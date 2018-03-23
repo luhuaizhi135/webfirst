@@ -18,3 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print(BASE_DIR)
 print(os.path.abspath(__file__))
 print(os.path.dirname(os.path.abspath(__file__)))
+
+print("test github ,is it ok?")
+
+def functionABC(a):
+    print("aaaaaaa")
