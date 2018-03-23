@@ -7,7 +7,7 @@
 <link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta http-equiv="refresh" content="20">
 <script>
 $(document).ready(function(){
 
@@ -64,6 +64,7 @@ $(document).ready(function(){
 			success: function(data,textStatus){
 						//alert(data);
 						//alert("success");
+						$(location).prop('href', "/polls/didi")
 					},
 					error: function(xhr,status,errMsg){
 						//alert(data)
@@ -97,11 +98,13 @@ $(document).ready(function(){
     	</td>
 		
     	<td>
-			<div class="panel-body" text-align="center">
+			<div class="container" text-align="left-side">
 			{% for cm in driver.comment_set.all %}
-				<input type="submit" class="btn btn-primary " style="float:left;margin-left:5px;margin-bottom:4px;"  value={{cm.comment_text}}{{cm.comment_num}} name={{cm.id}} id={{cm.id}} onclick="updatecomment({{cm.id}})">
+				<button type="button" class="btn btn-primary" style="float:left;margin-left:5px;margin-bottom:4px;"  onclick="updatecomment({{cm.id}})">
+					{{cm.comment_text}} <span class="badge badge-light">{{cm.comment_num}}</span>
+				</button>
 			{% endfor %}
-			<div/>
+			</div>
 		</td>	
 	</tr>
 {% endfor %}
