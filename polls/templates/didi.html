@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<script src="/static/js/jquery-3.3.1.js"></script>
+<link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+$(document).ready(function(){
+
+	
+	function getCookie(name) {  
+		var cookieValue = null;  
+		if (document.cookie && document.cookie != '') {  
+			var cookies = document.cookie.split(';');  
+			for (var i = 0; i < cookies.length; i++) {  
+				var cookie = jQuery.trim(cookies[i]);  
+				// Does this cookie string begin with the name we want?  
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+					break;  
+				}  
+			}  
+		}  
+		return cookieValue;  
+	}  
+	function csrfSafeMethod(method) {  
+		// these HTTP methods do not require CSRF protection  
+		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+	}  
+	$.ajaxSetup({  
+		beforeSend: function(xhr, settings) {  
+		var csrftoken = getCookie('csrftoken');       
+		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);  
+			}  
+		}  
+	}); 
+	
+	
+
+  
+});
+</script>
+
+<script>
+    /*update driver's comment*/
+	function updatecomment(cmid)
+	{
+		
+		url = "/polls/comment/"+cmid
+		//alert(url)
+		var jsondata = JSON.stringify({"cmid":cmid})
+		$.ajax({
+			type : "post",
+			url : url,
+			async:false,
+			
+			data:{cm:jsondata},
+			contentType:"application/x-www-form-urlencoded",
+			success: function(data,textStatus){
+						//alert(data);
+						//alert("success");
+					},
+					error: function(xhr,status,errMsg){
+						//alert(data)
+						alert("fail");
+						alert(status)
+						alert(errMsg)
+					}
+		});
+	}
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+<form action="/polls/didi" method="post">
+{% csrf_token %}
+<table class="table table-hover table-responsive">
+<thead>
+	<tr>
+		<th style="text-align:center"><div class="text-primary">名字</div></th>
+		<th style="text-align:center"><div class="text-primary">评价</div></th>
+	</tr>
+</thead>
+<tbody>
+	{% for driver in Drivers %}
+  	<tr>
+    	<td style="width:130px;height:auto;">
+    	<img src="/media/{{driver.img}}" class="rounded-circle img-fluid"  style="width:50px;height:50px;"> <a href="/polls/driver/{{driver.id}}">{{driver.driver_name}}</a>
+    	</td>
+		
+    	<td>
+			<div class="panel-body" text-align="center">
+			{% for cm in driver.comment_set.all %}
+				<input type="submit" class="btn btn-primary " style="float:left;margin-left:5px;margin-bottom:4px;"  value={{cm.comment_text}}{{cm.comment_num}} name={{cm.id}} id={{cm.id}} onclick="updatecomment({{cm.id}})">
+			{% endfor %}
+			<div/>
+		</td>	
+	</tr>
+{% endfor %}
+</tbody>
+</table>
+</form>
+</div>
+
+</body>
+
+
+</html>
