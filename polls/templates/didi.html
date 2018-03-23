@@ -12,7 +12,7 @@
   /* Make the image fully responsive */
   .carousel-inner img {
       width: 100%;
-      height: 100%;
+      height: 50%;
   }
 </style>
 <script>
@@ -86,6 +86,8 @@ $(document).ready(function(){
 
 <body>
 <div class="container">
+<div class="row">
+<div class="col-sm-12">
 <div id="demo" class="carousel slide" data-ride="carousel" >
  
   <!-- 指示符 -->
@@ -98,19 +100,19 @@ $(document).ready(function(){
   <!-- 轮播图片 -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="/media/photos/1.jpg">
+      <img src="/media/photos/1.jpg" >
 	  <div class="carousel-caption">
         <h3>不忘初心</h3>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="/media/photos/2.jpg">
+      <img src="/media/photos/2.jpg" >
 	  <div class="carousel-caption">
         <h3>牢记使命</h3>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="/media/photos/3.jpg">
+      <img src="/media/photos/3.jpg" >
 	  <div class="carousel-caption">
         <h3>永远奋斗</h3>
       </div>
@@ -126,10 +128,11 @@ $(document).ready(function(){
   </a>
  
 </div>
+</div>
+</div>
 
-
-
-<form action="/polls/didi" method="post">
+<div class="row">	
+<div class="col-sm-6">		
 {% csrf_token %}
 <table class="table table-hover table-responsive">
 <thead>
@@ -158,7 +161,45 @@ $(document).ready(function(){
 {% endfor %}
 </tbody>
 </table>
-</form>
+</div>
+
+
+<div class="col-sm-6">		
+{% csrf_token %}
+<table class="table table-hover table-responsive">
+<thead>
+	<tr>
+		<th style="text-align:center"><div class="text-primary">名字</div></th>
+		<th style="text-align:center"><div class="text-primary">评价</div></th>
+	</tr>
+</thead>
+<tbody>
+	{% for driver in Drivers %}
+  	<tr>
+    	<td style="width:auto;height:auto;">
+    	<img src="/media/{{driver.img}}" class="rounded-circle img-fluid responsive"  style="width:50px;height:50px;"> <a href="/polls/driver/{{driver.id}}">{{driver.driver_name}}</a>
+    	</td>
+		
+    	<td >
+			<div class="container" text-align="left-side ">
+			{% for cm in driver.comment_set.all %}
+				<button type="button" class="btn btn-primary" style="float:left;margin-left:5px;margin-bottom:4px;"  onclick="updatecomment({{cm.id}})">
+					{{cm.comment_text}} <span class="badge badge-light">{{cm.comment_num}}</span>
+				</button>
+			{% endfor %}
+			</div>
+		</td>	
+	</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+
+
+</div>		
+
 </div>
 
 </body>
