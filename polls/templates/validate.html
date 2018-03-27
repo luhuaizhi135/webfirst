@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<link rel="stylesheet" href="./validate.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+      width: 100%;
+      height: 50%;
+  }
+</style>
+<script>
+$(document).ready(function(){
+
+	
+	function getCookie(name) {  
+		var cookieValue = null;  
+		if (document.cookie && document.cookie != '') {  
+			var cookies = document.cookie.split(';');  
+			for (var i = 0; i < cookies.length; i++) {  
+				var cookie = jQuery.trim(cookies[i]);  
+				// Does this cookie string begin with the name we want?  
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+					break;  
+				}  
+			}  
+		}  
+		return cookieValue;  
+	}  
+	function csrfSafeMethod(method) {  
+		// these HTTP methods do not require CSRF protection  
+		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+	}  
+	$.ajaxSetup({  
+		beforeSend: function(xhr, settings) {  
+		var csrftoken = getCookie('csrftoken');       
+		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);  
+			}  
+		}  
+	}); 
+	
+	
+
+  
+});
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+	<div class="col-xs-7">
+		<div class="form-group has-feedback">
+			<label for="idcode-btn">验证码</label>
+			<div class="input-group">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
+				<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
+			</div>
+			<span style="color:red;display: none;" class="tips"></span>
+			<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
+			<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+		</div>
+	</div>
+	<div class="col-xs-5" style="padding-top: 30px">
+		<div id="test"></div>	
+	</div>
+</div>
+	
+<br/>
+
+
+<script>
+
+	var gencode,inputcode;
+	var verifresult=false
+	function random1num()
+	{
+		var randNum = Math.floor(Math.random() * 6);
+		return String(randNum)
+	}
+	function random4num()
+	{
+		return random1num()+random1num()+random1num()+random1num()
+	}
+		
+		
+	function VerificationId()
+	{
+		child = document.getElementById("ehong-code")
+		if(child!=null)
+		{
+			document.getElementById("test").removeChild(child);
+		}
+		child = document.getElementById("ehong-code-tip-ck")
+		if(child!=null)
+		{
+			document.getElementById("test").removeChild(child);
+		}
+		var new_e = document.createElement("div")
+		gencode = random4num()
+		var node = document.createTextNode(gencode)
+		new_e.appendChild(node)
+		new_e.id = "ehong-code"
+		new_e.className = "ehong-idcode-val ehong-idcode-val"+random1num()
+		new_e.onclick = function(){VerificationId()}
+		
+		var tips = document.createElement("span")
+		tips.id = "ehong-code-tip-ck"
+		tips.className = "ehong-code-val-tip"
+		tips.innerHTML = "再换一组验证码"
+		
+		document.getElementById("test").appendChild(new_e)
+		document.getElementById("test").appendChild(tips)
+		
+	}
+	
+	function Verificate()
+	{
+
+		inputcode = $("#idcode-btn").val()
+		if(inputcode==gencode)
+		{
+			alert("succ: right code")
+			verifresult = true
+		}
+		else
+		{
+			alert("FAIL: wrong code")
+			verifresult = false
+		}
+		
+		return verifresult
+	}
+	
+
+</script>
+
+<script>
+VerificationId();
+
+$("#idcode-btn").change(Verificate)
+
+</script>
+	
+</body>
+</html>
