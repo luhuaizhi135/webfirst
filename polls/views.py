@@ -10,10 +10,20 @@ import logging
 # Create your views here.
 def index(request):
 	#return HttpResponse("Hello,my first web index ")
-	latest_question_list = models.Question.objects.order_by('-pub_date')[:5]
-	template = loader.get_template('index.html')
-	context = {'latest_question_list':latest_question_list}
+	#latest_question_list = models.Question.objects.order_by('-pub_date')[:5]
+	template = loader.get_template('validate.html')
+	#context = {'latest_question_list':latest_question_list}
+	context={}
 	return HttpResponse(template.render(context,request))
+
+def verify(request):
+	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+	logging.basicConfig(filename='myfirstweb.log', level=logging.ERROR, format=LOG_FORMAT)
+	logging.error(str(request.POST))
+	
+	username = request.POST['username']
+	password = request.POST['password']
+	return HttpResponse("verify called"+username+password)
 	
 def detail(request,question_id):
 	latest_question_list = models.Question.objects.order_by('-pub_date')[:5]

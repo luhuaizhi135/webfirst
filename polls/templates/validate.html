@@ -1,13 +1,17 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8"> 
-<link rel="stylesheet" href="./validate.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery-3.3.1.js"></script>
+<link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="/static/validate.css" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <style>
   /* Make the image fully responsive */
   .carousel-inner img {
@@ -15,6 +19,46 @@
       height: 50%;
   }
 </style>
+
+<script>
+$(document).ready(function(){
+
+	
+	function getCookie(name) {  
+		var cookieValue = null;  
+		if (document.cookie && document.cookie != '') {  
+			var cookies = document.cookie.split(';');  
+			for (var i = 0; i < cookies.length; i++) {  
+				var cookie = jQuery.trim(cookies[i]);  
+				// Does this cookie string begin with the name we want?  
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+					break;  
+				}  
+			}  
+		}  
+		return cookieValue;  
+	}  
+	function csrfSafeMethod(method) {  
+		// these HTTP methods do not require CSRF protection  
+		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+	}  
+	$.ajaxSetup({  
+		beforeSend: function(xhr, settings) {  
+		var csrftoken = getCookie('csrftoken');       
+		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);  
+			}  
+		}  
+	}); 
+	
+	
+
+  
+});
+</script>
+
+
 <script>
 $(document).ready(function(){
 
@@ -60,12 +104,13 @@ $(document).ready(function(){
 <div class="container">
 	<div class="row-fluid">
 		<div class="col-xs-7">
-			<form action="http://wwww.baidu.com" class="">
+			<form action="/verify" class="" method="post" enctype="application/x-www-form-urlencoded">
+			{% csrf_token %}
 				<div class="form-group has-feedback">
 					<label for="username">用户名</label>
 					<div class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-						<input id="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text">
+						<input id="username" name="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text">
 					</div>
 					<span style="color:red;display: none;" class="tips"></span>
 					<span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
@@ -76,7 +121,7 @@ $(document).ready(function(){
 					<label for="password">密码</label>
 					<div class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-						<input id="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
+						<input id="password" name="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
 					</div>
 
 					<span style="color:red;display: none;" class="tips"></span>
@@ -96,21 +141,24 @@ $(document).ready(function(){
 				</div>
 			
 				
-				<div class="row" style="padding-bottom: 30px ">
+				<div class="row">
 					<div class="col-xs-7">
-						<label for="idcode-btn">验证码</label>
-						<div class="input-group">
-							<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
-							<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
+						<div class="form-group has-feedback">
+							<label for="idcode-btn">验证码</label>
+							<div class="input-group">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
+								<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
+							</div>
+							<span style="color:red;display: none;" class="tips"></span>
+							<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
+							<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
 						</div>
-						<span style="color:red;display: none;" class="tips"></span>
-						<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-						<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
 					</div>
-					<div class="col-xs-5" style="padding-top: 30px ">
-						<div id="test"></div>	
+					<div class="col-xs-5" style="padding-top: 30px">
+						<div id="test" style="background: transparent;"></div>
 					</div>
 				</div>
+			
 				
 				<div class="form-group">
 					<input class="form-control btn btn-primary" id="submit" value="立&nbsp;&nbsp;即&nbsp;&nbsp;注&nbsp;&nbsp;册" type="submit">
@@ -131,7 +179,9 @@ $(document).ready(function(){
 <script>
 
 	var gencode,inputcode;
-	var verifresult=false
+	var varifycode = false
+	var varifyname = false
+	var varifypasswd = false
 	function random1num()
 	{
 		var randNum = Math.floor(Math.random() * 6);
@@ -180,15 +230,15 @@ $(document).ready(function(){
 		if(inputcode==gencode)
 		{
 			//alert("succ: right code")
-			verifresult = true
+			varifycode = true
 		}
 		else
 		{
 			//alert("FAIL: wrong code")
-			verifresult = false
+			varifycode = false
 		}
 		
-		return verifresult
+		return varifycode
 	}
 	
 	//校验成功函数
@@ -212,17 +262,76 @@ $(document).ready(function(){
 <script>
 VerificationId();
 
+$("#username").change(function(){
+	if($("#username").val()=='')
+	{
+		verifyfail($(this), 0, '用户名不能为空');
+		varifyname = false
+	}
+	else
+	{
+		verifysuccess($(this), 0);
+		varifyname = true
+	}
+	
+})
+
+$('#passwordConfirm').change(function(){
+	var a = $('#passwordConfirm').val()
+	var b = $('#password').val()
+	if($('#passwordConfirm').val() != $('#password').val())
+	{
+		//alert("两次密码输入不一致")
+		verifyfail($(this), 2, '两次密码输入不一致');
+		varifypasswd = false
+	}
+	else
+	{
+		verifysuccess($(this), 2);
+		varifypasswd = true
+	}
+})
+
 $("#idcode-btn").change(function(){
 	rst = Verificate()
 	if(rst)
 	{
-		verifysuccess($(this), 0);
+		verifysuccess($(this), 3);
+		varifycode =true
 	}
 	else
 	{
-		verifyfail($(this), 0, '验证码输入错误');
+		verifyfail($(this), 3, '验证码输入错误');
+		varifycode=false
 	}
 })
+
+$('#submit').click(function(e){
+	if(varifyname==false)
+	{
+		e.preventDefault()
+		verifyfail($(this), 0, '用户名不能为空');
+		return
+	}
+	if(varifypasswd==false)
+	{
+		e.preventDefault()
+		verifyfail($(this), 2, '两次密码输入不一致');
+		return
+	}
+	if(varifycode==false)
+	{
+		e.preventDefault()
+		verifyfail($(this), 3, '验证码输入错误');
+		return
+	}
+	
+	username = $('#username').val();
+	password = $('#password').val();
+	
+})
+
+
 
 </script>
 	

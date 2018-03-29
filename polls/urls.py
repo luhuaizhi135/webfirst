@@ -8,4 +8,5 @@ urlpatterns=[
 	url(r'^didi$',views.didi,name='didi'),
 	url(r'^driver/(?P<driver_id>[0-9]+)$',views.driver,name='driver'),
 	url(r'^comment/(?P<comment_id>[0-9]+)$',views.comment,name='comment'),
+	url(r'^verify$',views.verify,name='verify'),
 ]
