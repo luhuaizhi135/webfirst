@@ -6,24 +6,54 @@ from django.template import loader
 import json
 from django.core import serializers
 import logging
+from django.http import HttpResponseRedirect 
+from django.core.urlresolvers import reverse  
+from django.shortcuts import redirect 
 
 # Create your views here.
 def index(request):
 	#return HttpResponse("Hello,my first web index ")
 	#latest_question_list = models.Question.objects.order_by('-pub_date')[:5]
-	template = loader.get_template('validate.html')
+	#template = loader.get_template('login.html')
 	#context = {'latest_question_list':latest_question_list}
-	context={}
-	return HttpResponse(template.render(context,request))
+	#context={}
+	#return HttpResponse(template.render(context,request))
+	para = {"findit":True,"username":'',"password":''}
+	
+	return render(request,'login.html',{'para':json.dumps(para)})
+
+def login(request):
+	
+	try:
+		uname = request.POST['username']
+		password = request.POST['password']
+		
+		#find
+		if(models.User.objects.filter(username=uname).count()==0):
+			para = {"findit":False,"username":uname,"password":password}
+			return render(request,'login.html',{'para':json.dumps(para)})
+		else:
+			request.session["username"]=uname
+			request.session.set_expiry(0) 
+			return redirect(reverse('didi', args=[]))
+	except :
+		para = {"findit":True,"username":'',"password":''}
+		return render(request,'login.html',{'para':json.dumps(para)})
+		
 
 def verify(request):
 	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 	logging.basicConfig(filename='myfirstweb.log', level=logging.ERROR, format=LOG_FORMAT)
 	logging.error(str(request.POST))
 	
-	username = request.POST['username']
+	template = loader.get_template('validate.html')
+	return HttpResponse(template.render({},request))
+
+def registor(request):
+	uname = request.POST['username']
 	password = request.POST['password']
-	return HttpResponse("verify called"+username+password)
+	models.User.objects.create(username=uname, userpwd=password)
+	return redirect(reverse('login', args=[]))
 	
 def detail(request,question_id):
 	latest_question_list = models.Question.objects.order_by('-pub_date')[:5]
@@ -37,6 +67,7 @@ def didi(request):
 	Drivers = models.Driver.objects.all()
 	template = loader.get_template('didi.html')
 	context = {'Drivers':Drivers}
+	
 	return HttpResponse(template.render(context,request))
 	
 	#data = serializers.serialize("json", Drivers)

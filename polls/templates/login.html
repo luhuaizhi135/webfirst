@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8"> 
 <script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/js/jquerysession.js"></script>
 <link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
@@ -52,16 +53,42 @@ $(document).ready(function(){
 		}  
 	}); 
 	
+
+	//xxxx = $.session.get('username')
+	//alert(xxxx)
+	try
+	{
+		var para = {{ para|safe }};
+		xxxx = $.session.get('username')
+		
+		if(para['findit']==true)
+		{
+			$('#submit').show()
+			$('#registor').hide()
+		}
+		else
+		{
+			$('#submit').hide()
+			$('#registor').show()
+			verifyfail($(this), 0, '用户名不存在，请先注册');
+			varifyname = false
+		}
+	}
+	catch(err)
+	{
+		$('#submit').show()
+		$('#registor').hide()
+	}
 	
-
-  
-});
-</script>
-
-
-<script>
-$(document).ready(function(){
-
+	
+	
+	/*
+	if(para['findit']==false)
+	{
+		$('#submit').hide()
+		$('#registor').show()
+	}
+	*/
 	
 	function getCookie(name) {  
 		var cookieValue = null;  
@@ -104,7 +131,7 @@ $(document).ready(function(){
 <div class="container">
 	<div class="row-fluid">
 		<div class="col-xs-7">
-			<form action="/registor" class="" method="post" enctype="application/x-www-form-urlencoded">
+			<form action="/login" class="" method="post" enctype="application/x-www-form-urlencoded">
 			{% csrf_token %}
 				<div class="form-group has-feedback">
 					<label for="username">用户名</label>
@@ -129,16 +156,7 @@ $(document).ready(function(){
 					<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
 				</div>
 
-				<div class="form-group has-feedback">
-					<label for="passwordConfirm">确认密码</label>
-					<div class="input-group">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-						<input id="passwordConfirm" class="form-control" placeholder="请再次输入密码" maxlength="20" type="password">
-					</div>
-					<span style="color:red;display: none;" class="tips"></span>
-					<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-					<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-				</div>
+				
 			
 				
 				<div class="row">
@@ -161,11 +179,11 @@ $(document).ready(function(){
 			
 				
 				<div class="form-group">
-					<input class="form-control btn btn-primary" id="submit" value="立&nbsp;&nbsp;即&nbsp;&nbsp;注&nbsp;&nbsp;册" type="submit">
+					<input class="form-control btn btn-primary" id="registor" value="立&nbsp;&nbsp;即&nbsp;&nbsp;注&nbsp;&nbsp;册" type="button">
 				</div>
 
 				<div class="form-group">
-					<input value="重置" id="reset" class="form-control btn btn-danger" type="reset">
+					<input value="登录" id="submit" class="form-control btn btn-danger" type="submit">
 				</div>
 				
 			</form>
@@ -277,19 +295,9 @@ $("#username").change(function(){
 })
 
 $('#passwordConfirm').change(function(){
-	var a = $('#passwordConfirm').val()
-	var b = $('#password').val()
-	if($('#passwordConfirm').val() != $('#password').val())
-	{
-		//alert("两次密码输入不一致")
-		verifyfail($(this), 2, '两次密码输入不一致');
-		varifypasswd = false
-	}
-	else
-	{
-		verifysuccess($(this), 2);
-		varifypasswd = true
-	}
+	
+	verifysuccess($(this), 2);
+	varifypasswd = true
 })
 
 $("#idcode-btn").change(function(){
@@ -306,6 +314,11 @@ $("#idcode-btn").change(function(){
 	}
 })
 
+$('#registor').click(function(e){
+	window.location.href='/verify'
+})
+
+
 $('#submit').click(function(e){
 	if(varifyname==false)
 	{
@@ -313,12 +326,7 @@ $('#submit').click(function(e){
 		verifyfail($(this), 0, '用户名不能为空');
 		return
 	}
-	if(varifypasswd==false)
-	{
-		e.preventDefault()
-		verifyfail($(this), 2, '两次密码输入不一致');
-		return
-	}
+	
 	if(varifycode==false)
 	{
 		e.preventDefault()
