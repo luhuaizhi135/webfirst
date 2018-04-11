@@ -23,6 +23,16 @@
 <script>
 $(document).ready(function(){
 
+	if(document.referrer==0)
+	{
+		{% if request.session.username %}  
+			//alert("{{ request.session.username }} ")
+		{% else %}  
+			alert("请登陆")
+			
+			$(location).attr('href', '/login')
+		{% endif %}  
+	}
 	
 	function getCookie(name) {  
 		var cookieValue = null;  

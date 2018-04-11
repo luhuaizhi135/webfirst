@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
 encoding//polls/migrations/0001_initial.py=utf-8
 encoding//polls/migrations/0002_auto_20180320_1009.py=utf-8
+encoding//polls/migrations/0003_driver_img.py=utf-8
+encoding//polls/migrations/0004_user.py=utf-8
 encoding//polls/test.py=utf-8
 encoding//polls/views.py=utf-8

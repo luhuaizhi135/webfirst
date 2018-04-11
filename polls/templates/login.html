@@ -59,7 +59,6 @@ $(document).ready(function(){
 	try
 	{
 		var para = {{ para|safe }};
-		xxxx = $.session.get('username')
 		
 		if(para['findit']==true)
 		{
@@ -315,6 +314,8 @@ $("#idcode-btn").change(function(){
 })
 
 $('#registor').click(function(e){
+	//{{ request.session.username }}='registor'
+	//alert(document.referrer)
 	window.location.href='/verify'
 })
 
