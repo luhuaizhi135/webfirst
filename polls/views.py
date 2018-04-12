@@ -79,7 +79,9 @@ def driver(request,driver_id):
 	dr = get_object_or_404(models.Driver, pk=driver_id)
 	return HttpResponse(dr.driver_name)
 	
-	
+def blog(request):
+	template = loader.get_template('blog.html')
+	return HttpResponse(template.render({},request))
 
 def comment(request,comment_id):
 	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"

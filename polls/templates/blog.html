@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"> 
+<script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/js/jquerysession.js"></script>
+<link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-12" >
+<div id="demo" class="carousel slide">
+ 
+  <!-- 指示符 -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+ 
+  <!-- 轮播图片 -->
+  <div class="carousel-inner">
+    <div class="carousel-item active" style="background-size:cover">
+      <img src="/media/photos/1.jpg" >
+	  <div class="carousel-caption">
+        <h3>不忘初心</h3>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/media/photos/2.jpg" >
+	  <div class="carousel-caption">
+        <h3>牢记使命</h3>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/media/photos/3.jpg" >
+	  <div class="carousel-caption">
+        <h3>永远奋斗</h3>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- 左右切换按钮 -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+ 
+</div>
+</div>
+</div>
+</div>
+
+<div class="container" style="padding-up: 15px;">
+	<h1>Is this your first blog?</h1>
+	<ul class="nav  nav-tabs justify-content-left">
+		<li class="nav-item">
+			<a class="nav-link active" href="#">首页</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">论坛</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">帮助</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">下载</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">关于</a>
+		</li>
+
+		<form class="form-inline " style="float:right;">
+			<input class="form-control" type="text" placeholder="Search">
+			<button class="btn btn-default" type="button">Search</button>
+		</form>
+	</ul>
+
+</div>
+
+<div class="container" id="content">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="alert alert-light">
+			<h2>内容区</h2>
+			</div>
+			<div class="alert alert-secondary">
+				<p>上周我们 发布 了一个新版本，包含了大家期盼已久的功能：主题模板和网站对本地化的支持。 这个功能完全是由我们的一个贡献者（Juan）开发的，Ghost 基金提供了支持。 我们已经针对这个功能编写了完整的文档，下面就来介绍一下这个功能是如何工作的： 网站本地化 你可以在 Ghos</p>
+			</div>
+			<div class="alert alert-secondary">
+				<p>Ghost 从一开始就支持响应式 Web 使用体验，但是我们今天仍然向前迈出了一大步 -- 推出 Android 平台原生 APP ！ 我们一直试图为 Ghost 用户构建一个可靠的移动端 Web 体验，但不可避免地，它在它所能做的事情上仍然是相当受限的。即便是在 2017 年的</p>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="alert alert-light">
+			<h2>侧边栏</h2>
+			</div>
+			<nav class="navbar">
+ 
+			  <!-- Links -->
+			  <ul class="navbar-nav">
+				<li class="nav-item">
+				  <a class="nav-link" href="#">热点文章</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="#">最新发布</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="#">我的标签</a>
+				</li>
+			  </ul>
+			 
+			</nav>
+		</div>
+	</div>
+</div>
+
+	
+</body>
+</html>
