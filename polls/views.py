@@ -83,6 +83,10 @@ def blog(request):
 	template = loader.get_template('blog.html')
 	return HttpResponse(template.render({},request))
 
+def publish(request):
+	template = loader.get_template('publish.html')
+	return HttpResponse(template.render({},request))
+
 def comment(request,comment_id):
 	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 	#logging.basicConfig(filename='myfirstweb.log', level=logging.ERROR, format=LOG_FORMAT)

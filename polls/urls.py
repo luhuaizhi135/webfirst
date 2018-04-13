@@ -12,4 +12,5 @@ urlpatterns=[
 	url(r'^login$',views.login,name='login'),
 	url(r'^registor$',views.registor,name='registor'),
 	url(r'^blog$',views.blog,name='blog'),
+	url(r'^publish$',views.publish,name='publish'),
 ]

@@ -7,7 +7,28 @@
 <link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.5/styles/monokai_sublime.min.css">
+<link href="https://cdn.bootcss.com/magnific-popup.js/1.0.0/magnific-popup.min.css" rel="stylesheet">
+	
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"> -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>  -->
+<!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>  -->
+
+<!-- <link href="/static/summernote-master/dist/summernote.css" rel="stylesheet"> -->
+<!-- <script src="/static/summernote-master/dist/summernote.js"></script> -->
+
+
+<script>
+$(document).ready(function() {
+  $('.summernote').summernote();
+});
+</script>
+
 </head>
 
 <body>
@@ -59,8 +80,9 @@
 </div>
 </div>
 
-<div class="container" style="padding-up: 15px;">
-	<h1>Is this your first blog?</h1>
+<div class="container" >
+	<p></p>
+	
 	<ul class="nav  nav-tabs justify-content-left">
 		<li class="nav-item">
 			<a class="nav-link active" href="#">首页</a>
@@ -90,35 +112,75 @@
 	<div class="row">
 		<div class="col-md-9">
 			<div class="alert alert-light">
-			<h2>内容区</h2>
+			
 			</div>
 			<div class="alert alert-secondary">
-				<p>上周我们 发布 了一个新版本，包含了大家期盼已久的功能：主题模板和网站对本地化的支持。 这个功能完全是由我们的一个贡献者（Juan）开发的，Ghost 基金提供了支持。 我们已经针对这个功能编写了完整的文档，下面就来介绍一下这个功能是如何工作的： 网站本地化 你可以在 Ghos</p>
+				<h3 class="text-center">最新版本发布</h3>
+				<h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6>
+				<div  class="alert alert-secondary" style="border:0px">
+					<p>上周我们 发布 了一个新版本，包含了大家期盼已久的功能：主题模板和网站对本地化的支持。 这个功能完全是由我们的一个贡献者（Juan）开发的，Ghost 基金提供了支持。 我们已经针对这个功能编写了完整的文档，下面就来介绍一下这个功能是如何工作的： 网站本地化 你可以在 Ghos</p>
+				</div>
+				<button type="button" class="btn btn-info btn-sm">阅读全文</button>
 			</div>
 			<div class="alert alert-secondary">
+				<h3 class="text-center">响应式布局体验</h3>
+				<h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6>
+				<div  class="alert alert-secondary" style="border:0px">
+				<img src="/media/photos/4.jpg" alt="Android 版 Ghost 客户端来了！" class="img-fluid">
 				<p>Ghost 从一开始就支持响应式 Web 使用体验，但是我们今天仍然向前迈出了一大步 -- 推出 Android 平台原生 APP ！ 我们一直试图为 Ghost 用户构建一个可靠的移动端 Web 体验，但不可避免地，它在它所能做的事情上仍然是相当受限的。即便是在 2017 年的</p>
+				</div>
+				<button type="button" class="btn btn-info btn-sm">阅读全文</button>
 			</div>
+			
+			<!-- <div class="alert alert-secondary"> -->
+				<!-- <div class="summernote" rows="15"></div> -->
+			<!-- </div> -->
+			
+			
 		</div>
 		<div class="col-md-3">
 			<div class="alert alert-light">
-			<h2>侧边栏</h2>
+			
 			</div>
-			<nav class="navbar">
- 
-			  <!-- Links -->
-			  <ul class="navbar-nav">
-				<li class="nav-item">
-				  <a class="nav-link" href="#">热点文章</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="#">最新发布</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="#">我的标签</a>
-				</li>
-			  </ul>
-			 
-			</nav>
+			<div class="alert alert-secondary">
+			    <h4 class="title">导航</h4>
+				<nav class="navbar">
+				  <!-- Links -->
+				  <ul class="navbar-nav">
+					<li class="nav-item">
+					  <a class="nav-link" href="#">热点文章</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#">最新发布</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#">我的标签</a>
+					</li>
+				  </ul> 
+				</nav>
+			
+			</div>
+			
+			<div class="alert alert-secondary">
+				<!-- start tag cloud widget -->
+				<div class="row">
+					<h4 class="title">标签云</h4>
+					<div class=" row-fluid">						
+						<a href="/tag/ke-hu-duan/" class='btn btn-info btn-sm' style="float:left;margin-left:5px;margin-bottom:4px;">客户端</a>
+						<a href="/tag/android/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">Android</a>
+						<a href="/tag/jquery/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">jQuery</a>
+						<a href="/tag/ghost-0-7-ban-ben/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">Ghost 0.7 版本</a>
+						<a href="/tag/opensource/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">开源</a>
+						<a href="/tag/zhu-shou-han-shu/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">助手函数</a>
+						<a href="/tag/tag-cloud/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">标签云</a>
+						<a href="/tag/navigation/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">导航</a>	
+					</div>
+				</div>
+				<!-- end tag cloud widget -->	
+			</div>
+			
+			
+			
 		</div>
 	</div>
 </div>

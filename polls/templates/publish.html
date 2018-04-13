@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"> 
+<script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/js/jquerysession.js"></script>
+<link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.5/styles/monokai_sublime.min.css">
+<link href="https://cdn.bootcss.com/magnific-popup.js/1.0.0/magnific-popup.min.css" rel="stylesheet">
+	
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"> -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<link href="/static/summernote-master/dist/summernote-bs4.css" rel="stylesheet">
+<script src="/static/summernote-master/dist/summernote-bs4.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  $('.summernote').summernote({height:330});
+});
+</script>
+
+<style>
+.modal-backdrop{
+	background-color: rgba(0,0,0,0)!important;
+	z-index: 0 !important;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-12" >
+<div id="demo" class="carousel slide">
+ 
+  <!-- 指示符 -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+ 
+  <!-- 轮播图片 -->
+  <div class="carousel-inner">
+    <div class="carousel-item active" style="background-size:cover">
+      <img src="/media/photos/1.jpg" >
+	  <div class="carousel-caption">
+        <h3>不忘初心</h3>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/media/photos/2.jpg" >
+	  <div class="carousel-caption">
+        <h3>牢记使命</h3>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/media/photos/3.jpg" >
+	  <div class="carousel-caption">
+        <h3>永远奋斗</h3>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- 左右切换按钮 -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+ 
+</div>
+</div>
+</div>
+</div>
+
+<div class="container" >
+	<p></p>
+	
+	<ul class="nav  nav-tabs justify-content-left">
+		<li class="nav-item">
+			<a class="nav-link active" href="#">首页</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">论坛</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">帮助</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">下载</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">关于</a>
+		</li>
+
+		<form class="form-inline " style="float:right;">
+			<input class="form-control" type="text" placeholder="Search">
+			<button class="btn btn-default" type="button">Search</button>
+		</form>
+	</ul>
+
+</div>
+
+<div class="container" id="content">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="alert alert-light">
+			</div>
+			<div class="alert alert-secondary">
+				<form method="post">
+					<div class="form-group">
+					    <label class="col-form-label" for="inputDefault">标题</label>
+					    <input type="text" class="form-control" placeholder="Default input" id="inputDefault">
+					    <label class="col-form-label" for="inputDefault">内容</label>
+					    <textarea class="summernote" name="publishcontent"></textarea>
+						</div>	
+							<input value="确定" id="pub" class="btn btn-info btn-sm" type="submit">
+						<div class="form-group">
+					</div>
+				</form>
+			</div>
+			
+		</div>
+		<div class="col-md-3">
+			<div class="alert alert-light">
+			
+			</div>
+			<div class="alert alert-secondary">
+			    <h4 class="title">导航</h4>
+				<nav class="navbar">
+				  <!-- Links -->
+				  <ul class="navbar-nav">
+					<li class="nav-item">
+					  <a class="nav-link" href="#">热点文章</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#">最新发布</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#">我的标签</a>
+					</li>
+				  </ul> 
+				</nav>
+			
+			</div>
+			
+			<div class="alert alert-secondary">
+				<!-- start tag cloud widget -->
+				<div class="row">
+					<h4 class="title">标签云</h4>
+					<div class=" row-fluid">						
+						<a href="/tag/ke-hu-duan/" class='btn btn-info btn-sm' style="float:left;margin-left:5px;margin-bottom:4px;">客户端</a>
+						<a href="/tag/android/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">Android</a>
+						<a href="/tag/jquery/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">jQuery</a>
+						<a href="/tag/ghost-0-7-ban-ben/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">Ghost 0.7 版本</a>
+						<a href="/tag/opensource/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">开源</a>
+						<a href="/tag/zhu-shou-han-shu/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">助手函数</a>
+						<a href="/tag/tag-cloud/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">标签云</a>
+						<a href="/tag/navigation/" class='btn btn-info btn-sm ' style="float:left;margin-left:5px;margin-bottom:4px;">导航</a>	
+					</div>
+				</div>
+				<!-- end tag cloud widget -->	
+			</div>
+			
+			
+			
+		</div>
+	</div>
+</div>
+
+	
+</body>
+</html>
