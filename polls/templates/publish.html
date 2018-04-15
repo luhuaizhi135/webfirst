@@ -27,8 +27,8 @@
 <script>
 function opimage(files)
 {
-	alert("insert image1111111111")
-	alert(files[0])
+	//alert("insert image1111111111")
+	//alert(files[0])
 	
 	var form_data = new FormData();
 	var file_info =files[0];
@@ -45,7 +45,7 @@ function opimage(files)
 		dataType:'text',
 		success: function(pic) {
 
-			alert("succ")
+			//alert("succ")
 			$('.summernote').summernote('insertImage',pic);
 		},
 		error: function(xhr,status,errMsg){
@@ -91,7 +91,21 @@ $(document).ready(function() {
     onImageUpload: opimage
   }});
   
+  
+  $('#btn1').click(function(){
+	alert("test");
+	y = $("#publishcontent")
+	x = $("#publishcontent").val()
+	alert("Text: " + $("#publishcontent").val());
+	alert("HTML: " + $("#publishcontent").html());
+	$("#publishcontent").val('<p>eg3egg34g34gewf43ctvtvaffs</p><p><img src="/static/pic/123.jpg" style="width: 500px;"></p><p>111111111111111111er3r32324t34t34ef</p>')
+	$("#publishcontent").val("fffdddddddddddddddddddddddddddddddddddddddd")
+})
+
+
 });
+
+
 
 </script>
 
@@ -192,12 +206,14 @@ $(document).ready(function() {
 					    <label class="col-form-label" for="inputDefault">标题</label>
 					    <input type="text" class="form-control" placeholder="Default input" id="inputDefault">
 					    <label class="col-form-label" for="inputDefault">内容</label>
-					    <textarea class="summernote" name="publishcontent"></textarea>
+					    <textarea class="summernote" name="publishcontent" id="publishcontent"></textarea>
 						</div>	
 							<input value="确定" id="pub" class="btn btn-info btn-sm" type="submit">
+							
 						<div class="form-group">
 					</div>
 				</form>
+				<button class="btn btn-info btn-sm" id="btn1">test</button>
 			</div>
 			
 		</div>
