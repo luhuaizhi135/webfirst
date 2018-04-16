@@ -27,6 +27,23 @@
 $(document).ready(function() {
   $('#testblog').html('<p>eg3egg34g34gewf43ctvtvaffs</p><p><img src="/static/pic/123.jpg" style="width: 500px"></p><p>111111111111111111er3r32324t34t34ef</p>');
 });
+
+function HTMLEncode(html) {
+    var temp = document.createElement("div");
+    (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+    var output = temp.innerHTML;
+    temp = null;
+    return output;
+}
+
+function HTMLDecode(text) { 
+    var temp = document.createElement("div"); 
+    temp.innerHTML = text; 
+    var output = temp.innerText || temp.textContent; 
+    temp = null; 
+    return output; 
+} 
+
 </script>
 
 </head>
@@ -48,19 +65,19 @@ $(document).ready(function() {
   <!-- 轮播图片 -->
   <div class="carousel-inner">
     <div class="carousel-item active" style="background-size:cover">
-      <img src="/media/photos/1.jpg" >
+      <img src="/media/photos/7.bmp" >
 	  <div class="carousel-caption">
         <h3>不忘初心</h3>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="/media/photos/2.jpg" >
+      <img src="/media/photos/8.jpg" >
 	  <div class="carousel-caption">
         <h3>牢记使命</h3>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="/media/photos/3.jpg" >
+      <img src="/media/photos/9.jpg" >
 	  <div class="carousel-caption">
         <h3>永远奋斗</h3>
       </div>
@@ -141,10 +158,21 @@ $(document).ready(function() {
 				<button type="button" class="btn btn-info btn-sm" id="testbtn">阅读全文</button>
 			</div>
 			
-			
-			<!-- <div class="alert alert-secondary"> -->
-				<!-- <div class="summernote" rows="15"></div> -->
-			<!-- </div> -->
+			{% for blog in Blogs %}
+			<div class="alert alert-secondary">
+				<h3 class="text-center">{{blog.blogtitle}}</h3>
+				<h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6>
+				<div  class="alert alert-secondary" style="border:0px" id="testblog111">
+						<p class="{{blog.id}}" ></p>
+						<script>
+							$(function(){
+								$(".{{blog.id}}").html(HTMLDecode("{{blog.blogcontent}}"));
+							});
+						</script>
+				</div>
+				<button type="button" class="btn btn-info btn-sm" id="testbtn">阅读全文</button>
+			</div>
+			{% endfor %}
 			
 			
 		</div>

@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -96,10 +97,11 @@ $(document).ready(function() {
 	alert("test");
 	y = $("#publishcontent")
 	x = $("#publishcontent").val()
-	alert("Text: " + $("#publishcontent").val());
-	alert("HTML: " + $("#publishcontent").html());
-	$("#publishcontent").val('<p>eg3egg34g34gewf43ctvtvaffs</p><p><img src="/static/pic/123.jpg" style="width: 500px;"></p><p>111111111111111111er3r32324t34t34ef</p>')
-	$("#publishcontent").val("fffdddddddddddddddddddddddddddddddddddddddd")
+	alert("title: " + $("#publishtitle").val());
+	alert("content: " + $("#publishcontent").val());
+	//alert("HTML: " + $("#publishcontent").html());
+	//$("#publishcontent").val('<p>eg3egg34g34gewf43ctvtvaffs</p><p><img src="/static/pic/123.jpg" style="width: //500px;"></p><p>111111111111111111er3r32324t34t34ef</p>')
+	//$("#publishcontent").val("fffdddddddddddddddddddddddddddddddddddddddd")
 })
 
 
@@ -135,19 +137,19 @@ $(document).ready(function() {
   <!-- 轮播图片 -->
   <div class="carousel-inner">
     <div class="carousel-item active" style="background-size:cover">
-      <img src="/media/photos/1.jpg" >
+      <img src="/media/photos/7.bmp" >
 	  <div class="carousel-caption">
         <h3>不忘初心</h3>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="/media/photos/2.jpg" >
+      <img src="/media/photos/8.jpg" >
 	  <div class="carousel-caption">
         <h3>牢记使命</h3>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="/media/photos/3.jpg" >
+      <img src="/media/photos/9.jpg" >
 	  <div class="carousel-caption">
         <h3>永远奋斗</h3>
       </div>
@@ -200,20 +202,18 @@ $(document).ready(function() {
 		<div class="col-md-9">
 			<div class="alert alert-light">
 			</div>
-			<div class="alert alert-secondary">
-				<form method="post">
+			<div class="alert alert-secondary">	
+				<form method="post" action="/publishblog"  enctype="application/x-www-form-urlencoded">
+					{% csrf_token %}
 					<div class="form-group">
 					    <label class="col-form-label" for="inputDefault">标题</label>
-					    <input type="text" class="form-control" placeholder="Default input" id="inputDefault">
+					    <input type="text" class="form-control" placeholder="请输入标题" id="publishtitle" name="publishtitle">
 					    <label class="col-form-label" for="inputDefault">内容</label>
 					    <textarea class="summernote" name="publishcontent" id="publishcontent"></textarea>
-						</div>	
-							<input value="确定" id="pub" class="btn btn-info btn-sm" type="submit">
-							
-						<div class="form-group">
+						<input value="确定" id="pub" class="form-control  btn btn-info btn-sm" type="submit">
 					</div>
 				</form>
-				<button class="btn btn-info btn-sm" id="btn1">test</button>
+				<button class="btn btn-info btn-sm" id="btn1" hidden>test</button>
 			</div>
 			
 		</div>

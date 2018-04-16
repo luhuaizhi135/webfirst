@@ -78,8 +78,12 @@ def driver(request,driver_id):
 	return HttpResponse(dr.driver_name)
 	
 def blog(request):
+	
+	Blogs = models.Blog.objects.all()
 	template = loader.get_template('blog.html')
-	return HttpResponse(template.render({},request))
+	context = {'Blogs':Blogs}
+	
+	return HttpResponse(template.render(context,request))
 
 def publish(request):
 	template = loader.get_template('publish.html')
@@ -95,6 +99,14 @@ def uploadpic(request):
 		f.close()
 		pic = '/static/pic/'+file_obj.name
 		return HttpResponse(pic)
+	
+def publishblog(request):
+	if request.method == 'POST':
+		blogtitle = request.POST['publishtitle']
+		blogcontent = request.POST['publishcontent']
+		models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
+		return redirect(reverse('blog', args=[]))
+		
 	
 def comment(request,comment_id):
 	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
