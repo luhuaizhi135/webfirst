@@ -77,11 +77,20 @@ def driver(request,driver_id):
 	dr = get_object_or_404(models.Driver, pk=driver_id)
 	return HttpResponse(dr.driver_name)
 	
-def blog(request):
-	
+def blog(request,pg):
+	av_page=2
 	Blogs = models.Blog.objects.all()
 	template = loader.get_template('blog.html')
-	context = {'Blogs':Blogs}
+	
+	start_pg = (int(pg)-1)*av_page
+	end_pg = (int(pg)-1)*av_page+av_page
+	
+	if Blogs.count()%av_page == 0:
+		total_pg = int(Blogs.count()/av_page)
+	else:
+		total_pg = int(Blogs.count()/av_page)+1
+	
+	context = {'Blogs':Blogs[start_pg:end_pg],'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
 	
 	return HttpResponse(template.render(context,request))
 
@@ -105,7 +114,7 @@ def publishblog(request):
 		blogtitle = request.POST['publishtitle']
 		blogcontent = request.POST['publishcontent']
 		models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
-		return redirect(reverse('blog', args=[]))
+		return redirect(reverse('blog', args=[1]))
 		
 	
 def comment(request,comment_id):

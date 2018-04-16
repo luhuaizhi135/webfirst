@@ -6,27 +6,33 @@
 <script src="/static/js/jquerysession.js"></script>
 <link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.5/styles/monokai_sublime.min.css">
-<link href="https://cdn.bootcss.com/magnific-popup.js/1.0.0/magnific-popup.min.css" rel="stylesheet">
+<!-- <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script> -->
+<!-- <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.5/styles/monokai_sublime.min.css"> -->
+<!-- <link href="https://cdn.bootcss.com/magnific-popup.js/1.0.0/magnific-popup.min.css" rel="stylesheet"> -->
+
+<script src="/static/thirdparty/popper.min.js"></script>
+<link rel="stylesheet" href="/static/thirdparty/monokai_sublime.min.css">
+<link href="/static/thirdparty/magnific-popup.min.css" rel="stylesheet">
+
 	
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"> -->
-<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>  -->
-<!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>  -->
-
-<!-- <link href="/static/summernote-master/dist/summernote.css" rel="stylesheet"> -->
-<!-- <script src="/static/summernote-master/dist/summernote.js"></script> -->
-
-
 <script>
+
 $(document).ready(function() {
   $('#testblog').html('<p>eg3egg34g34gewf43ctvtvaffs</p><p><img src="/static/pic/123.jpg" style="width: 500px"></p><p>111111111111111111er3r32324t34t34ef</p>');
 });
+
+	
+//context = {'Blogs':Blogs[start_pg:end_pg],'cur_page':pg,'total_pg':total_pg}
+total_pg={{total_pg}} //总页数
+cur_page={{cur_page}} //当前页
+av_page={{av_page}}//每页个数
+var pre_pg
+var next_pg
+//alert(total_pg)
+//alert(cur_page)
+
 
 function HTMLEncode(html) {
     var temp = document.createElement("div");
@@ -221,6 +227,68 @@ function HTMLDecode(text) {
 			
 		</div>
 	</div>
+	
+	<script>
+	
+	</script>
+	
+	<ul class="pagination" id="blogpage">
+	  <li class="page-item"><a class="page-link" href="/blog/" id="prepage")>Previous</a></li>
+	  
+	  
+	  <script>
+		  for(var i=1;i<=total_pg;i++)
+		  {
+			
+			var new_li = document.createElement("li")
+			new_li.className = "page-item"
+			if(i==cur_page)
+			{
+				new_li.className +=  " active"
+			}
+			
+			var new_a = document.createElement("a")
+			new_a.className = "page-link"
+			new_a.text = i
+			new_a.href="/blog/"+i
+			
+			new_li.appendChild(new_a)
+			document.getElementById('blogpage').appendChild(new_li)
+			//new_e.onclick = function(){VerificationId()}
+		  }
+		  
+		  if(cur_page>1)
+		  {
+			pre_pg = cur_page-1
+		  }
+		  else
+		  {
+			pre_pg=1
+		  }
+		  if(cur_page<total_pg)
+		  {
+			next_pg = cur_page+1
+		  }
+		  else
+		  {
+			next_pg = cur_page
+		  }
+		  
+		  document.getElementById('prepage').href = "/blog/"+String(pre_pg)
+		  
+	  </script>
+	  
+	  <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
+	  <!-- <li class="page-item"><a class="page-link" href="#">2</a></li> -->
+	  <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+	  
+	  
+	  <li class="page-item"><a class="page-link" href="#" id="nextpage">Next</a></li>
+	  <script>
+		document.getElementById('nextpage').href = "/blog/"+String(next_pg)
+	  </script>
+	</ul>
+
 </div>
 
 	
