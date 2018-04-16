@@ -124,13 +124,13 @@ SESSION_SAVE_EVERY_REQUEST = False        #  «∑Ò√ø¥Œ«Î«Û∂º±£¥ÊSession£¨ƒ¨»œ–ﬁ∏ƒ÷
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

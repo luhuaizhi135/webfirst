@@ -79,7 +79,8 @@ def driver(request,driver_id):
 	
 def blog(request,pg):
 	av_page=2
-	Blogs = models.Blog.objects.all()
+	#Blogs = models.Blog.objects.all()
+	Blogs = models.Blog.objects.order_by("-blogdate")
 	template = loader.get_template('blog.html')
 	
 	start_pg = (int(pg)-1)*av_page

@@ -2,6 +2,7 @@ from django.db import models
 from unittest.util import _MAX_LENGTH
 from django.template.defaultfilters import default
 from django.utils.encoding import python_2_unicode_compatible
+import django.utils.timezone as timezone
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -51,3 +52,7 @@ class User(models.Model):
 class Blog(models.Model):
     blogtitle = models.CharField(max_length=120)  
     blogcontent = models.TextField()  
+    blogdate = models.DateTimeField(default = timezone.now)
+    
+   
+    

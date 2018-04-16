@@ -137,43 +137,44 @@ function HTMLDecode(text) {
 			<div class="alert alert-light">
 			
 			</div>
-			<div class="alert alert-secondary">
-				<h3 class="text-center">最新版本发布</h3>
-				<h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6>
-				<div  class="alert alert-secondary" style="border:0px">
-					<p>上周我们 发布 了一个新版本，包含了大家期盼已久的功能：主题模板和网站对本地化的支持。 这个功能完全是由我们的一个贡献者（Juan）开发的，Ghost 基金提供了支持。 我们已经针对这个功能编写了完整的文档，下面就来介绍一下这个功能是如何工作的： 网站本地化 你可以在 Ghos</p>
-				</div>
-				<button type="button" class="btn btn-info btn-sm">阅读全文</button>
-			</div>
-			<div class="alert alert-secondary">
-				<h3 class="text-center">响应式布局体验</h3>
-				<h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6>
-				<div  class="alert alert-secondary" style="border:0px">
-				<img src="/media/photos/4.jpg" alt="Android 版 Ghost 客户端来了！" class="img-fluid">
-				<p>Ghost 从一开始就支持响应式 Web 使用体验，但是我们今天仍然向前迈出了一大步 -- 推出 Android 平台原生 APP ！ 我们一直试图为 Ghost 用户构建一个可靠的移动端 Web 体验，但不可避免地，它在它所能做的事情上仍然是相当受限的。即便是在 2017 年的</p>
-				</div>
-				<button type="button" class="btn btn-info btn-sm">阅读全文</button>
-			</div>
+			<!-- <div class="alert alert-secondary"> -->
+				<!-- <h3 class="text-center">最新版本发布</h3> -->
+				<!-- <h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6> -->
+				<!-- <div  class="alert alert-secondary" style="border:0px"> -->
+					<!-- <p>上周我们 发布 了一个新版本，包含了大家期盼已久的功能：主题模板和网站对本地化的支持。 这个功能完全是由我们的一个贡献者（Juan）开发的，Ghost 基金提供了支持。 我们已经针对这个功能编写了完整的文档，下面就来介绍一下这个功能是如何工作的： 网站本地化 你可以在 Ghos</p> -->
+				<!-- </div> -->
+				<!-- <button type="button" class="btn btn-info btn-sm">阅读全文</button> -->
+			<!-- </div> -->
+			<!-- <div class="alert alert-secondary"> -->
+				<!-- <h3 class="text-center">响应式布局体验</h3> -->
+				<!-- <h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6> -->
+				<!-- <div  class="alert alert-secondary" style="border:0px"> -->
+				<!-- <img src="/media/photos/4.jpg" alt="Android 版 Ghost 客户端来了！" class="img-fluid"> -->
+				<!-- <p>Ghost 从一开始就支持响应式 Web 使用体验，但是我们今天仍然向前迈出了一大步 -- 推出 Android 平台原生 APP ！ 我们一直试图为 Ghost 用户构建一个可靠的移动端 Web 体验，但不可避免地，它在它所能做的事情上仍然是相当受限的。即便是在 2017 年的</p> -->
+				<!-- </div> -->
+				<!-- <button type="button" class="btn btn-info btn-sm">阅读全文</button> -->
+			<!-- </div> -->
 			
-			<div class="alert alert-secondary">
-				<h3 class="text-center">数据库获取文章</h3>
-				<h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6>
-				<div  class="alert alert-secondary" style="border:0px" id="testblog">
+			<!-- <div class="alert alert-secondary"> -->
+				<!-- <h3 class="text-center">数据库获取文章</h3> -->
+				<!-- <h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6> -->
+				<!-- <div  class="alert alert-secondary" style="border:0px" id="testblog"> -->
 					
-				</div>
-				<button type="button" class="btn btn-info btn-sm" id="testbtn">阅读全文</button>
-			</div>
+				<!-- </div> -->
+				<!-- <button type="button" class="btn btn-info btn-sm" id="testbtn">阅读全文</button> -->
+			<!-- </div> -->
 			
 			{% for blog in Blogs %}
 			<div class="alert alert-secondary">
 				<h3 class="text-center">{{blog.blogtitle}}</h3>
-				<h6 class="text-center"><small>作者：<span class="text-info">王赛</span> • 2018年1月22日</small></h6>
+				<h6 class="text-center"><small>作者：<span class="text-info">大智若愚</span> • {{blog.blogdate|date:"Y-m-d H:i:s"}}</small></h6>
 				<div  class="alert alert-secondary" style="border:0px" id="testblog111">
 						<p class="{{blog.id}}" ></p>
 						<script>
 							$(function(){
 								$(".{{blog.id}}").html(HTMLDecode("{{blog.blogcontent}}"));
 							});
+							//alert('{{blog.blogdate|date:"Y-m-d H:i:s"}}')
 						</script>
 				</div>
 				<button type="button" class="btn btn-info btn-sm" id="testbtn">阅读全文</button>
