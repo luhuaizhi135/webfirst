@@ -10,6 +10,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse  
 from django.shortcuts import redirect 
 import os
+from django.db import transaction
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Create your views here.
@@ -77,23 +79,35 @@ def driver(request,driver_id):
 	dr = get_object_or_404(models.Driver, pk=driver_id)
 	return HttpResponse(dr.driver_name)
 	
-def blog(request,pg):
-	av_page=3
-	#Blogs = models.Blog.objects.all()
-	Blogs = models.Blog.objects.order_by("-blogdate")
-	template = loader.get_template('blog.html')
-	
-	start_pg = (int(pg)-1)*av_page
-	end_pg = (int(pg)-1)*av_page+av_page
-	
-	if Blogs.count()%av_page == 0:
-		total_pg = int(Blogs.count()/av_page)
-	else:
-		total_pg = int(Blogs.count()/av_page)+1
-	
-	context = {'Blogs':Blogs[start_pg:end_pg],'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
-	
-	return HttpResponse(template.render(context,request))
+def blog(request):
+	if request.method=='GET':
+		pg = request.GET.get('pg')
+		searchcondition = request.GET.get('searchval')
+		
+		
+		
+		av_page=3
+		#Blogs = models.Blog.objects.all()
+		if searchcondition=='':
+			request.session["searchcondition"] = ''
+			Blogs = models.Blog.objects.order_by("-blogdate")
+		else:
+			request.session["searchcondition"] = searchcondition
+			Blogs = models.Blog.objects.filter(blogtitle__contains=searchcondition).order_by("-blogdate")
+			
+		template = loader.get_template('blog.html')
+		
+		start_pg = (int(pg)-1)*av_page
+		end_pg = (int(pg)-1)*av_page+av_page
+		
+		if Blogs.count()%av_page == 0:
+			total_pg = int(Blogs.count()/av_page)
+		else:
+			total_pg = int(Blogs.count()/av_page)+1
+		
+		context = {'Blogs':Blogs[start_pg:end_pg],'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
+		
+		return HttpResponse(template.render(context,request))
 
 def publish(request):
 	template = loader.get_template('publish.html')
@@ -111,18 +125,41 @@ def uploadpic(request):
 		return HttpResponse(pic)
 	
 def publishblog(request):
-	if request.method == 'POST':
-		blogtitle = request.POST['publishtitle']
-		blogcontent = request.POST['publishcontent']
-		models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
+	sid = transaction.savepoint()
+	try:
+		if request.method == 'POST':
+			blogtitle = request.POST['publishtitle']
+			blogcontent = request.POST['publishcontent']
+			models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
+			transaction.savepoint_commit(sid)
+			return redirect(reverse('blog', args=[1]))
+		transaction.savepoint_rollback(sid)
+	except:
+		transaction.savepoint_rollback(sid)
 		
+def searchblog(request):
+	if request.method=='POST':
+		searchcondition = request.POST['searchblogcondition']
+		Blogs = models.Blog.objects.filter(blogtitle__contains=searchcondition).order_by("-blogdate")
+		pg='1'
+		av_page=3
+		#Blogs = models.Blog.objects.all()
+		#Blogs = models.Blog.objects.order_by("-blogdate")
+		template = loader.get_template('blog.html')
+		
+		start_pg = (int(pg)-1)*av_page
+		end_pg = (int(pg)-1)*av_page+av_page
+		
+		if Blogs.count()%av_page == 0:
+			total_pg = int(Blogs.count()/av_page)
+		else:
+			total_pg = int(Blogs.count()/av_page)+1
+		
+		context = {'Blogs':Blogs[start_pg:end_pg],'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
+		
+		return HttpResponse(template.render(context,request))
 	
-		#for i in range(1,100):
-			#blogtitle = 'test'
-			#blogcontent = 'test'
-			#models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
 		
-		return redirect(reverse('blog', args=[1]))
 	
 def comment(request,comment_id):
 	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"

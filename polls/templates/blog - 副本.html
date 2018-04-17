@@ -13,16 +13,6 @@
 <script>
 
 $(document).ready(function() {
-
-	{% if request.session.searchcondition %}  
-		$('#searchblogcondition').val("{{ request.session.searchcondition }}")
-		//alert("{{ request.session.searchcondition }}")
-	{% else %}  
-		//alert("没有request.session.searchcondition")
-	{% endif %}  
-	
-	
-	
 	function getCookie(name) {  
 			var cookieValue = null;  
 			if (document.cookie && document.cookie != '') {  
@@ -52,14 +42,11 @@ $(document).ready(function() {
 		}); 
   $('#testblog').html('<p>eg3egg34g34gewf43ctvtvaffs</p><p><img src="/static/pic/123.jpg" style="width: 500px"></p><p>111111111111111111er3r32324t34t34ef</p>');
   
-  $('#searchblog').click(function(){
-	//alert('search click')
-	window.location.href='/blog/?pg=1&searchval='+$('#searchblogcondition').val(); 
-  })
 });
 
 function gotopagehref(){
-		window.location.href='/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
+		//alert("go to page")
+		window.location.href='/blog/'+$('#gotopagetext').val(); 
 	}
 	
 total_pg={{total_pg}} //总页数
@@ -147,7 +134,7 @@ function HTMLDecode(text) {
 	
 	<ul class="nav  nav-tabs justify-content-left">
 		<li class="nav-item">
-			<a class="nav-link active" href="/blog/?pg=1&searchval=">首页</a>
+			<a class="nav-link active" href="#">首页</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="#">论坛</a>
@@ -162,11 +149,11 @@ function HTMLDecode(text) {
 			<a class="nav-link" href="#">关于</a>
 		</li>
 
-		<div class="form-inline " style="float:right;">
+		<form class="form-inline " style="float:right;" method="post" action="/searchblog">
 			{% csrf_token %}
 			<input class="form-control" type="text" placeholder="Search" id="searchblogcondition" name="searchblogcondition">
 			<button class="btn btn-default" type="submit" id="searchblog">Search</button>
-		</div>
+		</form>
 	</ul>
 
 </div>
@@ -250,13 +237,6 @@ function HTMLDecode(text) {
 	  
 	  
 	  <script>
-			{% if request.session.searchcondition %}  
-				$('#searchblogcondition').val("{{ request.session.searchcondition }}")
-				//alert("{{ request.session.searchcondition }}")
-			{% else %}  
-				//alert("没有request.session.searchcondition")
-			{% endif %} 
-	
 		  //for(var i=1;i<=total_pg;i++)
 		  //alert(Math.floor(1/6))
 		  per_pg =6 //每组显示6页
@@ -287,8 +267,8 @@ function HTMLDecode(text) {
 			var new_a = document.createElement("a")
 			new_a.className = "page-link"
 			new_a.text = i
-			new_a.href="/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
-			//alert(new_a.href)
+			new_a.href="/blog/"+i
+			
 			new_li.appendChild(new_a)
 			document.getElementById('blogpage').appendChild(new_li)
 			//new_e.onclick = function(){VerificationId()}
@@ -311,13 +291,13 @@ function HTMLDecode(text) {
 			next_pg = cur_page
 		  }
 		  
-		  document.getElementById('prepage').href = "/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
+		  document.getElementById('prepage').href = "/blog/"+String(pre_pg)
 		  
 	  </script>
 	  
 	  <li class="page-item"><a class="page-link" href="#" id="nextpage">Next</a></li>
 	  <script>
-		document.getElementById('nextpage').href = "/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
+		document.getElementById('nextpage').href = "/blog/"+String(next_pg)
 	  </script>
 	  
 	  <li class="page-item">跳至<input type="text" style="width:35px;" id="gotopagetext" name="gotopage">页</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li>
