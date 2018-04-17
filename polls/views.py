@@ -112,6 +112,14 @@ def blog(request):
 		
 		return HttpResponse(template.render(context,request))
 
+def showblog(request):
+	if request.method=='GET':
+		blogid = request.GET.get('blogid')
+		blog = get_object_or_404(models.Blog, pk=blogid)
+		template = loader.get_template('showblog.html')
+		context = {'blog':blog}
+		return HttpResponse(template.render(context,request))
+
 def publish(request):
 	template = loader.get_template('publish.html')
 	return HttpResponse(template.render({},request))
@@ -135,7 +143,8 @@ def publishblog(request):
 			blogcontent = request.POST['publishcontent']
 			models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
 			transaction.savepoint_commit(sid)
-			return redirect(reverse('blog', args=[1]))
+			#return redirect(reverse('blog', args=[1]))
+			return HttpResponseRedirect("/blog/?pg=1&searchval=")
 		transaction.savepoint_rollback(sid)
 	except:
 		transaction.savepoint_rollback(sid)
