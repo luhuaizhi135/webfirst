@@ -11,6 +11,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect 
 import os
 from django.db import transaction
+from django.shortcuts import render, render_to_response
+from django.template import loader, RequestContext
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -39,7 +41,7 @@ def login(request):
 		else:
 			request.session["username"]=uname
 			request.session.set_expiry(0) 
-			return redirect(reverse('didi', args=[]))
+			return HttpResponseRedirect("/blog/?pg=1&searchval=")
 	except :
 		para = {"findit":True,"username":'',"password":''}
 		return render(request,'login.html',{'para':json.dumps(para)})
@@ -94,6 +96,7 @@ def blog(request):
 		else:
 			request.session["searchcondition"] = searchcondition
 			Blogs = models.Blog.objects.filter(blogtitle__contains=searchcondition).order_by("-blogdate")
+		request.session.set_expiry(0) 
 			
 		template = loader.get_template('blog.html')
 		

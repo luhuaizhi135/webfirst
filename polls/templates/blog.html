@@ -12,6 +12,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 
+{% if request.session.username %}  
+	//alert("{{ request.session.username }} ")
+{% else %}  
+	alert("请登陆")
+	$(location).attr('href', '/login')
+{% endif %}  
+
 $(document).ready(function() {
 
 	{% if request.session.searchcondition %}  
@@ -150,7 +157,7 @@ function HTMLDecode(text) {
 			<a class="nav-link active" href="/blog/?pg=1&searchval=">首页</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="#">论坛</a>
+			<a class="nav-link" href="/didi">论坛</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="#">帮助</a>

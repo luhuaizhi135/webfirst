@@ -68,8 +68,21 @@ function opimage(files)
 	});
 			
 }
+{% if request.session.username %}  
+	//alert("{{ request.session.username }} ")
+{% else %}  
+	alert("请登陆")
+	$(location).attr('href', '/login')
+{% endif %}  
 
 $(document).ready(function() {
+	<!-- {% if request.session.username %}   -->
+		<!-- //alert("{{ request.session.username }} ") -->
+	<!-- {% else %}   -->
+		<!-- alert("请登陆") -->
+		<!-- $(location).attr('href', '/login') -->
+	<!-- {% endif %}   -->
+	
 	function getCookie(name) {  
 		var cookieValue = null;  
 		if (document.cookie && document.cookie != '') {  
@@ -187,7 +200,7 @@ $(document).ready(function() {
 			<a class="nav-link active" href="#">首页</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="#">论坛</a>
+			<a class="nav-link" href="/didi">论坛</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="#">帮助</a>
