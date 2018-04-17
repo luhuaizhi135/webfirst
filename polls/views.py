@@ -78,7 +78,7 @@ def driver(request,driver_id):
 	return HttpResponse(dr.driver_name)
 	
 def blog(request,pg):
-	av_page=2
+	av_page=3
 	#Blogs = models.Blog.objects.all()
 	Blogs = models.Blog.objects.order_by("-blogdate")
 	template = loader.get_template('blog.html')
@@ -115,8 +115,14 @@ def publishblog(request):
 		blogtitle = request.POST['publishtitle']
 		blogcontent = request.POST['publishcontent']
 		models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
-		return redirect(reverse('blog', args=[1]))
 		
+	
+		#for i in range(1,100):
+			#blogtitle = 'test'
+			#blogcontent = 'test'
+			#models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
+		
+		return redirect(reverse('blog', args=[1]))
 	
 def comment(request,comment_id):
 	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"

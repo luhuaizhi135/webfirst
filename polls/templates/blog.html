@@ -21,8 +21,14 @@
 
 $(document).ready(function() {
   $('#testblog').html('<p>eg3egg34g34gewf43ctvtvaffs</p><p><img src="/static/pic/123.jpg" style="width: 500px"></p><p>111111111111111111er3r32324t34t34ef</p>');
+  
+
 });
 
+function gotopagehref(){
+		//alert("go to page")
+		window.location.href='/blog/'+$('#gotopagetext').val(); 
+	}
 	
 //context = {'Blogs':Blogs[start_pg:end_pg],'cur_page':pg,'total_pg':total_pg}
 total_pg={{total_pg}} //总页数
@@ -32,6 +38,7 @@ var pre_pg
 var next_pg
 //alert(total_pg)
 //alert(cur_page)
+
 
 
 function HTMLEncode(html) {
@@ -50,6 +57,10 @@ function HTMLDecode(text) {
     return output; 
 } 
 
+
+
+
+	  
 </script>
 
 </head>
@@ -229,16 +240,31 @@ function HTMLDecode(text) {
 		</div>
 	</div>
 	
-	<script>
 	
-	</script>
 	
-	<ul class="pagination" id="blogpage">
+	<ul class="pagination pagination-sm" id="blogpage">
 	  <li class="page-item"><a class="page-link" href="/blog/" id="prepage")>Previous</a></li>
 	  
 	  
 	  <script>
-		  for(var i=1;i<=total_pg;i++)
+		  //for(var i=1;i<=total_pg;i++)
+		  //alert(Math.floor(1/6))
+		  per_pg =6 //每组显示6页
+		   
+		  for(var m=0;;m++)
+		  {
+			if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
+			{
+				break;
+			}
+		  }
+		  start_pg = m*6+1
+		  end_pg = (m+1)*6
+		  if(end_pg>total_pg)
+		  {
+			end_pg=total_pg
+		  }
+		  for(var i=start_pg;i<=end_pg;i++)
 		  {
 			
 			var new_li = document.createElement("li")
@@ -279,16 +305,18 @@ function HTMLDecode(text) {
 		  
 	  </script>
 	  
-	  <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-	  <!-- <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-	  <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-	  
-	  
 	  <li class="page-item"><a class="page-link" href="#" id="nextpage">Next</a></li>
 	  <script>
 		document.getElementById('nextpage').href = "/blog/"+String(next_pg)
 	  </script>
+	  
+	  <li class="page-item">跳至<input type="text" style="width:35px;" id="gotopagetext" name="gotopage">页</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li>
+	  
+	  
 	</ul>
+	
+	
+	
 
 </div>
 
