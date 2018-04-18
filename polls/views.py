@@ -35,7 +35,7 @@ def login(request):
 		password = request.POST['password']
 		
 		#find
-		if(models.User.objects.filter(username=uname).count()==0):
+		if(models.User.objects.filter(username=uname,userpwd=password).count()==0):
 			para = {"findit":False,"username":uname,"password":password}
 			return render(request,'login.html',{'para':json.dumps(para)})
 		else:

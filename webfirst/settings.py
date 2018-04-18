@@ -25,7 +25,7 @@ SECRET_KEY = 'q(atv91vsnbhm=jvi(3ci=isoymm63$b+9mzj65t4s$88uuf%('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','192.168.1.101','192.168.0.104','192.168.0.105','192.168.0.100']
+ALLOWED_HOSTS = ['127.0.0.1','192.168.1.103','192.168.0.104','192.168.0.105','192.168.0.100']
 
 #test gitjub
 # Application definition

@@ -19,6 +19,35 @@
       width: 100%;
       height: 50%;
   }
+  
+</style>
+
+<style>
+body{
+    background: url("/media/photos/14.jpg");
+	background-color:green;
+    animation-name:myfirst;
+    animation-duration:12s;
+    /*变换时间*/
+    animation-delay:2s;
+    /*动画开始时间*/
+    animation-iteration-count:infinite;
+    /*下一周期循环播放*/
+    animation-play-state:running;
+    /*动画开始运行*/
+}
+<!-- @keyframes myfirst -->
+<!-- { -->
+    <!-- 0%   {background:url("D:/code/project/webfirst/media/photos/7.bmp");} -->
+    <!-- 34%  {background:url("D:/code/project/webfirst/media/photos/8.jpg");} -->
+    <!-- 67%  {background:url("D:/code/project/webfirst/media/photos/9.jpg");} -->
+    <!-- 100% {background:url("D:/code/project/webfirst/media/photos/7.bmp");} -->
+<!-- } -->
+.form{background: rgba(255,255,255,0.3);width:300px;margin:120px auto;padding:20px}
+/*阴影*/
+.fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
+input[type="text"],input[type="password"]{padding-left:26px;}
+.checkbox{padding-left:21px;}
 </style>
 
 <script>
@@ -54,40 +83,23 @@ $(document).ready(function(){
 	}); 
 	
 
-	//xxxx = $.session.get('username')
-	//alert(xxxx)
 	try
 	{
 		var para = {{ para|safe }};
 		
 		if(para['findit']==true)
 		{
-			$('#submit').show()
-			$('#registor').hide()
 		}
 		else
 		{
-			$('#submit').hide()
-			$('#registor').show()
-			verifyfail($(this), 0, '用户名不存在，请先注册');
+			verifyfail($(this), 0, '用户名不存在或密码错误');
 			varifyname = false
 		}
 	}
 	catch(err)
 	{
-		$('#submit').show()
-		$('#registor').hide()
 	}
 	
-	
-	
-	/*
-	if(para['findit']==false)
-	{
-		$('#submit').hide()
-		$('#registor').show()
-	}
-	*/
 	
 	function getCookie(name) {  
 		var cookieValue = null;  
@@ -127,66 +139,68 @@ $(document).ready(function(){
 
 <body>
 
-<div class="container">
-	<div class="row-fluid">
-		<div class="col-xs-7">
-			<form action="/login" class="" method="post" enctype="application/x-www-form-urlencoded">
-			{% csrf_token %}
-				<div class="form-group has-feedback">
-					<label for="username">用户名</label>
-					<div class="input-group">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-						<input id="username" name="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text" autoComplete ="off">
+<div class="container" align="left">
+	<div align="left">
+		<!-- <div class="form-horizontal col-md-offset-3" id="login_form"> -->
+			<div align="left" style="float:left;">
+				<form action="/login" class="form" method="post" align="left" enctype="application/x-www-form-urlencoded">
+				{% csrf_token %}
+					<div class="form-group has-feedback">
+						<label for="username" ></label>
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+							<input id="username" name="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text" autoComplete ="off" >
+						</div>
+						<span style="color:red;display: none;" class="tips"></span>
+						<span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
+						<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
 					</div>
-					<span style="color:red;display: none;" class="tips"></span>
-					<span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
-					<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-				</div>
-				
-				<div class="form-group has-feedback">
-					<label for="password">密码</label>
-					<div class="input-group">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-						<input id="password" name="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
+					
+					<div class="form-group has-feedback">
+						<label for="password" ></label>
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+							<input id="password" name="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
+						</div>
+
+						<span style="color:red;display: none;" class="tips"></span>
+						<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
+						<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
 					</div>
 
-					<span style="color:red;display: none;" class="tips"></span>
-					<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-					<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-				</div>
-
+					
 				
-			
-				
-				<div class="row">
-					<div class="col-xs-7">
-						<div class="form-group has-feedback">
-							<label for="idcode-btn">验证码</label>
-							<div class="input-group">
-								<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
-								<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
+					
+					<div class="row">
+						<div class="col-xs-7">
+							<div class="form-group has-feedback">
+								<label for="idcode-btn" ></label>
+								<div class="input-group">
+									<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
+									<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
+								</div>
+								<span style="color:red;display: none;" class="tips"></span>
+								<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
+								<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
 							</div>
-							<span style="color:red;display: none;" class="tips"></span>
-							<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-							<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+						</div>
+						<div class="col-xs-5" style="padding-top: 30px">
+							<div id="test" style="background: transparent;"></div>
 						</div>
 					</div>
-					<div class="col-xs-5" style="padding-top: 30px">
-						<div id="test" style="background: transparent;"></div>
+				
+					<div class="form-group">
+						<input value="登 录" id="submit" class="btn btn-default" type="submit"><span>&nbsp;&nbsp;</span>
+					<!-- </div> -->
+					<!-- <div class="form-group"> -->
+						<input class="btn btn-default" id="registor" value="注 册" type="button">
 					</div>
-				</div>
-			
-				
-				<div class="form-group">
-					<input class="form-control btn btn-primary" id="registor" value="立&nbsp;&nbsp;即&nbsp;&nbsp;注&nbsp;&nbsp;册" type="button">
-				</div>
 
-				<div class="form-group">
-					<input value="登录" id="submit" class="form-control btn btn-danger" type="submit">
-				</div>
-				
-			</form>
-		</div>	
+					
+					
+				</form>
+			</div>	
+		<!-- </div> -->
 	</div>	
 </div>
 
@@ -233,7 +247,7 @@ $(document).ready(function(){
 		var tips = document.createElement("span")
 		tips.id = "ehong-code-tip-ck"
 		tips.className = "ehong-code-val-tip"
-		tips.innerHTML = "再换一组验证码"
+		tips.innerHTML = ""
 		
 		document.getElementById("test").appendChild(new_e)
 		document.getElementById("test").appendChild(tips)

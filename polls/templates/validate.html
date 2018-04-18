@@ -19,7 +19,33 @@
       height: 50%;
   }
 </style>
-
+<style>
+body{
+    background: url("/media/photos/12.jpg");
+	background-color:green;
+    animation-name:myfirst;
+    animation-duration:12s;
+    /*变换时间*/
+    animation-delay:2s;
+    /*动画开始时间*/
+    animation-iteration-count:infinite;
+    /*下一周期循环播放*/
+    animation-play-state:running;
+    /*动画开始运行*/
+}
+<!-- @keyframes myfirst -->
+<!-- { -->
+    <!-- 0%   {background:url("D:/code/project/webfirst/media/photos/7.bmp");} -->
+    <!-- 34%  {background:url("D:/code/project/webfirst/media/photos/8.jpg");} -->
+    <!-- 67%  {background:url("D:/code/project/webfirst/media/photos/9.jpg");} -->
+    <!-- 100% {background:url("D:/code/project/webfirst/media/photos/7.bmp");} -->
+<!-- } -->
+.form{background: rgba(255,255,255,0);width:1200px;margin:120px auto;}
+/*阴影*/
+.fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
+input[type="text"],input[type="password"]{padding-left:26px;}
+.checkbox{padding-left:21px;}
+</style>
 <script>
 $(document).ready(function(){
 
@@ -112,12 +138,13 @@ $(document).ready(function(){
 <body>
 
 <div class="container">
-	<div class="row-fluid">
+	<div class="form row">
+	<div class="form-horizontal col-md-offset-3" id="login_form">
 		<div class="col-xs-7">
 			<form action="/registor" class="" method="post" enctype="application/x-www-form-urlencoded">
 			{% csrf_token %}
 				<div class="form-group has-feedback">
-					<label for="username">用户名</label>
+					<label for="username" class="text-warning">用户名</label>
 					<div class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 						<input id="username" name="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text" autoComplete ="off">
@@ -128,7 +155,7 @@ $(document).ready(function(){
 				</div>
 				
 				<div class="form-group has-feedback">
-					<label for="password">密码</label>
+					<label for="password" class="text-warning">密码</label>
 					<div class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
 						<input id="password" name="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
@@ -140,7 +167,7 @@ $(document).ready(function(){
 				</div>
 
 				<div class="form-group has-feedback">
-					<label for="passwordConfirm">确认密码</label>
+					<label for="passwordConfirm" class="text-warning">确认密码</label>
 					<div class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
 						<input id="passwordConfirm" class="form-control" placeholder="请再次输入密码" maxlength="20" type="password">
@@ -154,7 +181,7 @@ $(document).ready(function(){
 				<div class="row">
 					<div class="col-xs-7">
 						<div class="form-group has-feedback">
-							<label for="idcode-btn">验证码</label>
+							<label for="idcode-btn" class="text-warning">验证码</label>
 							<div class="input-group">
 								<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
 								<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
@@ -180,6 +207,7 @@ $(document).ready(function(){
 				
 			</form>
 		</div>	
+		</div>
 	</div>	
 </div>
 
