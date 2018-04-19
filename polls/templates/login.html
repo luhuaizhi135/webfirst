@@ -7,7 +7,8 @@
 <script src="/static/js/jquerysession.js"></script>
 <link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+<!-- <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script> -->
+<script src="/static/thirdparty/popper.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/static/validate.css" type="text/css">
@@ -21,11 +22,16 @@
   }
   
 </style>
+<style>
+a:hover
+{
+	color:green;
+}
+</style>
 
 <style>
 body{
-    background: url("/media/photos/14.jpg");
-	background-color:green;
+    background: url("/media/photos/15.jpg");
     animation-name:myfirst;
     animation-duration:12s;
     /*变换时间*/
@@ -43,7 +49,7 @@ body{
     <!-- 67%  {background:url("D:/code/project/webfirst/media/photos/9.jpg");} -->
     <!-- 100% {background:url("D:/code/project/webfirst/media/photos/7.bmp");} -->
 <!-- } -->
-.form{background: rgba(255,255,255,0.3);width:300px;margin:120px auto;padding:20px}
+.form{background: rgba(255,255,255,0);width:300px;margin:120px auto;padding:20px}
 /*阴影*/
 .fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
 input[type="text"],input[type="password"]{padding-left:26px;}
@@ -128,11 +134,12 @@ $(document).ready(function(){
 			}  
 		}  
 	}); 
-	
-	
 
-  
 });
+
+
+
+
 </script>
 
 </head>
@@ -142,14 +149,14 @@ $(document).ready(function(){
 <div class="container" align="left">
 	<div align="left">
 		<!-- <div class="form-horizontal col-md-offset-3" id="login_form"> -->
-			<div align="left" style="float:left;">
+			<div class="form-horizontal col-md-offset-3"  align="left" style="float:left;">
 				<form action="/login" class="form" method="post" align="left" enctype="application/x-www-form-urlencoded">
 				{% csrf_token %}
 					<div class="form-group has-feedback">
 						<label for="username" ></label>
-						<div class="input-group">
+						<div class="input-group">	
 							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-							<input id="username" name="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text" autoComplete ="off" >
+							<input id="username" name="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text" autoComplete ="off">
 						</div>
 						<span style="color:red;display: none;" class="tips"></span>
 						<span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
@@ -160,7 +167,7 @@ $(document).ready(function(){
 						<label for="password" ></label>
 						<div class="input-group">
 							<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-							<input id="password" name="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
+							<input id="password" name="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password" autoComplete ="off" >
 						</div>
 
 						<span style="color:red;display: none;" class="tips"></span>
@@ -177,7 +184,7 @@ $(document).ready(function(){
 								<label for="idcode-btn" ></label>
 								<div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
-									<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
+									<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="6" type="text">
 								</div>
 								<span style="color:red;display: none;" class="tips"></span>
 								<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
@@ -190,10 +197,14 @@ $(document).ready(function(){
 					</div>
 				
 					<div class="form-group">
-						<input value="登 录" id="submit" class="btn btn-default" type="submit"><span>&nbsp;&nbsp;</span>
+						<input value="登 录" id="submit" class="form-control btn btn-default" type="submit">
+						<!-- <span>&nbsp;&nbsp;</span> -->
 					<!-- </div> -->
 					<!-- <div class="form-group"> -->
-						<input class="btn btn-default" id="registor" value="注 册" type="button">
+						<!-- <input class="btn btn-default" id="registor" value="注 册" type="button"> -->
+					</div>
+					<div class="form-group">
+					<a  id="registor" style="color:#ff0000;">立即注册</a>
 					</div>
 
 					

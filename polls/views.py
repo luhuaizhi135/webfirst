@@ -80,6 +80,10 @@ def didi(request):
 def driver(request,driver_id):
 	dr = get_object_or_404(models.Driver, pk=driver_id)
 	return HttpResponse(dr.driver_name)
+
+def report(request):
+	template = loader.get_template('report.html')
+	return HttpResponse(template.render({},request))
 	
 def blog(request):
 	if request.method=='GET':

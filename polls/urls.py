@@ -17,4 +17,5 @@ urlpatterns=[
 	url(r'^uploadpic$',views.uploadpic,name='uploadpic'),
 	url(r'^publishblog$',views.publishblog,name='publishblog'),
 	url(r'^searchblog$',views.searchblog,name='searchblog'),
+	url(r'^report/$',views.report,name='report'),
 ]
