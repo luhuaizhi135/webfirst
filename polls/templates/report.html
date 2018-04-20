@@ -7,7 +7,11 @@
 <link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 <script src="/static/thirdparty/popper.min.js"></script>
-<link rel="stylesheet" href="/static/thirdparty/monokai_sublime.min.css">
+
+<link href="/static/thirdparty/toastr/toastr/build/toastr.css"  rel="stylesheet" >
+<script src="/static/thirdparty/toastr/toastr/build/toastr.min.js"></script>
+
+<link href="/static/thirdparty/monokai_sublime.min.css" rel="stylesheet" />
 <link href="/static/thirdparty/magnific-popup.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -24,6 +28,12 @@
 	<!-- $(location).attr('href', '/login') -->
 <!-- {% endif %}   -->
 
+toastr.options.positionClass = 'toast-center-center';
+toastr.options.showDuration="300"
+toastr.options.hideDuration="300"
+toastr.options.timeOut="2000"
+
+
 $(document).ready(function() {
 
 	{% if request.session.searchcondition %}  
@@ -33,7 +43,7 @@ $(document).ready(function() {
 		//alert("没有request.session.searchcondition")
 	{% endif %}  
 	
-	
+	  
 	
 	function getCookie(name) {  
 			var cookieValue = null;  
@@ -65,8 +75,74 @@ $(document).ready(function() {
 
   $('#searchblog').click(function(){
 	//alert('search click')
+	//toastr.success('上传文档成功');
 	window.location.href='/blog/?pg=1&searchval='+$('#searchblogcondition').val(); 
   })
+  
+  var initalProgress = 0
+  function updateProgress()
+  {
+	$('#uploadprocess').css('width',String(initalProgress)+"%");
+	initalProgress = initalProgress+1;
+	time_handle = setTimeout(updateProgress,100);
+	if(initalProgress==100)
+	{
+		clearTimeout(time_handle);
+	}
+  }
+  
+  $('#addnewbtn').click(function(){
+	
+	initalProgress=0
+	$('#uploadprocess').css('width',String(initalProgress)+"%");
+	$('#fartherprg').hide()
+	$('#photoCover').val('')
+  })
+  
+  <!-- $('input[id=reportfile]').change(function() {   -->
+		<!-- $('#photoCover').val($(this).val());   -->
+	<!-- });   -->
+						
+  $('#uploadreport').click(function(){
+		//alert($('#photoCover').val())
+		
+		$('#fartherprg').show()
+		time_handle = setTimeout(updateProgress,100)
+		
+		
+		//begin
+		var form_data = new FormData();
+		var file_info =$('#reportfile')[0].files[0];
+		form_data.append('file',file_info);
+		$.ajax({
+				url:'/uploadreport',
+				type:'POST',
+				data: form_data,
+				processData: false,  // tell jquery not to process the data
+				contentType: false, // tell jquery not to set contentType
+				success: function(report) {
+
+					$('#uploadprocess').css('width',"100%");
+					$('#photoCover').val('')
+					//alert('上传成功')
+					toastr.success('上传文档成功');
+					clearTimeout(time_handle);
+					setTimeout(function(){$('#closeupload').click()},2000)
+					
+					
+				},
+				error: function(xhr,status,errMsg){
+					//alert(data)
+					alert("upload report file  fail");
+					alert(status)
+					alert(errMsg)
+					$('#photoCover').val('')
+					clearTimeout(time_handle);
+					$('#closeupload').click()
+				}
+			//end
+		})
+	})
 });
 
 
@@ -89,8 +165,7 @@ function HTMLDecode(text) {
     temp = null; 
     return output; 
 } 
-
-  
+				
 </script>
 
 <!-- <style> -->
@@ -100,10 +175,9 @@ function HTMLDecode(text) {
 </head>
 
 <body>
-
-				
-				
-				
+			
+			
+									
 <!-- 轮播图开始 -->
 <div class="container">
 <div class="row">
@@ -234,7 +308,7 @@ function HTMLDecode(text) {
 				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">用&nbsp;&nbsp;户</span></h3></th>
 				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">信&nbsp;&nbsp;息</span></h3></th>
 				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">最&nbsp;后&nbsp;上&nbsp;传</span></h3></th>
-				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">操&nbsp;&nbsp;作</span><button type="button" class="btn btn-outline-success btn-sm form-inline" data-toggle="modal" data-target="#myModal">新增</button></h3></th>
+				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">操&nbsp;&nbsp;作</span><button type="button" class="btn btn-outline-success btn-sm form-inline" data-toggle="modal" data-target="#myModal" id="addnewbtn">新增</button></h3></th>
 				</tr>
 			  </thead>
 			  <tbody>
@@ -370,45 +444,29 @@ function HTMLDecode(text) {
 					<input id="photoCover" class="form-control input-large" type="text" style="height:30px;"> 
 					<a class="btn btn-outline-info btn-sm" onclick="$('input[id=reportfile]').click();">Browse</a> 
 					<a class="btn btn-outline-info btn-sm" id="uploadreport">Upload</a> 
-				</div>  
-				   
-				<script type="text/javascript">  
-					$('input[id=reportfile]').change(function() {  
-						$('#photoCover').val($(this).val());  
-					});  
-					
-					$('#uploadreport').click(function(){
-						alert($('#photoCover').val())
-						//begin
-						var form_data = new FormData();
-						var file_info =$('#reportfile')[0].files[0];
-						form_data.append('file',file_info);
-						$.ajax({
-								url:'/uploadreport',
-								type:'POST',
-								data: form_data,
-								processData: false,  // tell jquery not to process the data
-								contentType: false, // tell jquery not to set contentType
-								success: function(report) {
-
-									alert('upload report file succ:'+report)
-								},
-								error: function(xhr,status,errMsg){
-									//alert(data)
-									alert("upload report file  fail");
-									alert(status)
-									alert(errMsg)
-								}
-							//end
-						})
-					})
-				</script> 
-				
+					<script>
+						$('input[id=reportfile]').click(function(){
+								$('#photoCover').val($('input[id=reportfile]').val());
+							})
+						$('input[id=reportfile]').change(function() {  
+							$('#photoCover').val($('input[id=reportfile]').val());  
+						});  
+						
+					</script>
+				</div> 
 			  </div>
 			  <div class="input-group-append">
 				<!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
 			  </div>
+			  
 			</div>
+			
+			<!--进度条begin-->
+			<div class="progress" id="fartherprg" >
+			  <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="uploadprocess" role="progressbar" style="width: 0%"></div>
+			</div>	
+			<!--进度条end-->
+		
 		  </div>
 		 
 		</fieldset>
@@ -419,7 +477,7 @@ function HTMLDecode(text) {
       <div class="modal-footer">
 	    <!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
 		<!-- <input type="submit" class="btn btn-success"></input> -->
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeupload">关闭</button>
       </div>
 	
     </div>
