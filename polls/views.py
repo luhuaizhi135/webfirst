@@ -139,6 +139,17 @@ def uploadpic(request):
 		pic = '/static/pic/'+file_obj.name
 		return HttpResponse(pic)
 	
+def uploadreport(request):
+	if request.method == 'POST':
+		file_obj = request.FILES.get('file')
+		f = open(os.path.join(BASE_DIR, 'polls/static', 'report', file_obj.name), 'wb')
+
+		for chunk in file_obj.chunks():
+			f.write(chunk)
+		f.close()
+		report = '/static/report/'+file_obj.name
+		return HttpResponse(report)
+	
 def publishblog(request):
 	sid = transaction.savepoint()
 	try:
