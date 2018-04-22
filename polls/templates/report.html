@@ -15,9 +15,23 @@
 <link href="/static/thirdparty/magnific-popup.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+<!--时间轴begin-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!-- <link rel="stylesheet" type="text/css" href="/static/thirdparty/timeline/bootstrap-3.3.6-dist/css/bootstrap.min.css" /> -->
+<link rel="stylesheet" type="text/css" href="/static/thirdparty/timeline/css/jquery.eeyellow.Timeline.css" />
+
+<!-- <script>window.jQuery || document.write('<script src="/static/thirdparty/timeline/js/jquery-1.11.0.min.js"><\/script>')</script> -->
+<!-- <script type="text/javascript" src="/static/thirdparty/timeline/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script> -->
+<script type="text/javascript" src="/static/thirdparty/timeline/js/jquery.eeyellow.Timeline.js"></script>
+<!--时间轴end-->
+
 <!-- <style> -->
 <!-- a:visited{color:#343a40} -->
 <!-- </style> -->
+<style>
+td{padding:8px !important;}
+</style>
 
 <script>
 
@@ -43,7 +57,10 @@ $(document).ready(function() {
 		//alert("没有request.session.searchcondition")
 	{% endif %}  
 	
-	  
+	$('.VivaTimeline').vivaTimeline({
+                carousel: true,
+                carouselTime: 3000
+            });  
 	
 	function getCookie(name) {  
 			var cookieValue = null;  
@@ -315,70 +332,90 @@ function HTMLDecode(text) {
 				
 				
 				<tr class="table-success">
-				  <th scope="row" class="text-info">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>zhaobin</td>
 				  <td>每日巡检</td>
 				  <td>2018-04-17 20:31:36</td>
-				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
+				  <a href="/static/report/Agile POL全光园区解决方案 V3.0.pdf" id="downloadreport" download><span></span></a>
+				  <!-- <a href="/static/report/def.doc" id="downloadreport" download><span></span></a> -->
+				  <script>
+						function dlreport(){
+							//alert("hererer")
+							$('#downloadreport').click()
+							window.location.href = $("#downloadreport")[0]
+						}
+				  </script>
+				  <td><button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td>
+				  
 				</tr>
 				<tr class="table-default">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>chenggeng</td>
 				  <td>紧急事故</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-success">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-default">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-success">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-default">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-success">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-default">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-success">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
 				  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
 				</tr>
 				<tr class="table-default">
-				  <th scope="row">配电运维报告</th>
+				  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
+				  <td>配电运维报告</td>
 				  <td>Column content</td>
 				  <td>Column content</td>
 				  <td>2018-04-17 20:31:36</td>
@@ -393,7 +430,7 @@ function HTMLDecode(text) {
 
 
 
-<!-- 模态框begin -->
+<!-- 模态框-上传报告begin -->
 <div class="modal fade" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -483,7 +520,130 @@ function HTMLDecode(text) {
     </div>
   </div>
 </div>
-<!-- 模态框end -->
+<!-- 模态框--上传报告end -->
+
+
+<!-- 模态框-时间轴begin -->
+<div class="modal fade in" id="timelineModal">
+  <!-- <div class="modal-dialog"  style="max-width:1000px;width:1000px !important"> -->
+  <div class="modal-dialog" >
+    <div class="modal-content">
+ 
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">操作日志</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+ 
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+		
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="VivaTimeline">
+                    <dl>
+                        <dt>2018 四月</dt>
+                        <dd class="pos-left clearfix">
+                            <div class="circ"></div>
+                            <div class="time">4.18</div>
+                            <div class="events">
+                                <div class="events-header">巡检报告</div>
+                                <div class="events-body">
+                                    <div class="row">
+                                        <!-- <div class="col-md-6 pull-left"> -->
+                                            <!-- <img class="events-object img-responsive img-rounded" src="/media/photos/8.jpg" /> -->
+                                        <!-- </div> -->
+                                        <div class="events-desc">
+                                            日常巡检数据更新，涉及10KV报告，报告人----XXX
+                                        </div>
+                                    </div>
+									<!-- <div class="row"> -->
+                                        <!-- <div class="col-md-6 pull-left"> -->
+                                            <!-- <img class="events-object img-responsive img-rounded" src="img/dog02.jpeg" /> -->
+                                        <!-- </div> -->
+                                        <!-- <div class="events-desc"> -->
+                                            <!-- Morbi at nisi vitae mauris pretium egestas. Morbi placerat risus ligula, nec placerat urna porta vel. Nullam sollicitudin orci quis odio eleifend, ut facilisis orci lobortis. Vivamus sed lobortis odio. Nam volutpat, leo a ullamcorper luctus, sapien libero auctor est, sed semper massa turpis sed quam. Mauris posuere, libero in ultricies dignissim, lacus purus egestas urna, nec semper lorem tellus non eros. Nam at bibendum libero. Curabitur a ante et orci cursus tincidunt. Vivamus dictum, libero et rhoncus congue, nulla erat mollis dui, vitae cursus dui justo quis velit. In a tellus arcu. Nam at lobortis nisl. Donec consequat placerat eros, quis elementum mauris sodales a. Maecenas id feugiat velit. Phasellus dictum eleifend varius. Cras nec orci turpis. Aenean ut turpis nibh. -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                    <!-- <div class="row"> -->
+                                        <!-- <div class="col-md-6 pull-left"> -->
+                                            <!-- <img class="events-object img-responsive img-rounded" src="img/dog03.jpeg" /> -->
+                                        <!-- </div> -->
+                                        <!-- <div class="events-desc"> -->
+                                            <!-- Cras condimentum, metus ut vehicula euismod, odio massa pulvinar neque, id gravida neque est et sem. Proin consequat id nibh quis molestie. Quisque vehicula purus id purus elementum facilisis. Phasellus sodales nibh quis neque rhoncus aliquet. Nunc eget ipsum efficitur, pretium arcu et, gravida purus. Phasellus tempor lacus ac enim pulvinar elementum. Integer aliquet justo lacinia nunc tempus vulputate. -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                </div>
+                                <!-- <div class="events-footer"> -->
+                                    <!-- 123 -->
+                                <!-- </div> -->
+                            </div>
+                        </dd>
+                        <dt>2018 三月</dt>
+                        <dd class="pos-right clearfix">
+                            <div class="circ"></div>
+                            <div class="time">3.30</div>
+                            <div class="events">
+                                <div class="events-header">紧急事故</div>
+                                <div class="events-body">
+                                    <div class="row">
+                                        <!-- <div class="col-md-6 pull-left"> -->
+                                            <!-- <img class="events-object img-responsive img-rounded" src="/media/photos/8.jpg" /> -->
+                                        <!-- </div> -->
+                                        <div class="events-desc">
+                                            空调漏水，紧急处理，需联系厂家维修
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="events-footer">
+
+                                </div>
+                            </div>
+                        </dd>
+                        <dd class="pos-left clearfix">
+                            <div class="circ"></div>
+                            <div class="time">3.15</div>
+                            <div class="events">
+                                <div class="events-header">改进维修</div>
+                                <div class="events-body">
+                                    <div class="row">
+                                        <!-- <div class="col-md-6 pull-left"> -->
+                                            <!-- <img class="events-object img-responsive img-rounded" src="/media/photos/8.jpg" /> -->
+                                        <!-- </div> -->
+                                        <div class="events-desc">
+                                            桥架改造，施工单位----XXXX
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dd>
+                        <dt>2018 二月</dt>
+                        <dt>2018 一月</dt>
+                        <dt>2017 十二月</dt>
+                        <dt>2017 十一月</dt>
+                        <dt>2017 十月</dt>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+ 
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+	    <!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
+		<!-- <input type="submit" class="btn btn-success"></input> -->
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeupload">关闭</button>
+      </div>
+	
+    </div>
+  </div>
+</div>
+<!-- 模态框--时间轴end -->
+
+
 	
 </body>
 </html>

@@ -219,9 +219,6 @@ body{background-color:#EFEFEF}
 <div class="container" id="content" style="margin-top:5px">
 	<div class="row">
 		<div class="col-md-9">
-			<!-- <div class="alert alert-light"> -->
-			
-			<!-- </div> -->
 			
 			{% for blog in Blogs %}
 			<div class="alert alert-light">
@@ -240,8 +237,7 @@ body{background-color:#EFEFEF}
 				</div>
 				<button type="button" class="btn btn-info btn-sm" id="btnshowall" onclick="showablog('{{blog.id}}','{{blog.blogtitle}}')">阅读全文</button>
 			</div>
-			{% endfor %}
-			
+			{% endfor %}	
 			
 		</div>
 		<div class="col-md-3">
