@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="no-js">
 <head>
 <meta charset="utf-8"> 
 <script src="/static/js/jquery-3.3.1.js"></script>
 <script src="/static/js/jquerysession.js"></script>
 <link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-<script src="/static/thirdparty/popper.min.js"></script>
 
+<script src="/static/thirdparty/popper.min.js"></script>
 <link href="/static/thirdparty/toastr/toastr/build/toastr.css"  rel="stylesheet" >
 <script src="/static/thirdparty/toastr/toastr/build/toastr.min.js"></script>
 
@@ -26,16 +26,100 @@
 <script type="text/javascript" src="/static/thirdparty/timeline/js/jquery.eeyellow.Timeline.js"></script>
 <!--时间轴end-->
 
+
+<!-- 新的导航样式begin -->
+<!-- <link href="/static/thirdparty/cpts_649_bpo/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+<!-- <link href="/static/thirdparty/cpts_649_bpo/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen"> -->
+<!-- <link href="/static/thirdparty/cpts_649_bpo/vendors/easypiechart/jquery.easy-pie-chart.css" rel="stylesheet" media="screen"> -->
+<!-- <link href="/static/thirdparty/cpts_649_bpo/assets/styles.css" rel="stylesheet" media="screen"> -->
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!-- <script src="/static/thirdparty/cpts_649_bpo/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script> -->
+<!-- 新的导航样式end -->
+
+<!-- <link href="/static/thirdparty/cpts_649_bpo/assets/styles.css" rel="stylesheet" media="screen"> -->
+
+<!-- <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">   -->
+<!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous"> -->
+
+<link href="/static/thirdparty/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet">
+
+<style>
+body{background-color:#EFEFEF}
+</style>
 <!-- <style> -->
 <!-- a:visited{color:#343a40} -->
 <!-- </style> -->
 <style>
-td{padding:8px !important;}
+td{padding:6px !important;}
 </style>
 
+<style>
+	.list-group-item{padding: .5rem 1rem;color: #007bff; !important}
+</style>
+
+<!-- <style> -->
+<!-- @media (min-width: 980px) -->
+<!-- .nav-collapse.collapse { -->
+    <!-- height: auto!important; -->
+    <!-- overflow: visible!important; -->
+<!-- } -->
+
+<!-- .nav-collapse.collapse { -->
+    <!-- height: auto; -->
+    <!-- overflow: visible; -->
+<!-- } -->
+<!-- .bs-docs-sidenav { -->
+    <!-- max-width: 228px; -->
+    <!-- margin: 30px 0 0; -->
+    <!-- padding: 0; -->
+    <!-- background-color: #fff; -->
+    <!-- -webkit-border-radius: 6px; -->
+    <!-- -moz-border-radius: 6px; -->
+    <!-- border-radius: 6px; -->
+    <!-- -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065); -->
+    <!-- -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065); -->
+    <!-- box-shadow: 0 1px 4px rgba(0,0,0,.065); -->
+<!-- } -->
+<!-- .nav-list { -->
+    <!-- padding-right: 15px; -->
+    <!-- padding-left: 15px; -->
+    <!-- margin-bottom: 0; -->
+<!-- } -->
+<!-- .nav { -->
+    <!-- margin-bottom: 20px; -->
+    <!-- margin-left: 0; -->
+    <!-- list-style: none; -->
+<!-- } -->
+<!-- .collapse { -->
+    <!-- position: relative; -->
+    <!-- height: 0; -->
+    <!-- overflow: hidden; -->
+    <!-- -webkit-transition: height .35s ease; -->
+    <!-- -moz-transition: height .35s ease; -->
+    <!-- -o-transition: height .35s ease; -->
+    <!-- transition: height .35s ease; -->
+<!-- } -->
+<!-- ul, ol { -->
+    <!-- padding: 0; -->
+    <!-- margin: 0 0 10px 25px; -->
+<!-- } -->
+<!-- user agent stylesheet -->
+<!-- ul, menu, dir { -->
+    <!-- display: block; -->
+    <!-- list-style-type: disc; -->
+    <!-- -webkit-margin-before: 1em; -->
+    <!-- -webkit-margin-after: 1em; -->
+    <!-- -webkit-margin-start: 0px; -->
+    <!-- -webkit-margin-end: 0px; -->
+    <!-- -webkit-padding-start: 40px; -->
+<!-- } -->
+<!-- </style> -->
+
 <script>
-
-
 <!-- {% if request.session.username %}   -->
 <!-- {% else %}   -->
 	<!-- alert("请登陆") -->
@@ -163,9 +247,6 @@ $(document).ready(function() {
 });
 
 
-	
-
-
 
 function HTMLEncode(html) {
     var temp = document.createElement("div");
@@ -182,6 +263,16 @@ function HTMLDecode(text) {
     temp = null; 
     return output; 
 } 
+
+function gotopagehref(){
+		window.location.href='#'//'/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
+	}
+	
+total_pg=100//{{total_pg}} //总页数
+cur_page=1//{{cur_page}} //当前页
+av_page=10//{{av_page}}//每页个数
+var pre_pg
+var next_pg
 				
 </script>
 
@@ -251,7 +342,7 @@ function HTMLDecode(text) {
 	<!-- <div class="alert alert-light"> -->
 	<ul class="nav  nav-tabs justify-content-center" >
 		<li class="nav-item">
-			<a class="nav-link " href="/blog/?pg=1&searchval=">首页</a>
+			<a class="nav-link " href="/blog/?pg=1&searchval="><i class="fas fa-home fa-lg"></i>首页</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="/didi">论坛</a>
@@ -283,49 +374,36 @@ function HTMLDecode(text) {
 	<div class="row">
 		<div class="col-md-2">
 
-			<div class="alert alert-light">
+			<!-- <div class="alert alert-light"> -->
+			<!-- <div class="row"> -->
 			    <!-- <h4 class="title">导航</h4> -->
-				<nav class="navbar">
-				  <ul class="navbar-nav">
-					<li class="nav-item">
-					  <h5><a class="nav-link " href="#">35KV</a></h5>
-					</li>
-					<li class="nav-item">
-					  <h5><a class="nav-link" href="#">10KV</a></h5>
-					</li>
-					<li class="nav-item">
-					  <h5><a class="nav-link" href="#">400V</a></h5>
-					</li>
-					<li class="nav-item">
-					  <h5><a class="nav-link" href="#">动力</a></h5>
-					</li>
-					<li class="nav-item">
-					  <h5><a class="nav-link" href="#">照明</a></h5>
-					</li>
-					<li class="nav-item">
-					  <h5><a class="nav-link" href="#">消防</a></h5>
-					</li>
-					<li class="nav-item">
-					  <h5><a class="nav-link" href="#">电池</a></h5>
-					</li>
-					<li class="nav-item">
-					  <h5><a class="nav-link" href="#">柴发</a></h5>
-					</li>
-				  </ul> 
-				</nav>
+				<div class="list-group">
+				  
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">35KV<i class="fas fa-chevron-right fa-sm"></i></a>
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">10KV<i class="fas fa-chevron-right fa-sm"></i></a>
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">400V<i class="fas fa-chevron-right fa-sm"></i></a>
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">动力<i class="fas fa-chevron-right fa-sm"></i></a>
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">照明<i class="fas fa-chevron-right fa-sm"></i></a>
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">消防<i class="fas fa-chevron-right fa-sm"></i></a>
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">电池<i class="fas fa-chevron-right fa-sm"></i></a>
+				  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">柴发<i class="fas fa-chevron-right fa-sm"></i></a>
+				</div>
 			
-			</div>
+			<!-- </div> -->
 		</div>
 		<div class="col-md-10">
-		<!-- <div class="alert alert-light"> -->
+		<div class="alert alert-light">
 			<table class="table table-hover">
 			  <thead>
+			  
+				<button type="button" class="btn btn-outline-success btn-sm form-inline" data-toggle="modal" data-target="#myModal" id="addnewbtn">添加报告</button>
+			    
 				<tr>
-				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">报&nbsp;&nbsp;告</span></h3></th>
-				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">用&nbsp;&nbsp;户</span></h3></th>
-				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">信&nbsp;&nbsp;息</span></h3></th>
-				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">最&nbsp;后&nbsp;上&nbsp;传</span></h3></th>
-				  <th scope="col" class="text-muted" style="border-top:0px"><h3><span class="badge badge-light">操&nbsp;&nbsp;作</span><button type="button" class="btn btn-outline-success btn-sm form-inline" data-toggle="modal" data-target="#myModal" id="addnewbtn">新增</button></h3></th>
+				  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-file fa-sm">&nbsp;</i>报&nbsp;&nbsp;告</h3></th>
+				  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th>
+				  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-exclamation-circle fa-sm">&nbsp;</i>信&nbsp;&nbsp;息</h3></th>
+				  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-history fa-sm">&nbsp;</i>修&nbsp;改&nbsp;记&nbsp;录</h3></th>
+				  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>操&nbsp;&nbsp;作</h5></th>
 				</tr>
 			  </thead>
 			  <tbody>
@@ -423,8 +501,86 @@ function HTMLDecode(text) {
 				</tr>
 			  </tbody>
 			</table> 
+			
+			<!--分页begin-->
+			<ul class="pagination pagination-sm" id="blogpage">
+			  <li class="page-item"><a class="page-link" href="#" id="prepage")>Previous</a></li>
+			 
+			  <script>
+					{% if request.session.searchcondition %}  
+						$('#searchblogcondition').val("{{ request.session.searchcondition }}")
+						//alert("{{ request.session.searchcondition }}")
+					{% else %}  
+						//alert("没有request.session.searchcondition")
+					{% endif %} 
+			
+				  //for(var i=1;i<=total_pg;i++)
+				  //alert(Math.floor(1/6))
+				  per_pg =6 //每组显示6页
+				   
+				  for(var m=0;;m++)
+				  {
+					if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
+					{
+						break;
+					}
+				  }
+				  start_pg = m*6+1
+				  end_pg = (m+1)*6
+				  if(end_pg>total_pg)
+				  {
+					end_pg=total_pg
+				  }
+				  for(var i=start_pg;i<=end_pg;i++)
+				  {
+					
+					var new_li = document.createElement("li")
+					new_li.className = "page-item"
+					if(i==cur_page)
+					{
+						new_li.className +=  " active"
+					}
+					
+					var new_a = document.createElement("a")
+					new_a.className = "page-link"
+					new_a.text = i
+					new_a.href='#'//"/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
+					new_li.appendChild(new_a)
+					document.getElementById('blogpage').appendChild(new_li)
+				  }
+				  
+				  if(cur_page>1)
+				  {
+					pre_pg = cur_page-1
+				  }
+				  else
+				  {
+					pre_pg=1
+				  }
+				  if(cur_page<total_pg)
+				  {
+					next_pg = cur_page+1
+				  }
+				  else
+				  {
+					next_pg = cur_page
+				  }
+				  
+				  document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
+				  
+			  </script>
+			  
+			  <li class="page-item"><a class="page-link" href="#" id="nextpage">Next</a></li>
+			  <script>
+				document.getElementById('nextpage').href = "#"//"/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
+			  </script>
+			  
+			  <li class="page-item">&nbsp;&nbsp;跳至:&nbsp;<input class="page-link" type="text" style="width:35px;display:inline" id="gotopagetext" name="gotopage" style="height:80%">&nbsp;页&nbsp;&nbsp;</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li>
+			  
+			</ul>
+			<!--分页end-->
 		</div>
-		<!-- </div> -->
+		</div>
 	</div>
 </div>
 
