@@ -1,373 +1,209 @@
-{% load static %}
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-<head>
-<meta charset="utf-8"> 
-<script src="/static/js/jquery-3.3.1.js"></script>
-<script src="/static/js/jquerysession.js"></script>
-<link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-<!-- <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script> -->
-<script src="/static/thirdparty/popper.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="/static/validate.css" type="text/css">
-<link rel="stylesheet" href="/static/thirdparty/bootstrap-3.3.7/dist/css/bootstrap.min.css">
-
-<style>
-  /* Make the image fully responsive */
-  .carousel-inner img {
-      width: 100%;
-      height: 50%;
-  }
-  
-</style>
-<style>
-a:hover
-{
-	color:green;
-}
-</style>
-
-<style>
-body{
-    background: url("/media/photos/15.jpg");
-    animation-name:myfirst;
-    animation-duration:12s;
-    /*变换时间*/
-    animation-delay:2s;
-    /*动画开始时间*/
-    animation-iteration-count:infinite;
-    /*下一周期循环播放*/
-    animation-play-state:running;
-    /*动画开始运行*/
-}
-<!-- @keyframes myfirst -->
-<!-- { -->
-    <!-- 0%   {background:url("D:/code/project/webfirst/media/photos/7.bmp");} -->
-    <!-- 34%  {background:url("D:/code/project/webfirst/media/photos/8.jpg");} -->
-    <!-- 67%  {background:url("D:/code/project/webfirst/media/photos/9.jpg");} -->
-    <!-- 100% {background:url("D:/code/project/webfirst/media/photos/7.bmp");} -->
-<!-- } -->
-.form{background: rgba(255,255,255,0);width:300px;margin:120px auto;padding:20px}
-/*阴影*/
-.fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
-input[type="text"],input[type="password"]{padding-left:26px;}
-.checkbox{padding-left:21px;}
-</style>
-
-<script>
-$(document).ready(function(){
-
-	
-	function getCookie(name) {  
-		var cookieValue = null;  
-		if (document.cookie && document.cookie != '') {  
-			var cookies = document.cookie.split(';');  
-			for (var i = 0; i < cookies.length; i++) {  
-				var cookie = jQuery.trim(cookies[i]);  
-				// Does this cookie string begin with the name we want?  
-				if (cookie.substring(0, name.length + 1) == (name + '=')) {  
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
-					break;  
-				}  
-			}  
-		}  
-		return cookieValue;  
-	}  
-	function csrfSafeMethod(method) {  
-		// these HTTP methods do not require CSRF protection  
-		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
-	}  
-	$.ajaxSetup({  
-		beforeSend: function(xhr, settings) {  
-		var csrftoken = getCookie('csrftoken');       
-		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
-				xhr.setRequestHeader("X-CSRFToken", csrftoken);  
-			}  
-		}  
-	}); 
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- <title>Church &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
+	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	
 
-	try
-	{
-		var para = {{ para|safe }};
-		
-		if(para['findit']==true)
-		{
-		}
-		else
-		{
-			verifyfail($(this), 0, '用户名不存在或密码错误');
-			varifyname = false
-		}
-	}
-	catch(err)
-	{
-	}
 	
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700" rel="stylesheet">
 	
-	function getCookie(name) {  
-		var cookieValue = null;  
-		if (document.cookie && document.cookie != '') {  
-			var cookies = document.cookie.split(';');  
-			for (var i = 0; i < cookies.length; i++) {  
-				var cookie = jQuery.trim(cookies[i]);  
-				// Does this cookie string begin with the name we want?  
-				if (cookie.substring(0, name.length + 1) == (name + '=')) {  
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
-					break;  
-				}  
-			}  
-		}  
-		return cookieValue;  
-	}  
-	function csrfSafeMethod(method) {  
-		// these HTTP methods do not require CSRF protection  
-		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
-	}  
-	$.ajaxSetup({  
-		beforeSend: function(xhr, settings) {  
-		var csrftoken = getCookie('csrftoken');       
-		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
-				xhr.setRequestHeader("X-CSRFToken", csrftoken);  
-			}  
-		}  
-	}); 
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/bootstrap.css">
 
-});
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/magnific-popup.css">
 
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/flexslider.css">
 
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/owl.theme.default.min.css">
 
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/style.css">
 
-</script>
+	<!-- Modernizr JS -->
+	<script src="/static/thirdparty/ft5_79_church/js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+	
+	<script src="/static/js/jquery-3.3.1.js"></script>
+	<script src="/static/js/jquerysession.js"></script>
 
-</head>
-
-<body>
-
-<div class="container" align="left">
-	<div align="left">
-		<!-- <div class="form-horizontal col-md-offset-3" id="login_form"> -->
-			<div class="form-horizontal col-md-offset-3"  align="left" style="float:left;">
-				<form action="/login" class="form" method="post" align="left" enctype="application/x-www-form-urlencoded">
-				{% csrf_token %}
-					<div class="form-group has-feedback">
-						<label for="username" ></label>
-						<div class="input-group">	
-							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-							<input id="username" name="username" class="form-control" placeholder="请输入用户名" maxlength="20" type="text" autoComplete ="off">
-						</div>
-						<span style="color:red;display: none;" class="tips"></span>
-						<span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
-						<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-					</div>
-					
-					<div class="form-group has-feedback">
-						<label for="password" ></label>
-						<div class="input-group">
-							<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-							<input id="password" name="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password" autoComplete ="off" >
-						</div>
-
-						<span style="color:red;display: none;" class="tips"></span>
-						<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-						<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-					</div>
-
-					
+	
+	<script>
+		$(document).ready(function() {
+			{% if request.session.username %}  
+				//alert("{{username}}")
+				//alert("{{ request.session.username }} ")
 				
-					
-					<div class="row">
-						<div class="col-xs-7">
-							<div class="form-group has-feedback">
-								<label for="idcode-btn" ></label>
-								<div class="input-group">
-									<span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
-									<input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="6" type="text">
-								</div>
-								<span style="color:red;display: none;" class="tips"></span>
-								<span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-								<span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-							</div>
-						</div>
-						<div class="col-xs-5" style="padding-top: 30px">
-							<div id="test" style="background: transparent;"></div>
-						</div>
-					</div>
+				$('#fh5co-hero').hide()
 				
-					<div class="form-group">
-						<input value="登 录" id="submit" class="form-control btn btn-default" type="submit">
-						<!-- <span>&nbsp;&nbsp;</span> -->
-					<!-- </div> -->
-					<!-- <div class="form-group"> -->
-						<!-- <input class="btn btn-default" id="registor" value="注 册" type="button"> -->
-					</div>
-					<div class="form-group">
-					<a  id="registor" style="color:#ff0000;">立即注册</a>
-					</div>
-
+			{% else %}  
+				//alert("还未登录")
+				<!-- $('#fh5co-hero').show() -->
+				//$(location).attr('href', '/login')
+			{% endif %}  
+		})
+	</script>
+	
+	</head>
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+	<nav class="fh5co-nav" role="navigation">
+		<div class="container-wrap">
+			<div class="top-menu">
+				<div class="row">
 					
-					
-				</form>
-			</div>	
-		<!-- </div> -->
-	</div>	
-</div>
-
-<br/>
-
-
-<script>
-
-	var gencode,inputcode;
-	var varifycode = false
-	var varifyname = false
-	var varifypasswd = false
-	function random1num()
-	{
-		var randNum = Math.floor(Math.random() * 6);
-		return String(randNum)
-	}
-	function random4num()
-	{
-		return random1num()+random1num()+random1num()+random1num()
-	}
+					<div class="col-md-12 col-md-offset-0 text-center menu-1">
+						<ul>
+							<li class="active"><a href="#">首页</a></li>
+							<li><a href="#">论坛</a></li>
+							<li class="has-dropdown">
+								<a href="#">报告</a>
+								<ul class="dropdown">
+									<li><a href="#">电力</a></li>
+									<li><a href="#">暖通</a></li>
+									<li><a href="#">消防</a></li>
+									<li><a href="#">设施</a></li>
+								</ul>
+							</li>
+							<li><a href="#">人事</a></li>
+							<li><a href="#">其它</a></li>
+							<li><a href="#">联系我们</a></li>
+							
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</nav>
+	<div class="container-wrap">
+		<aside id="fh5co-hero" class="">
+			<div class="flexslider">
+				<ul class="slides">
+			   	<li style="background-image: url(/static/thirdparty/ft5_79_church/images/img_bg_1.jpg);">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-md-6 col-md-offset-3 text-center">
+				   				<div class="slider-text">
+					   				<div class="slider-text-inner">
+					   					<h1>欢迎来到财拓云数据中心</h1>
+											
+											<p><a class="btn btn-primary btn-demo" href="/loginpop" style="font-size: 14px;padding: 10px 20px !important;"> <i class="icon-user"></i>登 录</a> <a class="btn btn-primary btn-learn" style="font-size: 14px;padding: 10px 20px !important;" href="/verify"><i class="icon-user-plus"></i>注 册</a></p>
+					   				</div>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			  	</ul>
+		  	</div>
+		</aside>
 		
 		
-	function VerificationId()
-	{
-		child = document.getElementById("ehong-code")
-		if(child!=null)
-		{
-			document.getElementById("test").removeChild(child);
-		}
-		child = document.getElementById("ehong-code-tip-ck")
-		if(child!=null)
-		{
-			document.getElementById("test").removeChild(child);
-		}
-		var new_e = document.createElement("div")
-		gencode = random4num()
-		var node = document.createTextNode(gencode)
-		new_e.appendChild(node)
-		new_e.id = "ehong-code"
-		new_e.className = "ehong-idcode-val ehong-idcode-val"+random1num()
-		new_e.onclick = function(){VerificationId()}
+		<div id="fh5co-services" class="fh5co-light-grey">
+			<div class="row animate-box">
+				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+					<h2>财拓云IDC欢迎您</h2>
+					<p>我们具备领先的基础设施建设，丰富经验的运维团队，为您提供优质的IDC服务，客户永远是我们的中心，愿与您联手协作共赢，创造美好未来！</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-1.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<h3 class="font-weight-bold" ><a href="#"><b>运维报告平台</b></a></h3>
+							<p>基础设施运维、IT运维，内容涉及电力，暖通，消防，网络等.</p>
+							<a href="#">Read More <i class="icon-arrow-right3"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-3.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<h3 class="font-weight-bold" ><a href="#"><strong>技术论坛</strong></a></h3>
+							<p>我们不断的总结运维经验，深入学习先进的IDC技术，紧跟潮流，努力打造一支强大的学习型组织.</p>
+							<a href="#">Read More <i class="icon-arrow-right3"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-2.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<h3 class="font-weight-bold" ><a href="#"><b>公司介绍</b></a></h3>
+							<p>为您全方位介绍财拓云IDC基础设施建设，运维技术，团队成员.</p>
+							<a href="#">Read More <i class="icon-arrow-right3"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+
 		
-		var tips = document.createElement("span")
-		tips.id = "ehong-code-tip-ck"
-		tips.className = "ehong-code-val-tip"
-		tips.innerHTML = ""
-		
-		document.getElementById("test").appendChild(new_e)
-		document.getElementById("test").appendChild(tips)
-		
-	}
+	</div><!-- END container-wrap -->
+
 	
-	function Verificate()
-	{
+	</div>
 
-		inputcode = $("#idcode-btn").val()
-		if(inputcode==gencode)
-		{
-			//alert("succ: right code")
-			varifycode = true
-		}
-		else
-		{
-			//alert("FAIL: wrong code")
-			varifycode = false
-		}
-		
-		return varifycode
-	}
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
 	
-	//校验成功函数
-	function verifysuccess(Obj, counter) {
-		Obj.parent().parent().removeClass('has-error').addClass('has-success');
-		$('#ehong-code-tip-ck').hide();
-		$('.glyphicon-ok').eq(counter).show();
-		$('.glyphicon-remove').eq(counter).hide();
-		$('.tips').eq(counter).hide();
-	}
+	<!-- jQuery -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/static/thirdparty/ft5_79_church/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.flexslider-min.js"></script>
+	<!-- Carousel -->
+	<script src="/static/thirdparty/ft5_79_church/js/owl.carousel.min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.magnific-popup.min.js"></script>
+	<script src="/static/thirdparty/ft5_79_church/js/magnific-popup-options.js"></script>
+	<!-- Counters -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.countTo.js"></script>
+	<!-- Main -->
+	<script src="/static/thirdparty/ft5_79_church/js/main.js"></script>
 
-	// 校验失败函数
-	function verifyfail(Obj, counter, msg) {
-		Obj.parent().parent().removeClass('has-success').addClass('has-error');
-		$('.glyphicon-remove').eq(counter).show();
-		$('.glyphicon-ok').eq(counter).hide();
-		$('.tips').eq(counter).text(msg).show();
-	}
-</script>
-
-<script>
-VerificationId();
-
-$("#username").change(function(){
-	if($("#username").val()=='')
-	{
-		verifyfail($(this), 0, '用户名不能为空');
-		varifyname = false
-	}
-	else
-	{
-		verifysuccess($(this), 0);
-		varifyname = true
-	}
-	
-})
-
-$('#passwordConfirm').change(function(){
-	
-	verifysuccess($(this), 2);
-	varifypasswd = true
-})
-
-$("#idcode-btn").change(function(){
-	rst = Verificate()
-	if(rst)
-	{
-		verifysuccess($(this), 3);
-		varifycode =true
-	}
-	else
-	{
-		verifyfail($(this), 3, '验证码输入错误');
-		varifycode=false
-	}
-})
-
-$('#registor').click(function(e){
-	//{{ request.session.username }}='registor'
-	//alert(document.referrer)
-	window.location.href='/verify'
-})
-
-
-$('#submit').click(function(e){
-	if(varifyname==false)
-	{
-		e.preventDefault()
-		verifyfail($(this), 0, '用户名不能为空');
-		return
-	}
-	
-	if(varifycode==false)
-	{
-		e.preventDefault()
-		verifyfail($(this), 3, '验证码输入错误');
-		return
-	}
-	
-	username = $('#username').val();
-	password = $('#password').val();
-	
-})
-
-
-
-</script>
-	
-</body>
+	</body>
 </html>
+

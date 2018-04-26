@@ -342,25 +342,25 @@ var next_pg
 	<!-- <div class="alert alert-light"> -->
 	<ul class="nav  nav-tabs justify-content-center" >
 		<li class="nav-item">
-			<a class="nav-link " href="/blog/?pg=1&searchval="><i class="fas fa-home fa-lg"></i>首页</a>
+			<a class="nav-link " href="#"><i class="fas fa-home fa-lg"></i>首页</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="/didi">论坛</a>
+			<a class="nav-link" href="#">电力</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link "  href="/publish">发布</a>
+			<a class="nav-link "  href="#">暖通</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="#">下载</a>
+			<a class="nav-link" href="#">消防</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="#">关于</a>
+			<a class="nav-link" href="#">设施</a>
 		</li>
 		
 		<div class="form-inline justify-content-right" style="float:right;">
 			{% csrf_token %}
 			<input class="form-control" type="text" placeholder="Search" id="searchblogcondition" name="searchblogcondition" style="margin-right:2px">
-			<button class="btn btn-default" type="submit" id="searchblog">Search</button>
+			<button class="btn btn-secondary" type="submit" id="searchblog" style="background-color:#EFEFEF;border-color:#EFEFEF; !important"><i class="fas fa-search fa-lg" style="color:rgba(0,123,255,0.5);"></i></button>
 		</div>
 	</ul>
 	
@@ -501,10 +501,10 @@ var next_pg
 				</tr>
 			  </tbody>
 			</table> 
-			
+			<hr>
 			<!--分页begin-->
 			<ul class="pagination pagination-sm" id="blogpage">
-			  <li class="page-item"><a class="page-link" href="#" id="prepage")>Previous</a></li>
+			  <li class="page-item"><a class="page-link" href="#" id="prepage")>上一页</a></li>
 			 
 			  <script>
 					{% if request.session.searchcondition %}  
@@ -570,7 +570,7 @@ var next_pg
 				  
 			  </script>
 			  
-			  <li class="page-item"><a class="page-link" href="#" id="nextpage">Next</a></li>
+			  <li class="page-item"><a class="page-link" href="#" id="nextpage">下一页</a></li>
 			  <script>
 				document.getElementById('nextpage').href = "#"//"/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
 			  </script>

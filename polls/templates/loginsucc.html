@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- <title>Church &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
+	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	
+
+	
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/bootstrap.css">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/magnific-popup.css">
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/flexslider.css">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/owl.theme.default.min.css">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/static/thirdparty/ft5_79_church/css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="/static/thirdparty/ft5_79_church/js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+	
+	<script src="/static/js/jquery-3.3.1.js"></script>
+	<script src="/static/js/jquerysession.js"></script>
+
+	
+	<script>
+		$(document).ready(function() {
+			{% if request.session.username %}  
+				//alert("{{username}}")
+				//alert("{{ request.session.username }} ")
+				
+				//$('#fh5co-hero').hide()
+				
+			{% else %}  
+				//alert("还未登录")
+				<!-- $('#fh5co-hero').show() -->
+				$(location).attr('href', '/loginpop')
+			{% endif %}  
+		})
+	</script>
+	
+	</head>
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+	<nav class="fh5co-nav" role="navigation">
+		<div class="container-wrap">
+			<div class="top-menu">
+				<div class="row">
+					
+					<div class="col-md-12 col-md-offset-0 text-center menu-1">
+						<ul>
+							<li class="active"><a href="/loginsucc">首页</a></li>
+							<li><a href="/blog/?pg=1&searchval=">论坛</a></li>
+							<li class="has-dropdown">
+								<a href="/report">报告</a>
+								<ul class="dropdown">
+									<li><a href="#">电力</a></li>
+									<li><a href="#">暖通</a></li>
+									<li><a href="#">消防</a></li>
+									<li><a href="#">设施</a></li>
+								</ul>
+							</li>
+							<li><a href="#">人事</a></li>
+							<li><a href="#">其它</a></li>
+							<li><a href="#">联系我们</a></li>
+							
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</nav>
+	<div class="container-wrap">
+		<!-- <aside id="fh5co-hero" class=""> -->
+			<!-- <div class="flexslider"> -->
+				<!-- <ul class="slides"> -->
+			   	<!-- <li style="background-image: url(/static/thirdparty/ft5_79_church/images/img_bg_1.jpg);"> -->
+			   		<!-- <div class="overlay"></div> -->
+			   		<!-- <div class="container-fluid"> -->
+			   			<!-- <div class="row"> -->
+				   			<!-- <div class="col-md-6 col-md-offset-3 text-center"> -->
+				   				<!-- <div class="slider-text"> -->
+					   				<!-- <div class="slider-text-inner"> -->
+					   					<!-- <h1>欢迎来到财拓云数据中心</h1> -->
+											
+											<!-- <p><a class="btn btn-primary btn-demo" href="/loginpop" style="font-size: 14px;padding: 10px 20px !important;"> <i class="icon-user"></i>登 录</a> <a class="btn btn-primary btn-learn" style="font-size: 14px;padding: 10px 20px !important;"><i class="icon-user-plus"></i>注 册</a></p> -->
+					   				<!-- </div> -->
+				   				<!-- </div> -->
+				   			<!-- </div> -->
+				   		<!-- </div> -->
+			   		<!-- </div> -->
+			   	<!-- </li> -->
+			  	<!-- </ul> -->
+		  	<!-- </div> -->
+		<!-- </aside> -->
+		
+		
+		<div id="fh5co-services" class="fh5co-light-grey">
+			<div class="row animate-box">
+				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+					<h2>财拓云IDC欢迎您</h2>
+					<p>我们具备领先的基础设施建设，丰富经验的运维团队，为您提供优质的IDC服务，客户永远是我们的中心，愿与您联手协作共赢，创造美好未来！</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<a href="/report" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-1.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<h3 class="font-weight-bold" ><a href="/report"><b>运维报告平台</b></a></h3>
+							<p>基础设施运维、IT运维，内容涉及电力，暖通，消防，网络等.</p>
+							<a href="/report">Read More <i class="icon-arrow-right3"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<a href="/blog/?pg=1&searchval=" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-3.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<h3 class="font-weight-bold" ><a href="/blog/?pg=1&searchval="><strong>技术论坛</strong></a></h3>
+							<p>我们不断的总结运维经验，深入学习先进的IDC技术，紧跟潮流，努力打造一支强大的学习型组织.</p>
+							<a href="/blog/?pg=1&searchval=">Read More <i class="icon-arrow-right3"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 animate-box">
+					<div class="services">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-2.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<h3 class="font-weight-bold" ><a href="#"><b>公司介绍</b></a></h3>
+							<p>为您全方位介绍财拓云IDC基础设施建设，运维技术，团队成员.</p>
+							<a href="#">Read More <i class="icon-arrow-right3"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+
+		
+	</div><!-- END container-wrap -->
+
+	
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="/static/thirdparty/ft5_79_church/js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.flexslider-min.js"></script>
+	<!-- Carousel -->
+	<script src="/static/thirdparty/ft5_79_church/js/owl.carousel.min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.magnific-popup.min.js"></script>
+	<script src="/static/thirdparty/ft5_79_church/js/magnific-popup-options.js"></script>
+	<!-- Counters -->
+	<script src="/static/thirdparty/ft5_79_church/js/jquery.countTo.js"></script>
+	<!-- Main -->
+	<script src="/static/thirdparty/ft5_79_church/js/main.js"></script>
+
+	</body>
+</html>
+

@@ -13,6 +13,8 @@ import os
 from django.db import transaction
 from django.shortcuts import render, render_to_response
 from django.template import loader, RequestContext
+from django.views.decorators.csrf import csrf_exempt
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -28,6 +30,35 @@ def index(request):
 	
 	return render(request,'login.html',{'para':json.dumps(para)})
 
+
+def loginsucc(request):
+	para = {"findit":True,"username":'',"password":''}
+	return render(request,'loginsucc.html',{'para':json.dumps(para)})
+
+def loginpop(request):
+	try:
+		uname = request.POST['username']
+		password = request.POST['password']
+		
+		#find
+		if(models.User.objects.filter(username=uname,userpwd=password).count()==0):
+			para = {"findit":False,"username":uname,"password":password}
+			return render(request,'loginpop.html',{'para':json.dumps(para)})
+		else:
+			request.session["username"]=uname
+			request.session.set_expiry(0) 
+			
+			#para = {"findit":True,"username":uname}
+			template = loader.get_template('loginsucc.html')
+			#return HttpResponse(template.render(para,request))
+		
+			context = {'username':uname}
+			return HttpResponse(template.render(context,request))
+
+	except :
+		para = {"findit":True,"username":'',"password":''}
+		return render(request,'loginpop.html',{'para':json.dumps(para)})
+
 def login(request):
 	
 	try:
@@ -41,21 +72,29 @@ def login(request):
 		else:
 			request.session["username"]=uname
 			request.session.set_expiry(0) 
-			return HttpResponseRedirect("/blog/?pg=1&searchval=")
+			#return HttpResponseRedirect("/blog/?pg=1&searchval=")
+			return HttpResponseRedirect("/loginsucc")
 	except :
 		para = {"findit":True,"username":'',"password":''}
 		return render(request,'login.html',{'para':json.dumps(para)})
 		
 
 def verify(request):
-	template = loader.get_template('validate.html')
+	#template = loader.get_template('validate.html')
+	template = loader.get_template('addnewuser.html')
 	return HttpResponse(template.render({},request))
 
 def registor(request):
 	uname = request.POST['username']
 	password = request.POST['password']
+	repeatpassword = request.POST['repeatpassword']
+	if password != repeatpassword:
+		return HttpResponseRedirect("/verify")
+	if (models.User.objects.filter(username=uname,userpwd=password).count()!=0):
+		return HttpResponseRedirect("/verify")
+		
 	models.User.objects.create(username=uname, userpwd=password)
-	return redirect(reverse('login', args=[]))
+	return redirect(reverse('loginpop', args=[]))
 	
 def detail(request,question_id):
 	latest_question_list = models.Question.objects.order_by('-pub_date')[:5]

@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <title>Bootstrap Multi Step Registration Form Template</title> -->
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="/static/thirdparty/azds_multi-step-registration/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/thirdparty/azds_multi-step-registration/assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/static/thirdparty/azds_multi-step-registration/assets/css/form-elements.css">
+        <link rel="stylesheet" href="/static/thirdparty/azds_multi-step-registration/assets/css/style.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="/static/thirdparty/azds_multi-step-registration/assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/thirdparty/azds_multi-step-registration/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/thirdparty/azds_multi-step-registration/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/thirdparty/azds_multi-step-registration/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/static/thirdparty/azds_multi-step-registration/assets/ico/apple-touch-icon-57-precomposed.png">
+
+		<script src="/static/js/jquery-3.3.1.js"></script>
+		<script src="/static/js/jquerysession.js"></script>
+
+		<script>
+			$(document).ready(function(){
+
+				
+				function getCookie(name) {  
+					var cookieValue = null;  
+					if (document.cookie && document.cookie != '') {  
+						var cookies = document.cookie.split(';');  
+						for (var i = 0; i < cookies.length; i++) {  
+							var cookie = jQuery.trim(cookies[i]);  
+							// Does this cookie string begin with the name we want?  
+							if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+								cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+								break;  
+							}  
+						}  
+					}  
+					return cookieValue;  
+				}  
+				function csrfSafeMethod(method) {  
+					// these HTTP methods do not require CSRF protection  
+					return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+				}  
+				$.ajaxSetup({  
+					beforeSend: function(xhr, settings) {  
+					var csrftoken = getCookie('csrftoken');       
+					if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
+							xhr.setRequestHeader("X-CSRFToken", csrftoken);  
+						}  
+					}  
+				}); 
+			});
+		</script>
+    </head>
+
+    <body>
+
+		
+
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong>Welcome</strong> 欢迎您加入财拓云IDC</h1>
+                            <div class="description">
+                            	<p>
+	                            	财拓云联通富特IDC总体规模2000+的机柜，领先的基础设施建设，具有独立专业的运维团队，为您提供优质的IDC服务，客户永远使我们的中心，愿与您联手协作共赢，创造美好前景！
+                            	</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	
+                        	<form role="form" action="/registor" method="post" enctype="application/x-www-form-urlencoded">
+                        		{% csrf_token %}
+								<!-- <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}"/> -->
+                        		<fieldset>
+		                        	<div class="form-top">
+		                        		<div class="form-top-left">
+		                        			<h3>注册信息</h3>
+		                            		<p>请填入新的用户名和密码</p>
+		                        		</div>
+		                        		<div class="form-top-right">
+		                        			<i class="fa fa-user-plus fa-lg"></i>
+		                        		</div>
+		                            </div>
+		                            <div class="form-bottom">
+				                    	<div class="form-group">
+				                    		<label class="sr-only" for="form-first-name">User name</label>
+				                        	<input type="text" name="username" placeholder="User name..." class="form-first-name form-control" id="form-first-name">
+				                        </div>
+										<div class="form-group">
+				                    		<label class="sr-only" for="form-password">Password</label>
+				                        	<input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
+				                        </div>
+										<div class="form-group">
+				                    		<label class="sr-only" for="form-password">Password</label>
+				                        	<input type="password" name="repeatpassword" placeholder="Repeat Password..." class="form-password form-control" id="form-password">
+				                        </div>
+				                        
+										<button type="submit" class="btn">注册</button>
+										
+										
+				                    </div>
+			                    </fieldset>	
+                        		
+		                    </form>
+		                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Javascript -->
+        <script src="/static/thirdparty/azds_multi-step-registration/assets/js/jquery-1.11.1.min.js"></script>
+        <script src="/static/thirdparty/azds_multi-step-registration/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/thirdparty/azds_multi-step-registration/assets/js/jquery.backstretch.min.js"></script>
+        <script src="/static/thirdparty/azds_multi-step-registration/assets/js/retina-1.1.0.min.js"></script>
+        <script src="/static/thirdparty/azds_multi-step-registration/assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>
