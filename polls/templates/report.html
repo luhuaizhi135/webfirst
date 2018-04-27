@@ -505,13 +505,14 @@ var next_pg
 							  </script>
 							  
 							  <li class="page-item"><a class="page-link" href="#" id="nextpage">下一页</a></li>
-							  <script>
-								document.getElementById('nextpage').href = "#"//"/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
-							  </script>
-							  
-							  <li class="page-item"><a class="page-link" href="#" id="nextpage">跳至</a></li>
+								  <script>
+									document.getElementById('nextpage').href = "#"//"/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
+								  </script>
+							  <span>&nbsp;&nbsp;</span>
+							  <!-- <li class="page-item"><a class="page-link" href="#" id="nextpage" >跳至</a></li> -->
+							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
 							  <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
-							  <a class="page-link" href="#"  style="display:inline !important">GO</a>
+							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
 							  
 							  <!-- <li class="page-item">&nbsp;&nbsp;跳至:&nbsp;<input class="page-link" type="text" style="width:35px;display:inline" id="gotopagetext" name="gotopage" style="height:80%">&nbsp;页&nbsp;&nbsp;</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li> -->
 							  
@@ -547,7 +548,7 @@ var next_pg
 	 
 		  <!-- 模态框主体 -->
 		  <div class="modal-body">
-		  <form  action="/blog/?pg=1&searchval=" method="post"  enctype="multipart/form-data">
+		  <form   action="/blog/?pg=1&searchval=" method="post"  enctype="multipart/form-data">
 			<fieldset form>
 			  <!-- <legend>Custom forms</legend> -->
 			  
@@ -576,15 +577,26 @@ var next_pg
 				  <option value="3">改造需求</option>
 				</select>
 			  </div>
-			  <div class="form-group">
+			  
+			  
+			  
+			  
+			  <!-- <div class="form-group"> -->
+			  <div  class="services">
 				<div class="input-group mb-3">
-				  <div class="custom-file">
+				  <!-- <div class="custom-file"> -->
 									
 					<input id="reportfile" type="file" style="display:none">  
-					<div class="input-append form-inline">  
-						<input id="photoCover" class="form-control input-large" type="text" style="height:30px;"> 
-						<a class="btn btn-outline-info btn-sm" onclick="$('input[id=reportfile]').click();">Browse</a> 
-						<a class="btn btn-outline-info btn-sm" id="uploadreport">Upload</a> 
+					<div class="input-append">  
+						<div class="desc">
+							<!-- <div class="row"> -->
+							<!-- <div class="col-md-12 form-inline" > -->
+								<input id="photoCover" class="form-control"  type="text" style="height:30px !important"> 
+								<button type="button" class="btn btn-success btn-sm " onclick="$('input[id=reportfile]').click();" id="addnewbtn">Browse</button>
+								<button type="button" class="btn btn-success btn-sm " id="uploadreport">Upload</button>
+							<!-- </div> -->
+							<!-- </div> -->
+						</div>
 						<script>
 							$('input[id=reportfile]').click(function(){
 									$('#photoCover').val($('input[id=reportfile]').val());
@@ -595,10 +607,8 @@ var next_pg
 							
 						</script>
 					</div> 
-				  </div>
-				  <div class="input-group-append">
-					<!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
-				  </div>
+				  <!-- </div> -->
+				  
 				  
 				</div>
 				
@@ -609,6 +619,12 @@ var next_pg
 				<!--进度条end-->
 			
 			  </div>
+			  
+			  
+			  
+			  
+			  
+			  
 			 
 			</fieldset>
 			</form> 
