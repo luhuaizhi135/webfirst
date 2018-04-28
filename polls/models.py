@@ -52,6 +52,7 @@ class User(models.Model):
 class Blog(models.Model):
     blogtitle = models.CharField(max_length=120)  
     blogcontent = models.TextField()  
+    blogabstract = models.TextField()  
     blogdate = models.DateTimeField(default = timezone.now)
     
    

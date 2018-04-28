@@ -14,6 +14,8 @@ from django.db import transaction
 from django.shortcuts import render, render_to_response
 from django.template import loader, RequestContext
 from django.views.decorators.csrf import csrf_exempt
+import re
+#from django.utils.encoding import force_unicode,smart_unicode, smart_str, DEFAULT_LOCALE_ENCODING  
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -124,12 +126,12 @@ def report(request):
 	template = loader.get_template('report.html')
 	return HttpResponse(template.render({},request))
 	
+
+	
 def blog(request):
 	if request.method=='GET':
 		pg = request.GET.get('pg')
 		searchcondition = request.GET.get('searchval')
-		
-		
 		
 		av_page=3
 		#Blogs = models.Blog.objects.all()
@@ -188,6 +190,13 @@ def uploadreport(request):
 		f.close()
 		report = '/static/report/'+file_obj.name
 		return HttpResponse(report)
+
+def genAbstract(blog):
+	tag_list = re.findall('<.*?>',blog)	
+	for tag in tag_list:
+		blog = blog.replace(tag,'')
+		
+	return blog
 	
 def publishblog(request):
 	sid = transaction.savepoint()
@@ -195,7 +204,8 @@ def publishblog(request):
 		if request.method == 'POST':
 			blogtitle = request.POST['publishtitle']
 			blogcontent = request.POST['publishcontent']
-			models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent)
+			blogabstract = genAbstract(blogcontent)
+			models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent,blogabstract=blogabstract[0:200])
 			transaction.savepoint_commit(sid)
 			#return redirect(reverse('blog', args=[1]))
 			return HttpResponseRedirect("/blog/?pg=1&searchval=")
