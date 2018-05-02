@@ -234,16 +234,9 @@
 							<p id="blog_{{blog.id}}">
 								<script>
 									$(function(){
-										
 										var blgcontend = HTMLDecode("{{blog.blogcontent}}")
-										var blogabstract = "{{blog.blogabstract}}"
-										
-										//$("#blog_{{blog.id}}").html(HTMLDecode("{{blog.blogcontent}}"));
-										$("#blog_{{blog.id}}").text(blogabstract)
-										
-										
+										$("#blog_{{blog.id}}").html(HTMLDecode("{{blog.blogcontent}}"));
 									});
-									//alert('{{blog.blogdate|date:"Y-m-d H:i:s"}}')
 								</script>
 							</p>
 							

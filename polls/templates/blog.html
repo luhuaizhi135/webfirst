@@ -163,15 +163,17 @@
 					window.location.href='/publish'; 
 				  })
 		})
-function gotopagehref(){
-		window.location.href='/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
-	}
-	
-total_pg={{total_pg}} //总页数
-cur_page={{cur_page}} //当前页
-av_page={{av_page}}//每页个数
-var pre_pg
-var next_pg
+		function gotopagehref(){
+				window.location.href='/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
+			}
+			
+			
+		total_pg={{total_pg}} //总页数
+		cur_page={{cur_page}} //当前页
+		av_page={{av_page}}//每页个数
+		var pre_pg
+		var next_pg
+		
 		function HTMLEncode(html) {
 			var temp = document.createElement("div");
 			(temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
@@ -234,15 +236,7 @@ var next_pg
 	<div class="container-wrap">
 		
 		<div id="fh5co-services" class="fh5co-light-grey" style="padding-top:2em">
-			<!-- <div class="row animate-box"> -->
-				<!-- <div class="col-md-6 col-md-offset-3 text-center fh5co-heading"> -->
-					<!-- <h2>财拓云IDC欢迎您</h2> -->
-					<!-- <p>我们具备领先的基础设施建设，丰富经验的运维团队，为您提供优质的IDC服务，客户永远是我们的中心，愿与您联手协作共赢，创造美好未来！</p> -->
-				<!-- </div> -->
-			<!-- </div> -->
-			
-			
-			
+
 			<div class="row">
 				<div class="col-md-9 animate-box">
 					<div class="form-inline my-2 my-lg-0">
@@ -253,9 +247,6 @@ var next_pg
 					</div>
 					<br>
 				</div>
-				
-				
-				
 			
 				<div class="col-md-9 animate-box">
 					
@@ -267,16 +258,10 @@ var next_pg
 							<p id="blog_{{blog.id}}">
 								<script>
 									$(function(){
-										
 										var blgcontend = HTMLDecode("{{blog.blogcontent}}")
 										var blogabstract = "{{blog.blogabstract}}"
-										
-										//$("#blog_{{blog.id}}").html(HTMLDecode("{{blog.blogcontent}}"));
 										$("#blog_{{blog.id}}").text(blogabstract)
-										
-										
 									});
-									//alert('{{blog.blogdate|date:"Y-m-d H:i:s"}}')
 								</script>
 							</p>
 							<a href="#"  onclick="showablog('{{blog.id}}','{{blog.blogtitle}}')">Read More <i class="icon-arrow-right3"></i></a>
@@ -285,18 +270,7 @@ var next_pg
 					<hr>
 					{% endfor %}	
 					<!--循环blog end-->
-					
-					
-					
-					<!-- <div class="services"> -->
-						<!-- <a href="/report" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-1.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a> -->
-						<!-- <div class="desc"> -->
-							<!-- <h3 class="font-weight-bold" ><a href="/report"><b>运维平台</b></a></h3> -->
-							<!-- <p>基础设施运维、IT运维，内容涉及电力，暖通，消防，网络等.</p> -->
-							<!-- <a href="/report">Read More <i class="icon-arrow-right3"></i></a> -->
-						<!-- </div> -->
-					<!-- </div> -->
-					
+
 					<ul class="pagination pagination-sm" id="blogpage">
 					  <li class="page-item"><a class="page-link" href="/blog/" id="prepage")>上一页</a></li>
 					  

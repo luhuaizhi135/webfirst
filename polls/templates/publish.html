@@ -80,6 +80,8 @@
 						padding-right: 20px;
 						padding-bottom: 8px;
 						padding-left: 20px;
+						
+						margin-top: 47px
 					}
 					
 		.btn_mine {
@@ -273,21 +275,23 @@
 		<div id="fh5co-services" class="fh5co-light-grey" style="padding-top:2em">
 		
 			<div class="row">
-				<div class="col-md-9 animate-box my-new-border">
-					
-					<p>
-						<form method="post" action="/publishblog"  enctype="application/x-www-form-urlencoded">
-							{% csrf_token %}
-							<div class="form-group">
-								<label class="col-form-label" for="inputDefault">标题</label>
-								<input type="text" class="form-control" placeholder="请输入标题" id="publishtitle" name="publishtitle">
-								<label class="col-form-label" for="inputDefault">内容</label>
-								<textarea class="summernote" name="publishcontent" id="publishcontent"></textarea>
-								<button id="pub" class="btn btn-info" type="submit">确定</button>
-							</div>
-						</form>
-					</p>
-
+				<div class="col-md-9 animate-box ">
+					<div class="services">
+						<div class="desc ">
+							<p>
+								<form method="post" action="/publishblog"  enctype="application/x-www-form-urlencoded">
+									{% csrf_token %}
+									<div class="form-group">
+										<label class="col-form-label" for="inputDefault">标题</label>
+										<input type="text" class="form-control" placeholder="请输入标题" id="publishtitle" name="publishtitle">
+										<label class="col-form-label" for="inputDefault">内容</label>
+										<textarea class="summernote" name="publishcontent" id="publishcontent"></textarea>
+										<button id="pub" class="btn btn-info" type="submit">确定</button>
+									</div>
+								</form>
+							</p>
+						</div>
+					</div>
 
 				</div>
 				<div class="col-md-3 animate-box">
@@ -305,7 +309,7 @@
 					</div>
 					<br>
 					<div class="services">
-						<div class="desc my-new-border">
+						<div class="desc my-new-border" style="margin-top: 0px !important">
 							<h3 class="font-weight-bold" >标签</h3>
 							<p>
 								<!-- <h5 class="font-weight-bold" ><a href="#" >热点文章</a></h5> -->
