@@ -54,7 +54,63 @@
 	
 	<script src="/static/js/jquery-3.3.1.js"></script>
 	<script src="/static/js/jquerysession.js"></script>
+	<link href="/static/thirdparty/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet">
+	
+	
+	<style>
+		.my-new-border{
+						border-top-color: rgba(0, 0, 0, 0.1);
+						border-top-style: solid;
+						border-top-width: 2px;
+						border-right-color: rgba(0, 0, 0, 0.1);
+						border-right-style: solid;
+						border-right-width: 2px;
+						border-bottom-color: rgba(0, 0, 0, 0.1);
+						border-bottom-style: solid;
+						border-bottom-width: 2px;
+						border-left-color: rgba(0, 0, 0, 0.1);
+						border-left-style: solid;
+						border-left-width: 2px;
+						border-image-source: initial;
+						border-image-slice: initial;
+						border-image-width: initial;
+						border-image-outset: initial;
+						border-image-repeat: initial;
+						
+						padding-top: 8px;
+						padding-right: 20px;
+						padding-bottom: 8px;
+						padding-left: 20px;
+					}
+					
+		.btn_mine {
+			  display: inline-block;
+			  font-weight: 400;
+			  text-align: center;
+			  white-space: nowrap;
+			  vertical-align: middle;
+			  -webkit-user-select: none;
+			  -moz-user-select: none;
+			  -ms-user-select: none;
+			  user-select: none;
+			  border: 1px solid transparent;
+			  padding: 0.375rem 0.75rem;
+			  font-size: 1rem;
+			  line-height: 1.5;
+			  border-radius: 0.25rem;
+			  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+			  margin-bottom:10px;
+			  margin-right:10px;
+			}
+			
+		.btn-sm_mine {
+			  padding: 0.25rem 0.5rem;
+			  font-size: 0.875rem;
+			  line-height: 1.5;
+			  border-radius: 0.2rem;
+			}
 
+	</style>
 	
 	<script>
 		$(document).ready(function() {
@@ -69,8 +125,53 @@
 				<!-- $('#fh5co-hero').show() -->
 				$(location).attr('href', '/loginpop')
 			{% endif %}  
+			function getCookie(name) {  
+					var cookieValue = null;  
+					if (document.cookie && document.cookie != '') {  
+						var cookies = document.cookie.split(';');  
+						for (var i = 0; i < cookies.length; i++) {  
+							var cookie = jQuery.trim(cookies[i]);  
+							// Does this cookie string begin with the name we want?  
+							if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+								cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+								break;  
+							}  
+						}  
+					}  
+					return cookieValue;  
+				}  
+				function csrfSafeMethod(method) {  
+					// these HTTP methods do not require CSRF protection  
+					return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+				}  
+				$.ajaxSetup({  
+					beforeSend: function(xhr, settings) {  
+					var csrftoken = getCookie('csrftoken');       
+					if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
+							xhr.setRequestHeader("X-CSRFToken", csrftoken);  
+						}  
+					}  
+				}); 
+				
+				 $('#searchblog').click(function(){
+					//alert($('#searchblogcondition').val())
+					//alert('/blog/?pg=1&searchval='+$('#searchblogcondition').val())
+					window.location.href='/blog/?pg=1&searchval='+$('#searchblogcondition').val(); 
+				  })
+				  
+				  $('#publishblog').click(function(){
+					window.location.href='/publish'; 
+				  })
 		})
-		
+function gotopagehref(){
+		window.location.href='/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
+	}
+	
+total_pg={{total_pg}} //总页数
+cur_page={{cur_page}} //当前页
+av_page={{av_page}}//每页个数
+var pre_pg
+var next_pg
 		function HTMLEncode(html) {
 			var temp = document.createElement("div");
 			(temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
@@ -131,38 +232,31 @@
 		</div>
 	</nav>
 	<div class="container-wrap">
-		<!-- <aside id="fh5co-hero" class=""> -->
-			<!-- <div class="flexslider"> -->
-				<!-- <ul class="slides"> -->
-			   	<!-- <li style="background-image: url(/static/thirdparty/ft5_79_church/images/img_bg_1.jpg);"> -->
-			   		<!-- <div class="overlay"></div> -->
-			   		<!-- <div class="container-fluid"> -->
-			   			<!-- <div class="row"> -->
-				   			<!-- <div class="col-md-6 col-md-offset-3 text-center"> -->
-				   				<!-- <div class="slider-text"> -->
-					   				<!-- <div class="slider-text-inner"> -->
-					   					<!-- <h1>欢迎来到财拓云数据中心</h1> -->
-											
-											<!-- <p><a class="btn btn-primary btn-demo" href="/loginpop" style="font-size: 14px;padding: 10px 20px !important;"> <i class="icon-user"></i>登 录</a> <a class="btn btn-primary btn-learn" style="font-size: 14px;padding: 10px 20px !important;"><i class="icon-user-plus"></i>注 册</a></p> -->
-					   				<!-- </div> -->
-				   				<!-- </div> -->
-				   			<!-- </div> -->
-				   		<!-- </div> -->
-			   		<!-- </div> -->
-			   	<!-- </li> -->
-			  	<!-- </ul> -->
-		  	<!-- </div> -->
-		<!-- </aside> -->
 		
-		
-		<div id="fh5co-services" class="fh5co-light-grey">
-			<div class="row animate-box">
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>财拓云IDC欢迎您</h2>
-					<p>我们具备领先的基础设施建设，丰富经验的运维团队，为您提供优质的IDC服务，客户永远是我们的中心，愿与您联手协作共赢，创造美好未来！</p>
-				</div>
-			</div>
+		<div id="fh5co-services" class="fh5co-light-grey" style="padding-top:2em">
+			<!-- <div class="row animate-box"> -->
+				<!-- <div class="col-md-6 col-md-offset-3 text-center fh5co-heading"> -->
+					<!-- <h2>财拓云IDC欢迎您</h2> -->
+					<!-- <p>我们具备领先的基础设施建设，丰富经验的运维团队，为您提供优质的IDC服务，客户永远是我们的中心，愿与您联手协作共赢，创造美好未来！</p> -->
+				<!-- </div> -->
+			<!-- </div> -->
+			
+			
+			
 			<div class="row">
+				<div class="col-md-9 animate-box">
+					<div class="form-inline my-2 my-lg-0">
+					 {% csrf_token %}
+					  <input class="form-control mr-sm-2" type="text" placeholder="Search" style="height:41px"  id="searchblogcondition" name="searchblogcondition" >
+					  <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-bottom:1px" id="searchblog" >Search</button>
+					  <button class="btn btn-info my-2 my-sm-0" type="button" style="margin-bottom:1px" id="publishblog" >Publish</button>
+					</div>
+					<br>
+				</div>
+				
+				
+				
+			
 				<div class="col-md-9 animate-box">
 					
 					<!--循环blog begin-->
@@ -202,8 +296,144 @@
 							<!-- <a href="/report">Read More <i class="icon-arrow-right3"></i></a> -->
 						<!-- </div> -->
 					<!-- </div> -->
+					
+					<ul class="pagination pagination-sm" id="blogpage">
+					  <li class="page-item"><a class="page-link" href="/blog/" id="prepage")>上一页</a></li>
+					  
+					  
+					  <script>
+							{% if request.session.searchcondition %}  
+								$('#searchblogcondition').val("{{ request.session.searchcondition }}")
+								//alert("{{ request.session.searchcondition }}")
+							{% else %}  
+								//alert("没有request.session.searchcondition")
+							{% endif %} 
+					
+						  //for(var i=1;i<=total_pg;i++)
+						  //alert(Math.floor(1/6))
+						  per_pg =6 //每组显示6页
+						   
+						  for(var m=0;;m++)
+						  {
+							if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
+							{
+								break;
+							}
+						  }
+						  start_pg = m*6+1
+						  end_pg = (m+1)*6
+						  if(end_pg>total_pg)
+						  {
+							end_pg=total_pg
+						  }
+						  for(var i=start_pg;i<=end_pg;i++)
+						  {
+							
+							var new_li = document.createElement("li")
+							new_li.className = "page-item"
+							if(i==cur_page)
+							{
+								new_li.className +=  " active"
+							}
+							
+							var new_a = document.createElement("a")
+							new_a.className = "page-link"
+							new_a.text = i
+							new_a.href="/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
+							//alert(new_a.href)
+							new_li.appendChild(new_a)
+							document.getElementById('blogpage').appendChild(new_li)
+							//new_e.onclick = function(){VerificationId()}
+						  }
+						  
+						  if(cur_page>1)
+						  {
+							pre_pg = cur_page-1
+						  }
+						  else
+						  {
+							pre_pg=1
+						  }
+						  if(cur_page<total_pg)
+						  {
+							next_pg = cur_page+1
+						  }
+						  else
+						  {
+							next_pg = cur_page
+						  }
+						  
+						  document.getElementById('prepage').href = "/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
+						  
+					  </script>
+					  
+					  <li class="page-item"><a class="page-link" href="#" id="nextpage">下一页</a></li>
+					  <script>
+						document.getElementById('nextpage').href = "/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
+					  </script>
+							  <span>&nbsp;&nbsp;</span>
+							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
+							  <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
+							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
+							  
+							  <!-- <li class="page-item">&nbsp;&nbsp;跳至:&nbsp;<input class="page-link" type="text" style="width:35px;display:inline" id="gotopagetext" name="gotopage" style="height:80%">&nbsp;页&nbsp;&nbsp;</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li> -->
+					  
+					  
+					</ul>
 				</div>
+				<div class="col-md-3 animate-box">
+					<div class="services">
+						<div class="desc my-new-border">
+							<h3 class="font-weight-bold" >导航</h3>
+							<p>
+								<h5 class="font-weight-bold" ><a href="#" >热点文章</a></h5>
+								<h5 class="font-weight-bold" ><a href="#" >最新发布</a></h5>
+								<h5 class="font-weight-bold" ><a href="#" >我的文章</a></h5>
+								<h5 class="font-weight-bold" ><a href="#" >精华知识</a></h5>
+								
+							</p>
+						</div>
+					</div>
+					<br>
+					<div class="services">
+						<div class="desc my-new-border">
+							<h3 class="font-weight-bold" >标签</h3>
+							<p>
+								<!-- <h5 class="font-weight-bold" ><a href="#" >热点文章</a></h5> -->
+								<!-- <h5 class="font-weight-bold" ><a href="#" >最新发布</a></h5> -->
+								<!-- <h5 class="font-weight-bold" ><a href="#" >我的文章</a></h5> -->
+								<!-- <h5 class="font-weight-bold" ><a href="#" >精华知识</a></h5> -->
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >热点文章</button>
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >最新发布</button>
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >我的文章</button>
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >精华知识</button>
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >热点文章</button>
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >最新发布</button>
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >我的文章</button>
+								<button href="#" class='btn_mine btn-info btn-sm_mine' >精华知识</button>
+							</p>
+						</div>
+					</div>
+					
+					<!-- <div class="services"> -->
+						<!-- <div class="desc my-new-border"> -->
+							<!-- <h3 class="font-weight-bold" >标签云</h3> -->
+							<!-- <p> -->
+														
+									<!-- <a href="/tag/ke-hu-duan/" class='btn btn-info btn-sm' >客户端</a> -->
+									<!-- <a href="/tag/android/" class='btn btn-info btn-sm ' >Android</a> -->
+									<!-- <a href="/tag/jquery/" class='btn btn-info btn-sm '>jQuery</a> -->
+									<!-- <a href="/tag/ghost-0-7-ban-ben/" class='btn btn-info btn-sm '>Ghost 0.7 版本</a> -->
+									<!-- <a href="/tag/opensource/" class='btn btn-info btn-sm '>开源</a> -->
+									<!-- <a href="/tag/zhu-shou-han-shu/" class='btn btn-info btn-sm '>助手函数</a> -->
+									<!-- <a href="/tag/tag-cloud/" class='btn btn-info btn-sm '>标签云</a> -->
+									<!-- <a href="/tag/navigation/" class='btn btn-info btn-sm '>导航</a>	 -->
+							
+							<!-- </p> -->
+						<!-- </div> -->
+					<!-- </div> -->
 				
+				</div>
 			</div>
 		</div>
         

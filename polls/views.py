@@ -205,7 +205,8 @@ def publishblog(request):
 			blogtitle = request.POST['publishtitle']
 			blogcontent = request.POST['publishcontent']
 			blogabstract = genAbstract(blogcontent)
-			models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent,blogabstract=blogabstract[0:200])
+			blogabstract=blogabstract[0:200]+"……"
+			models.Blog.objects.create(blogtitle=blogtitle, blogcontent=blogcontent,blogabstract=blogabstract)
 			transaction.savepoint_commit(sid)
 			#return redirect(reverse('blog', args=[1]))
 			return HttpResponseRedirect("/blog/?pg=1&searchval=")
