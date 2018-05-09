@@ -254,7 +254,7 @@
 					{% for blog in Blogs %}
 					<div class="services">
 						<div class="desc">
-							<h3 class="font-weight-bold" ><a href="/report"><b>{{blog.blogtitle}}</b></a></h3>
+							<h3 class="font-weight-bold" ><a href="#"><b>{{blog.blogtitle}}</b></a></h3>
 							<p id="blog_{{blog.id}}">
 								<script>
 									$(function(){
@@ -270,90 +270,91 @@
 					<hr>
 					{% endfor %}	
 					<!--循环blog end-->
-
-					<ul class="pagination pagination-sm" id="blogpage">
-					  <li class="page-item"><a class="page-link" href="/blog/" id="prepage")>上一页</a></li>
-					  
-					  
-					  <script>
-							{% if request.session.searchcondition %}  
-								$('#searchblogcondition').val("{{ request.session.searchcondition }}")
-								//alert("{{ request.session.searchcondition }}")
-							{% else %}  
-								//alert("没有request.session.searchcondition")
-							{% endif %} 
-					
-						  //for(var i=1;i<=total_pg;i++)
-						  //alert(Math.floor(1/6))
-						  per_pg =6 //每组显示6页
-						   
-						  for(var m=0;;m++)
-						  {
-							if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
-							{
-								break;
-							}
-						  }
-						  start_pg = m*6+1
-						  end_pg = (m+1)*6
-						  if(end_pg>total_pg)
-						  {
-							end_pg=total_pg
-						  }
-						  for(var i=start_pg;i<=end_pg;i++)
-						  {
-							
-							var new_li = document.createElement("li")
-							new_li.className = "page-item"
-							if(i==cur_page)
-							{
-								new_li.className +=  " active"
-							}
-							
-							var new_a = document.createElement("a")
-							new_a.className = "page-link"
-							new_a.text = i
-							new_a.href="/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
-							//alert(new_a.href)
-							new_li.appendChild(new_a)
-							document.getElementById('blogpage').appendChild(new_li)
-							//new_e.onclick = function(){VerificationId()}
-						  }
+					<div class="services">
+						<ul class="pagination pagination-sm" id="blogpage">
+						  <li class="page-item"><a class="page-link" href="/blog/" id="prepage")>上一页</a></li>
 						  
-						  if(cur_page>1)
-						  {
-							pre_pg = cur_page-1
-						  }
-						  else
-						  {
-							pre_pg=1
-						  }
-						  if(cur_page<total_pg)
-						  {
-							next_pg = cur_page+1
-						  }
-						  else
-						  {
-							next_pg = cur_page
-						  }
 						  
-						  document.getElementById('prepage').href = "/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
-						  
-					  </script>
-					  
-					  <li class="page-item"><a class="page-link" href="#" id="nextpage">下一页</a></li>
-					  <script>
-						document.getElementById('nextpage').href = "/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
-					  </script>
-							  <span>&nbsp;&nbsp;</span>
-							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
-							  <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
-							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
+						  <script>
+								{% if request.session.searchcondition %}  
+									$('#searchblogcondition').val("{{ request.session.searchcondition }}")
+									//alert("{{ request.session.searchcondition }}")
+								{% else %}  
+									//alert("没有request.session.searchcondition")
+								{% endif %} 
+						
+							  //for(var i=1;i<=total_pg;i++)
+							  //alert(Math.floor(1/6))
+							  per_pg =6 //每组显示6页
+							   
+							  for(var m=0;;m++)
+							  {
+								if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
+								{
+									break;
+								}
+							  }
+							  start_pg = m*6+1
+							  end_pg = (m+1)*6
+							  if(end_pg>total_pg)
+							  {
+								end_pg=total_pg
+							  }
+							  for(var i=start_pg;i<=end_pg;i++)
+							  {
+								
+								var new_li = document.createElement("li")
+								new_li.className = "page-item"
+								if(i==cur_page)
+								{
+									new_li.className +=  " active"
+								}
+								
+								var new_a = document.createElement("a")
+								new_a.className = "page-link"
+								new_a.text = i
+								new_a.href="/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
+								//alert(new_a.href)
+								new_li.appendChild(new_a)
+								document.getElementById('blogpage').appendChild(new_li)
+								//new_e.onclick = function(){VerificationId()}
+							  }
 							  
-							  <!-- <li class="page-item">&nbsp;&nbsp;跳至:&nbsp;<input class="page-link" type="text" style="width:35px;display:inline" id="gotopagetext" name="gotopage" style="height:80%">&nbsp;页&nbsp;&nbsp;</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li> -->
-					  
-					  
-					</ul>
+							  if(cur_page>1)
+							  {
+								pre_pg = cur_page-1
+							  }
+							  else
+							  {
+								pre_pg=1
+							  }
+							  if(cur_page<total_pg)
+							  {
+								next_pg = cur_page+1
+							  }
+							  else
+							  {
+								next_pg = cur_page
+							  }
+							  
+							  document.getElementById('prepage').href = "/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
+							  
+						  </script>
+						  
+						  <li class="page-item"><a class="page-link" href="#" id="nextpage">下一页</a></li>
+						  <script>
+							document.getElementById('nextpage').href = "/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
+						  </script>
+								  <span>&nbsp;&nbsp;</span>
+								  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
+								  <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
+								  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
+								  
+								  <!-- <li class="page-item">&nbsp;&nbsp;跳至:&nbsp;<input class="page-link" type="text" style="width:35px;display:inline" id="gotopagetext" name="gotopage" style="height:80%">&nbsp;页&nbsp;&nbsp;</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li> -->
+						  
+						  
+						</ul>
+					</div>
 				</div>
 				<div class="col-md-3 animate-box">
 					<div class="services">

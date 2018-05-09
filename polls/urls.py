@@ -21,4 +21,6 @@ urlpatterns=[
 	url(r'^publishblog$',views.publishblog,name='publishblog'),
 	url(r'^searchblog$',views.searchblog,name='searchblog'),
 	url(r'^report/$',views.report,name='report'),
+	url(r'^genreportmenu/$',views.genreportmenu,name='genreportmenu'),
+	#url(r'^report/(?P<dic_1>[0-9]+)/(?P<dic_2>[0-9]+)$',views.report,name='report'),
 ]

@@ -86,23 +86,98 @@
 	
 	
 <style>
-td{padding:6px !important;}
+	td{padding:6px !important;}
 </style>
 <style>
 	.list-group-item{padding: .5rem 1rem;color: #007bff; !important}
 </style>
+
+<style>
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+}
+
+.dropdown-content a {
+    display: block;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+</style>
+
+
+
 	<script>
-toastr.options.positionClass = 'toast-center-center';
-toastr.options.showDuration="300"
-toastr.options.hideDuration="300"
-toastr.options.timeOut="2000"
+		toastr.options.positionClass = 'toast-center-center';
+		toastr.options.showDuration="300"
+		toastr.options.hideDuration="300"
+		toastr.options.timeOut="2000"
+
+		elictric_menu = []
+		
+		function genMenu(menu_1)//"电力"、“暖通”
+		{
+			$.ajax({
+					url:'/genreportmenu',
+					type:'GET',
+					data:{"menu_1": menu_1},
+					//dataType:'json',
+					//processData: false,  // tell jquery not to process the data
+					contentType: false, // tell jquery not to set contentType
+					
+					async:false,
+					success: function(reportmenu) {
+
+						//alert(reportmenu)
+						
+						var json_reportmenu = JSON.parse(reportmenu);
+						//alert(json_reportmenu.elictric_menu)
+						elictric_menu = json_reportmenu.elictric_menu
+						document.getElementById("menu_total").innerHTML = "";
+						for (i=0;i<elictric_menu.length;i++)
+						{
+							var new_li = document.createElement("li")
+							new_li.href="javascript:void(0);"
+							new_li.className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+							new_li.text=elictric_menu[i]
+							new_li.innerHTML = elictric_menu[i]+'<i class="fas fa-chevron-right fa-sm"></i>'
+							document.getElementById("menu_total").appendChild(new_li)
+						}
+						
+					},
+					error: function(xhr,status,errMsg){
+						alert(status)
+						alert(errMsg)
+					}
+			})
+		}
+
+		
+		
 		$(document).ready(function() {
 			{% if request.session.username %}  
 				//alert("{{username}}")
 				//alert("{{ request.session.username }} ")
-				
 				//$('#fh5co-hero').hide()
-				
 			{% else %}  
 				//alert("还未登录")
 				<!-- $('#fh5co-hero').show() -->
@@ -115,6 +190,8 @@ toastr.options.timeOut="2000"
 		//alert("没有request.session.searchcondition")
 	{% endif %}  
 	
+		
+	
 	<!-- $('.VivaTimeline').vivaTimeline({ -->
                 <!-- carousel: true, -->
                 <!-- carouselTime: 3000 -->
@@ -122,32 +199,33 @@ toastr.options.timeOut="2000"
 	
 	
 	function getCookie(name) {  
-			var cookieValue = null;  
-			if (document.cookie && document.cookie != '') {  
-				var cookies = document.cookie.split(';');  
-				for (var i = 0; i < cookies.length; i++) {  
-					var cookie = jQuery.trim(cookies[i]);  
-					// Does this cookie string begin with the name we want?  
-					if (cookie.substring(0, name.length + 1) == (name + '=')) {  
-						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
-						break;  
-					}  
+		var cookieValue = null;  
+		if (document.cookie && document.cookie != '') {  
+			var cookies = document.cookie.split(';');  
+			for (var i = 0; i < cookies.length; i++) {  
+				var cookie = jQuery.trim(cookies[i]);  
+				// Does this cookie string begin with the name we want?  
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+					break;  
 				}  
 			}  
-			return cookieValue;  
 		}  
-		function csrfSafeMethod(method) {  
-			// these HTTP methods do not require CSRF protection  
-			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
-		}  
-		$.ajaxSetup({  
-			beforeSend: function(xhr, settings) {  
-			var csrftoken = getCookie('csrftoken');       
-			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
-					xhr.setRequestHeader("X-CSRFToken", csrftoken);  
-				}  
+		return cookieValue;  
+	}  
+	function csrfSafeMethod(method) {  
+		// these HTTP methods do not require CSRF protection  
+		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+	}  
+	$.ajaxSetup({  
+		beforeSend: function(xhr, settings) {  
+		var csrftoken = getCookie('csrftoken');       
+		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);  
 			}  
-		}); 
+		}  
+	}); 
+	
   $('#searchblog').click(function(){
 	//alert('search click')
 	//toastr.success('上传文档成功');
@@ -238,9 +316,21 @@ cur_page=1//{{cur_page}} //当前页
 av_page=10//{{av_page}}//每页个数
 var pre_pg
 var next_pg
+
+cur_menu="电力"
+function menuclick(e)
+{
+	//alert('menuclick')
+	//alert(e.innerText)
+	cur_menu = e.innerText
+	document.getElementById("menu_total").innerHTML = "";
+	genMenu(cur_menu)
+}
+
 	</script>
 	
 	</head>
+	
 	<body>
 		
 	<div class="fh5co-loader"></div>
@@ -250,7 +340,6 @@ var next_pg
 		<div class="container-wrap">
 			<div class="top-menu">
 				<div class="row">
-					
 					<div class="col-md-12 col-md-offset-0 text-center menu-1">
 						<ul>
 							<li class="active"><a href="/loginsucc">首页</a></li>
@@ -258,74 +347,55 @@ var next_pg
 							<li class="has-dropdown">
 								<a href="/report">报告</a>
 								<ul class="dropdown">
-									<li><a href="#">电力</a></li>
-									<li><a href="#">暖通</a></li>
-									<li><a href="#">消防</a></li>
-									<li><a href="#">设施</a></li>
+									<li><a href="javascript:void(0);" onclick="menuclick(this)">电力</a></li>
+									<li><a href="javascript:void(0);" onclick="menuclick(this)">暖通</a></li>
+									<li><a href="javascript:void(0);" onclick="menuclick(this)">消防</a></li>
+									<li><a href="javascript:void(0);" onclick="menuclick(this)">设施</a></li>
 								</ul>
 							</li>
 							<li><a href="#">人事</a></li>
 							<li><a href="#">其它</a></li>
 							<li><a href="#">联系我们</a></li>
-							
 						</ul>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</nav>
 	<div class="container-wrap">
-		<!-- <aside id="fh5co-hero" class=""> -->
-			<!-- <div class="flexslider"> -->
-				<!-- <ul class="slides"> -->
-			   	<!-- <li style="background-image: url(/static/thirdparty/ft5_79_church/images/img_bg_1.jpg);"> -->
-			   		<!-- <div class="overlay"></div> -->
-			   		<!-- <div class="container-fluid"> -->
-			   			<!-- <div class="row"> -->
-				   			<!-- <div class="col-md-6 col-md-offset-3 text-center"> -->
-				   				<!-- <div class="slider-text"> -->
-					   				<!-- <div class="slider-text-inner"> -->
-					   					<!-- <h1>欢迎来到财拓云数据中心</h1> -->
-											
-											<!-- <p><a class="btn btn-primary btn-demo" href="/loginpop" style="font-size: 14px;padding: 10px 20px !important;"> <i class="icon-user"></i>登 录</a> <a class="btn btn-primary btn-learn" style="font-size: 14px;padding: 10px 20px !important;"><i class="icon-user-plus"></i>注 册</a></p> -->
-					   				<!-- </div> -->
-				   				<!-- </div> -->
-				   			<!-- </div> -->
-				   		<!-- </div> -->
-			   		<!-- </div> -->
-			   	<!-- </li> -->
-			  	<!-- </ul> -->
-		  	<!-- </div> -->
-		<!-- </aside> -->
-		
-		
 		<div id="fh5co-services" class="fh5co-light-grey" style="padding: 2em 2em !important">
-			<!-- <div class="row animate-box"> -->
-				<!-- <div class="col-md-6 col-md-offset-3 text-center fh5co-heading"> -->
-					<!-- <h2>财拓云IDC欢迎您</h2> -->
-					<!-- <p>我们具备领先的基础设施建设，丰富经验的运维团队，为您提供优质的IDC服务，客户永远是我们的中心，愿与您联手协作共赢，创造美好未来！</p> -->
-				<!-- </div> -->
-			<!-- </div> -->
 			<div class="row">
 				<div class="col-md-2 animate-box">
 					<div class="services">
+						<!-- <button class="dropbtn">下拉菜单</button> -->
 						<div class="list-group">
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">35KV<i class="fas fa-chevron-right fa-sm"></i></a>
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">10KV<i class="fas fa-chevron-right fa-sm"></i></a>
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">400V<i class="fas fa-chevron-right fa-sm"></i></a>
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">动力<i class="fas fa-chevron-right fa-sm"></i></a>
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">照明<i class="fas fa-chevron-right fa-sm"></i></a>
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">消防<i class="fas fa-chevron-right fa-sm"></i></a>
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">电池<i class="fas fa-chevron-right fa-sm"></i></a>
-						  <a href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">柴发<i class="fas fa-chevron-right fa-sm"></i></a>
+							<ul id="menu_total">
+								<script>
+								
+									genMenu(cur_menu)
+									<!-- for (i=0;i<elictric_menu.length;i++) -->
+									<!-- { -->
+										<!-- var new_li = document.createElement("li") -->
+										<!-- new_li.href="javascript:void(0);" -->
+										<!-- new_li.className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" -->
+										<!-- new_li.text=elictric_menu[i] -->
+										<!-- new_li.innerHTML = elictric_menu[i]+'<i class="fas fa-chevron-right fa-sm"></i>' -->
+										
+										<!-- //new_li.onclick = function(){menuclick(this)} -->
+										<!-- document.getElementById("menu_total").appendChild(new_li) -->
+									<!-- } -->
+								</script>
+								
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">35KV<i class="fas fa-chevron-right fa-sm"></i></li> -->
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">10KV<i class="fas fa-chevron-right fa-sm"></i></li> -->
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">400V<i class="fas fa-chevron-right fa-sm"></i></li> -->
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">动力<i class="fas fa-chevron-right fa-sm"></i></li> -->
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">照明<i class="fas fa-chevron-right fa-sm"></i></li> -->
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">消防<i class="fas fa-chevron-right fa-sm"></i></li> -->
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">电池<i class="fas fa-chevron-right fa-sm"></i></li> -->
+								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">柴发<i class="fas fa-chevron-right fa-sm"></i></li> -->
+							</ul>
 						</div>
-						<!-- <a href="/report" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-1.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a> -->
-						<!-- <div class="desc"> -->
-							<!-- <h3 class="font-weight-bold" ><a href="/report"><b>运维报告平台</b></a></h3> -->
-							<!-- <p>基础设施运维、IT运维，内容涉及电力，暖通，消防，网络等.</p> -->
-							<!-- <a href="/report">Read More <i class="icon-arrow-right3"></i></a> -->
-						<!-- </div> -->
 					</div>
 				</div>
 				<div class="col-md-10 animate-box">
@@ -357,7 +427,8 @@ var next_pg
 											window.location.href = $("#downloadreport")[0]
 										}
 								  </script>
-								  <td><button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td>
+								  <td><button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info 
+								  btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td>
 								  
 								</tr>
 								<tr class="table-default">
@@ -436,7 +507,10 @@ var next_pg
 							</table> 
 							
 							<hr>
+							<!-- <div style="width:50%"> -->
 							<!--分页begin-->
+							<!-- <div style="width:90%"> -->
+							<!-- <div style="width:auto"> -->
 							<ul class="pagination pagination-sm" id="blogpage">
 							  <li class="page-item"><a class="page-link" href="#" id="prepage")>上一页</a></li>
 							 
@@ -512,26 +586,15 @@ var next_pg
 							  <!-- <li class="page-item"><a class="page-link" href="#" id="nextpage" >跳至</a></li> -->
 							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
 							  <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
-							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
-							  
-							  <!-- <li class="page-item">&nbsp;&nbsp;跳至:&nbsp;<input class="page-link" type="text" style="width:35px;display:inline" id="gotopagetext" name="gotopage" style="height:80%">&nbsp;页&nbsp;&nbsp;</input><a class="page-link" style="display:inline"  href="javascript:void(0);" onclick="gotopagehref()">GO</a></li> -->
-							  
+							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a							  
 							</ul>
+							<!-- </div> -->
+							<!-- </div> -->
 							<!--分页end-->
-							
-						<!-- <a href="/blog/?pg=1&searchval=" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-3.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a> -->
-						<!-- <div class="desc"> -->
-							<!-- <h3 class="font-weight-bold" ><a href="/blog/?pg=1&searchval="><strong>技术论坛</strong></a></h3> -->
-							<!-- <p>我们不断的总结运维经验，深入学习先进的IDC技术，紧跟潮流，努力打造一支强大的学习型组织.</p> -->
-							<!-- <a href="/blog/?pg=1&searchval=">Read More <i class="icon-arrow-right3"></i></a> -->
-						<!-- </div> -->
 					</div>
 				</div>
-				
 			</div>
 		</div>
-        
-
 		
 	</div><!-- END container-wrap -->
 
@@ -578,9 +641,6 @@ var next_pg
 				</select>
 			  </div>
 			  
-			  
-			  
-			  
 			  <!-- <div class="form-group"> -->
 			  <div  class="services">
 				<div class="input-group mb-3">
@@ -608,8 +668,7 @@ var next_pg
 						</script>
 					</div> 
 				  <!-- </div> -->
-				  
-				  
+ 
 				</div>
 				
 				<!--进度条begin-->
@@ -619,12 +678,6 @@ var next_pg
 				<!--进度条end-->
 			
 			  </div>
-			  
-			  
-			  
-			  
-			  
-			  
 			 
 			</fieldset>
 			</form> 

@@ -55,5 +55,8 @@ class Blog(models.Model):
     blogabstract = models.TextField()  
     blogdate = models.DateTimeField(default = timezone.now)
     
-   
-    
+class ElictricDic(models.Model):
+    electric_item = models.CharField(max_length=120)     
+ 
+class CoolingstationDic(models.Model):
+    Coolingstation_item = models.CharField(max_length=120)     

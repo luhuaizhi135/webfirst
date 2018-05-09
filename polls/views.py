@@ -122,11 +122,35 @@ def driver(request,driver_id):
 	dr = get_object_or_404(models.Driver, pk=driver_id)
 	return HttpResponse(dr.driver_name)
 
+def genreportmenu(request):
+	
+	if request.method=='GET':
+
+		menu_dic = {"电力":"func_A"}
+		menu_1 = request.GET.get('menu_1')
+		
+		#call model api
+		menus = []
+		if menu_1 == "电力" :
+			menu_model = models.ElictricDic.objects.all()
+			for menu in menu_model:
+				menus.append(menu.electric_item)
+				
+		if menu_1 == "暖通" :
+			menu_model = models.CoolingstationDic.objects.all()
+			for menu in menu_model:
+				menus.append(menu.Coolingstation_item)
+				
+			#data = serializers.serialize("json", menu_model)
+			
+		return HttpResponse(json.dumps({"elictric_menu":menus}))
+		#return HttpResponse(json.dumps(data))
+	
+	
 def report(request):
 	template = loader.get_template('report.html')
 	return HttpResponse(template.render({},request))
 	
-
 	
 def blog(request):
 	if request.method=='GET':
@@ -236,6 +260,11 @@ def searchblog(request):
 		
 		return HttpResponse(template.render(context,request))
 	
+
+def DebugLog(msg):
+	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+	logging.basicConfig(filename='mydebuglog.log', level=logging.ERROR, format=LOG_FORMAT)
+	logging.error(msg)
 		
 	
 def comment(request,comment_id):
