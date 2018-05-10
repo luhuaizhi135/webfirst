@@ -127,75 +127,245 @@
 
 
 	<script>
+	
+	cur_menu="电力"
+	cur_menu_child = ""
+	function menuclick(e)
+	{
+		//alert('menuclick')
+		//alert(e.innerText)
+		cur_menu = e.innerText
+		document.getElementById("menu_total").innerHTML = "";
+		genMenu(cur_menu)
+	}
+
+	elictric_menu = []
+	function menu_2_click(e)
+	{
+		//alert(cur_menu)
+		//alert(e.innerText)
+		cur_menu_child = e.innerText
+		//ajax refresh report table
+		//genReporttable(cur_pg)
+	}
+	
+	function pageitemclick(e)
+	{
+		genReporttable(e.innerText)
+	}
+	function prepageclick()
+	{
+		genReporttable(cur_page-1)
+	}
+	function nextpageclick()
+	{
+		genReporttable(cur_page+1)
+	}
+	function genReporttable(pg)
+	{
+		//cur_menu="电力"
+		//cur_menu_child = ""
+		//ajax refresh report table
+		$.ajax({
+				url:'/reportdetail',
+				type:'GET',
+				data:{"menu_1": cur_menu,"menu_2":cur_menu_child,"cur_pg":pg},
+				//dataType:'json',
+				//processData: false,  // tell jquery not to process the data
+				contentType: false, // tell jquery not to set contentType
+				
+				async:false,
+				success: function(reports) {
+
+					//alert(reportmenu)
+					
+					var json_reports = JSON.parse(reports);
+					//alert(json_reports)
+					//alert(json_reports["Reports"])
+					//alert(json_reports["cur_page"])
+					
+					total_pg=parseInt(json_reports["total_pg"]) //总页数
+					cur_page=parseInt(json_reports["cur_page"]) //当前页
+					av_page=parseInt(json_reports["av_page"])//每页个数
+		
+					document.getElementById("blogpage").innerHTML = "";
+					///////////////////////////////
+					new_li = document.createElement("li")
+					new_li.className = "page-item"
+					new_li.innerHTML = '<a class="page-link" href="#" id="prepage" )>上一页</a>'
+					document.getElementById("blogpage").appendChild(new_li)
+							 
+							 
+								  per_pg =6 //每组显示6页
+								  for(var m=0;;m++)
+								  {
+									if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
+									{
+										break;
+									}
+								  }
+								  start_pg = m*6+1
+								  end_pg = (m+1)*6
+								  if(end_pg>total_pg)
+								  {
+									end_pg=total_pg
+								  }
+								  for(var i=start_pg;i<=end_pg;i++)
+								  {
+									
+									var new_li = document.createElement("li")
+									new_li.className = "page-item"
+									if(i==cur_page)
+									{
+										new_li.className +=  " active"
+									}
+									
+									var new_a = document.createElement("a")
+									new_a.className = "page-link"
+									new_a.text = i
+									new_a.href='javascript:void(0);'//"/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
+									
+									new_li.appendChild(new_a)
+									
+									new_li.onclick = function(){pageitemclick(this)}
+									
+									document.getElementById('blogpage').appendChild(new_li)
+								  }
+								  
+								  if(cur_page>1)
+								  {
+									pre_pg = cur_page-1
+								  }
+								  else
+								  {
+									pre_pg=1
+								  }
+								  if(cur_page<total_pg)
+								  {
+									next_pg = cur_page+1
+								  }
+								  else
+								  {
+									next_pg = cur_page
+								  }
+								  
+								  document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
+								  document.getElementById('prepage').onclick=function(){prepageclick()}
+							  
+							  
+							  new_li = document.createElement("li")
+					new_li.className = "page-item"
+					new_li.innerHTML = '<a class="page-link" href="#" id="nextpage" )>下一页</a>'
+					document.getElementById("blogpage").appendChild(new_li)
+					
+							  
+								  
+									document.getElementById('nextpage').href = "#"
+									document.getElementById('nextpage').onclick=function(){nextpageclick()}
+								
+								new_span = document.createElement("span")
+								new_span.innerHTML = '&nbsp;&nbsp;'
+								document.getElementById("blogpage").appendChild(new_span)
+								
+								new_a = document.createElement("a")
+								new_a.className = "page-link"
+								new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
+								new_a.innerText="跳至"
+								document.getElementById("blogpage").appendChild(new_a)
+								
+								new_li = document.createElement("li")
+					new_li.className = "page-item"
+					new_li.innerHTML = '<input class="page-link" style="display:inline !important"></input>'
+					document.getElementById("blogpage").appendChild(new_li)
+					
+					new_a = document.createElement("a")
+								new_a.className = "page-link"
+								new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
+								new_a.innerText="GO"
+								document.getElementById("blogpage").appendChild(new_a)
+					
+							  //<span>&nbsp;&nbsp;</span>
+							 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
+							 // <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
+							 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
+					/////////////////////////////
+					
+					
+				},
+				error: function(xhr,status,errMsg){
+					alert(status)
+					alert(errMsg)
+				}
+		})
+	}
+	
+	function genMenu(menu_1)//"电力"、“暖通”
+	{
+		$.ajax({
+				url:'/genreportmenu',
+				type:'GET',
+				data:{"menu_1": menu_1},
+				//dataType:'json',
+				//processData: false,  // tell jquery not to process the data
+				contentType: false, // tell jquery not to set contentType
+				
+				async:false,
+				success: function(reportmenu) {
+
+					//alert(reportmenu)
+					
+					var json_reportmenu = JSON.parse(reportmenu);
+					//alert(json_reportmenu.elictric_menu)
+					elictric_menu = json_reportmenu.elictric_menu
+					document.getElementById("menu_total").innerHTML = "";
+					for (i=0;i<elictric_menu.length;i++)
+					{
+						var new_li = document.createElement("li")
+						new_li.href="javascript:void(0);"
+						new_li.className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+						new_li.text=elictric_menu[i]
+						new_li.innerHTML = elictric_menu[i]+'<i class="fas fa-chevron-right fa-sm"></i>'
+						if(i==0)
+						{
+							cur_menu_child = elictric_menu[i]
+						}
+						new_li.onclick = function(){menu_2_click(this)}
+						document.getElementById("menu_total").appendChild(new_li)
+					}
+					
+				},
+				error: function(xhr,status,errMsg){
+					alert(status)
+					alert(errMsg)
+				}
+		})
+	}
+
+	
+	
+	
 		toastr.options.positionClass = 'toast-center-center';
 		toastr.options.showDuration="300"
 		toastr.options.hideDuration="300"
 		toastr.options.timeOut="2000"
 
-		elictric_menu = []
+	$(document).ready(function() {
+		{% if request.session.username %}  
+			//alert("{{username}}")
+			//alert("{{ request.session.username }} ")
+			//$('#fh5co-hero').hide()
+		{% else %}  
+			//alert("还未登录")
+			<!-- $('#fh5co-hero').show() -->
+			$(location).attr('href', '/loginpop')
+		{% endif %}  
 		
-		function genMenu(menu_1)//"电力"、“暖通”
-		{
-			$.ajax({
-					url:'/genreportmenu',
-					type:'GET',
-					data:{"menu_1": menu_1},
-					//dataType:'json',
-					//processData: false,  // tell jquery not to process the data
-					contentType: false, // tell jquery not to set contentType
-					
-					async:false,
-					success: function(reportmenu) {
-
-						//alert(reportmenu)
-						
-						var json_reportmenu = JSON.parse(reportmenu);
-						//alert(json_reportmenu.elictric_menu)
-						elictric_menu = json_reportmenu.elictric_menu
-						document.getElementById("menu_total").innerHTML = "";
-						for (i=0;i<elictric_menu.length;i++)
-						{
-							var new_li = document.createElement("li")
-							new_li.href="javascript:void(0);"
-							new_li.className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-							new_li.text=elictric_menu[i]
-							new_li.innerHTML = elictric_menu[i]+'<i class="fas fa-chevron-right fa-sm"></i>'
-							document.getElementById("menu_total").appendChild(new_li)
-						}
-						
-					},
-					error: function(xhr,status,errMsg){
-						alert(status)
-						alert(errMsg)
-					}
-			})
-		}
-
-		
-		
-		$(document).ready(function() {
-			{% if request.session.username %}  
-				//alert("{{username}}")
-				//alert("{{ request.session.username }} ")
-				//$('#fh5co-hero').hide()
-			{% else %}  
-				//alert("还未登录")
-				<!-- $('#fh5co-hero').show() -->
-				$(location).attr('href', '/loginpop')
-			{% endif %}  
-	{% if request.session.searchcondition %}  
-		$('#searchblogcondition').val("{{ request.session.searchcondition }}")
-		//alert("{{ request.session.searchcondition }}")
-	{% else %}  
-		//alert("没有request.session.searchcondition")
-	{% endif %}  
-	
-		
-	
-	<!-- $('.VivaTimeline').vivaTimeline({ -->
-                <!-- carousel: true, -->
-                <!-- carouselTime: 3000 -->
-            <!-- });   -->
+		{% if request.session.searchcondition %}  
+			$('#searchblogcondition').val("{{ request.session.searchcondition }}")
+			//alert("{{ request.session.searchcondition }}")
+		{% else %}  
+			//alert("没有request.session.searchcondition")
+		{% endif %}  
 	
 	
 	function getCookie(name) {  
@@ -317,16 +487,10 @@ av_page=10//{{av_page}}//每页个数
 var pre_pg
 var next_pg
 
-cur_menu="电力"
-function menuclick(e)
-{
-	//alert('menuclick')
-	//alert(e.innerText)
-	cur_menu = e.innerText
-	document.getElementById("menu_total").innerHTML = "";
-	genMenu(cur_menu)
-}
-
+	
+	
+	
+		
 	</script>
 	
 	</head>
@@ -371,35 +535,18 @@ function menuclick(e)
 						<div class="list-group">
 							<ul id="menu_total">
 								<script>
-								
 									genMenu(cur_menu)
-									<!-- for (i=0;i<elictric_menu.length;i++) -->
-									<!-- { -->
-										<!-- var new_li = document.createElement("li") -->
-										<!-- new_li.href="javascript:void(0);" -->
-										<!-- new_li.className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" -->
-										<!-- new_li.text=elictric_menu[i] -->
-										<!-- new_li.innerHTML = elictric_menu[i]+'<i class="fas fa-chevron-right fa-sm"></i>' -->
-										
-										<!-- //new_li.onclick = function(){menuclick(this)} -->
-										<!-- document.getElementById("menu_total").appendChild(new_li) -->
-									<!-- } -->
 								</script>
-								
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">35KV<i class="fas fa-chevron-right fa-sm"></i></li> -->
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">10KV<i class="fas fa-chevron-right fa-sm"></i></li> -->
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">400V<i class="fas fa-chevron-right fa-sm"></i></li> -->
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">动力<i class="fas fa-chevron-right fa-sm"></i></li> -->
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">照明<i class="fas fa-chevron-right fa-sm"></i></li> -->
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">消防<i class="fas fa-chevron-right fa-sm"></i></li> -->
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">电池<i class="fas fa-chevron-right fa-sm"></i></li> -->
-								  <!-- <li href="#"  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">柴发<i class="fas fa-chevron-right fa-sm"></i></li> -->
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-10 animate-box">
 					<div class="services">
+						<script>
+							genReporttable(1)
+						</script>
+						
 						<table class="table table-hover">
 							  <thead> 
 								<button type="button" class="btn btn-success btn-sm form-inline" data-toggle="modal" data-target="#myModal" id="addnewbtn">添加报告</button>
@@ -512,81 +659,9 @@ function menuclick(e)
 							<!-- <div style="width:90%"> -->
 							<!-- <div style="width:auto"> -->
 							<ul class="pagination pagination-sm" id="blogpage">
-							  <li class="page-item"><a class="page-link" href="#" id="prepage")>上一页</a></li>
-							 
-							  <script>
-									{% if request.session.searchcondition %}  
-										$('#searchblogcondition').val("{{ request.session.searchcondition }}")
-										//alert("{{ request.session.searchcondition }}")
-									{% else %}  
-										//alert("没有request.session.searchcondition")
-									{% endif %} 
-							
-								  //for(var i=1;i<=total_pg;i++)
-								  //alert(Math.floor(1/6))
-								  per_pg =6 //每组显示6页
-								   
-								  for(var m=0;;m++)
-								  {
-									if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
-									{
-										break;
-									}
-								  }
-								  start_pg = m*6+1
-								  end_pg = (m+1)*6
-								  if(end_pg>total_pg)
-								  {
-									end_pg=total_pg
-								  }
-								  for(var i=start_pg;i<=end_pg;i++)
-								  {
-									
-									var new_li = document.createElement("li")
-									new_li.className = "page-item"
-									if(i==cur_page)
-									{
-										new_li.className +=  " active"
-									}
-									
-									var new_a = document.createElement("a")
-									new_a.className = "page-link"
-									new_a.text = i
-									new_a.href='#'//"/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
-									new_li.appendChild(new_a)
-									document.getElementById('blogpage').appendChild(new_li)
-								  }
-								  
-								  if(cur_page>1)
-								  {
-									pre_pg = cur_page-1
-								  }
-								  else
-								  {
-									pre_pg=1
-								  }
-								  if(cur_page<total_pg)
-								  {
-									next_pg = cur_page+1
-								  }
-								  else
-								  {
-									next_pg = cur_page
-								  }
-								  
-								  document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
-								  
-							  </script>
-							  
-							  <li class="page-item"><a class="page-link" href="#" id="nextpage">下一页</a></li>
-								  <script>
-									document.getElementById('nextpage').href = "#"//"/blog/?pg="+String(next_pg)+'&searchval='+$('#searchblogcondition').val(); 
-								  </script>
-							  <span>&nbsp;&nbsp;</span>
-							  <!-- <li class="page-item"><a class="page-link" href="#" id="nextpage" >跳至</a></li> -->
-							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
-							  <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
-							  <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a							  
+								<script>
+									genReporttable(1)	
+								</script>		  
 							</ul>
 							<!-- </div> -->
 							<!-- </div> -->

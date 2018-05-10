@@ -126,25 +126,40 @@ def genreportmenu(request):
 	
 	if request.method=='GET':
 
-		menu_dic = {"电力":"func_A"}
+		menu_dic = {"电力":"ElictricDic","暖通":"CoolingstationDic","消防":"FireProtectionDic","设施":"infrastructureDic"}
 		menu_1 = request.GET.get('menu_1')
-		
-		#call model api
-		menus = []
-		if menu_1 == "电力" :
-			menu_model = models.ElictricDic.objects.all()
-			for menu in menu_model:
-				menus.append(menu.electric_item)
-				
-		if menu_1 == "暖通" :
-			menu_model = models.CoolingstationDic.objects.all()
-			for menu in menu_model:
-				menus.append(menu.Coolingstation_item)
-				
-			#data = serializers.serialize("json", menu_model)
 			
+		menus = []
+
+		fun_model = "models."+	menu_dic[menu_1] + 	".objects.all()"
+		menu_model = eval(fun_model)
+		for menu in menu_model:
+			menus.append(menu.menu_item)		
+					
 		return HttpResponse(json.dumps({"elictric_menu":menus}))
 		#return HttpResponse(json.dumps(data))
+	
+def reportdetail(request):	
+	if request.method=='GET':
+		menu_1 = request.GET.get('menu_1')
+		menu_2 = request.GET.get('menu_2')
+		pg     = request.GET.get('cur_pg')
+		
+		av_page=3
+		
+		Reports = models.Report.objects.all()
+		
+		start_pg = (int(pg)-1)*av_page
+		end_pg = (int(pg)-1)*av_page+av_page
+		
+		if Reports.count()%av_page == 0:
+			total_pg = int(Reports.count()/av_page)
+		else:
+			total_pg = int(Reports.count()/av_page)+1
+		
+		data = serializers.serialize("json", Reports[start_pg:end_pg])
+		context = {'Reports':data,'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
+		return HttpResponse(json.dumps(context))
 	
 	
 def report(request):

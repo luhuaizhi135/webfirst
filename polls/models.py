@@ -56,7 +56,22 @@ class Blog(models.Model):
     blogdate = models.DateTimeField(default = timezone.now)
     
 class ElictricDic(models.Model):
-    electric_item = models.CharField(max_length=120)     
+    menu_item = models.CharField(max_length=120)     
  
 class CoolingstationDic(models.Model):
-    Coolingstation_item = models.CharField(max_length=120)     
+    menu_item = models.CharField(max_length=120)     
+    
+class FireProtectionDic(models.Model):
+    menu_item = models.CharField(max_length=120) 
+    
+class infrastructureDic(models.Model):
+    menu_item = models.CharField(max_length=120) 
+    
+class Report(models.Model):
+    filename = models.CharField(max_length=120)
+    username = models.CharField(max_length=20)
+    reportinfo = models.CharField(max_length=120)
+    reportdate = models.DateTimeField(default = timezone.now)
+    reportmenu = models.CharField(max_length=50)
+    
+    
