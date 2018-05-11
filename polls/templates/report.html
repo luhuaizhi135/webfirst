@@ -137,6 +137,8 @@
 		cur_menu = e.innerText
 		document.getElementById("menu_total").innerHTML = "";
 		genMenu(cur_menu)
+		genReporttable(1)
+		
 	}
 
 	elictric_menu = []
@@ -146,7 +148,7 @@
 		//alert(e.innerText)
 		cur_menu_child = e.innerText
 		//ajax refresh report table
-		//genReporttable(cur_pg)
+		genReporttable(1)
 	}
 	
 	function pageitemclick(e)
@@ -155,12 +157,20 @@
 	}
 	function prepageclick()
 	{
-		genReporttable(cur_page-1)
+		if(cur_page>1)
+		{
+			genReporttable(cur_page-1)
+		}
 	}
 	function nextpageclick()
 	{
-		genReporttable(cur_page+1)
+		if(cur_page<total_pg)
+		{
+			genReporttable(cur_page+1)
+		}
 	}
+	
+	totalreports=[];
 	function genReporttable(pg)
 	{
 		//cur_menu="电力"
@@ -169,20 +179,59 @@
 		$.ajax({
 				url:'/reportdetail',
 				type:'GET',
-				data:{"menu_1": cur_menu,"menu_2":cur_menu_child,"cur_pg":pg},
+				data:{"menu_1": cur_menu.trim(),"menu_2":cur_menu_child.trim(),"cur_pg":pg},
 				//dataType:'json',
 				//processData: false,  // tell jquery not to process the data
 				contentType: false, // tell jquery not to set contentType
 				
 				async:false,
-				success: function(reports) {
+				success: function(rps) {
 
-					//alert(reportmenu)
+					var json_reports = JSON.parse(rps);
+					totalreports = json_reports.Reports;
+					var allreports = JSON.parse(totalreports)
+					//alert(totalreports)
+					////生成报告开始
+					document.getElementById("reporttbody").innerHTML=""
+					for(rp in allreports)
+					{
+						new_tr = document.createElement("tr")
+						if(rp%2==0)
+						{
+							new_tr.className = "table-success"
+						}
+						else
+						{
+							new_tr.className = "table-default"
+						}
+						
+						new_td = document.createElement("td")
+						new_td.innerText = allreports[rp].fields.filename
+						new_tr.appendChild(new_td)
+						
+						new_td = document.createElement("td")
+						new_td.innerText = allreports[rp].fields.username
+						new_tr.appendChild(new_td)
+						
+						new_td = document.createElement("td")
+						new_td.innerText = allreports[rp].fields.reportinfo
+						new_tr.appendChild(new_td)
+						
+						new_td = document.createElement("td")
+						new_td.innerText = allreports[rp].fields.reportdate
+						new_tr.appendChild(new_td)
+						
+						new_td = document.createElement("td")
+						new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button>'
+						new_tr.appendChild(new_td)
+						
+						document.getElementById("reporttbody").appendChild(new_tr)
+					}
 					
-					var json_reports = JSON.parse(reports);
-					//alert(json_reports)
-					//alert(json_reports["Reports"])
-					//alert(json_reports["cur_page"])
+					///生成报告结束
+					
+					
+					///生成页码开始
 					
 					total_pg=parseInt(json_reports["total_pg"]) //总页数
 					cur_page=parseInt(json_reports["cur_page"]) //当前页
@@ -196,101 +245,99 @@
 					document.getElementById("blogpage").appendChild(new_li)
 							 
 							 
-								  per_pg =6 //每组显示6页
-								  for(var m=0;;m++)
-								  {
-									if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
-									{
-										break;
-									}
-								  }
-								  start_pg = m*6+1
-								  end_pg = (m+1)*6
-								  if(end_pg>total_pg)
-								  {
-									end_pg=total_pg
-								  }
-								  for(var i=start_pg;i<=end_pg;i++)
-								  {
-									
-									var new_li = document.createElement("li")
-									new_li.className = "page-item"
-									if(i==cur_page)
-									{
-										new_li.className +=  " active"
-									}
-									
-									var new_a = document.createElement("a")
-									new_a.className = "page-link"
-									new_a.text = i
-									new_a.href='javascript:void(0);'//"/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
-									
-									new_li.appendChild(new_a)
-									
-									new_li.onclick = function(){pageitemclick(this)}
-									
-									document.getElementById('blogpage').appendChild(new_li)
-								  }
-								  
-								  if(cur_page>1)
-								  {
-									pre_pg = cur_page-1
-								  }
-								  else
-								  {
-									pre_pg=1
-								  }
-								  if(cur_page<total_pg)
-								  {
-									next_pg = cur_page+1
-								  }
-								  else
-								  {
-									next_pg = cur_page
-								  }
-								  
-								  document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
-								  document.getElementById('prepage').onclick=function(){prepageclick()}
+					  per_pg =6 //每组显示6页
+					  for(var m=0;;m++)
+					  {
+						if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
+						{
+							break;
+						}
+					  }
+					  start_pg = m*6+1
+					  end_pg = (m+1)*6
+					  if(end_pg>total_pg)
+					  {
+						end_pg=total_pg
+					  }
+					  for(var i=start_pg;i<=end_pg;i++)
+					  {
+						
+						var new_li = document.createElement("li")
+						new_li.className = "page-item"
+						if(i==cur_page)
+						{
+							new_li.className +=  " active"
+						}
+						
+						var new_a = document.createElement("a")
+						new_a.className = "page-link"
+						new_a.text = i
+						new_a.href='javascript:void(0);'//"/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
+						
+						new_li.appendChild(new_a)
+						
+						new_li.onclick = function(){pageitemclick(this)}
+						
+						document.getElementById('blogpage').appendChild(new_li)
+					  }
+					  
+					  if(cur_page>1)
+					  {
+						pre_pg = cur_page-1
+					  }
+					  else
+					  {
+						pre_pg=1
+					  }
+					  if(cur_page<total_pg)
+					  {
+						next_pg = cur_page+1
+					  }
+					  else
+					  {
+						next_pg = cur_page
+					  }
+					  
+					  document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
+					  document.getElementById('prepage').onclick=function(){prepageclick()}
 							  
 							  
-							  new_li = document.createElement("li")
+					new_li = document.createElement("li")
 					new_li.className = "page-item"
 					new_li.innerHTML = '<a class="page-link" href="#" id="nextpage" )>下一页</a>'
 					document.getElementById("blogpage").appendChild(new_li)
 					
 							  
 								  
-									document.getElementById('nextpage').href = "#"
-									document.getElementById('nextpage').onclick=function(){nextpageclick()}
-								
-								new_span = document.createElement("span")
-								new_span.innerHTML = '&nbsp;&nbsp;'
-								document.getElementById("blogpage").appendChild(new_span)
-								
-								new_a = document.createElement("a")
-								new_a.className = "page-link"
-								new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
-								new_a.innerText="跳至"
-								document.getElementById("blogpage").appendChild(new_a)
-								
-								new_li = document.createElement("li")
+					document.getElementById('nextpage').href = "#"
+					document.getElementById('nextpage').onclick=function(){nextpageclick()}
+					
+					new_span = document.createElement("span")
+					new_span.innerHTML = '&nbsp;&nbsp;'
+					document.getElementById("blogpage").appendChild(new_span)
+					
+					new_a = document.createElement("a")
+					new_a.className = "page-link"
+					new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
+					new_a.innerText="跳至"
+					document.getElementById("blogpage").appendChild(new_a)
+					
+					new_li = document.createElement("li")
 					new_li.className = "page-item"
 					new_li.innerHTML = '<input class="page-link" style="display:inline !important"></input>'
 					document.getElementById("blogpage").appendChild(new_li)
 					
 					new_a = document.createElement("a")
-								new_a.className = "page-link"
-								new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
-								new_a.innerText="GO"
-								document.getElementById("blogpage").appendChild(new_a)
+					new_a.className = "page-link"
+					new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
+					new_a.innerText="GO"
+					document.getElementById("blogpage").appendChild(new_a)
 					
-							  //<span>&nbsp;&nbsp;</span>
-							 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
-							 // <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
-							 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
+					  //<span>&nbsp;&nbsp;</span>
+					 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
+					 // <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
+					 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
 					/////////////////////////////
-					
-					
 				},
 				error: function(xhr,status,errMsg){
 					alert(status)
@@ -544,7 +591,9 @@ var next_pg
 				<div class="col-md-10 animate-box">
 					<div class="services">
 						<script>
-							genReporttable(1)
+							$(document).ready(function() {
+								genReporttable(1)
+							})
 						</script>
 						
 						<table class="table table-hover">
@@ -558,98 +607,31 @@ var next_pg
 								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>操&nbsp;&nbsp;作</h5></th>
 								</tr>
 							  </thead>
-							  <tbody>
-								<tr class="table-success">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>zhaobin</td>
-								  <td>每日巡检</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <a href="/static/report/Agile POL全光园区解决方案 V3.0.pdf" id="downloadreport" download><span></span></a>
-								  <!-- <a href="/static/report/def.doc" id="downloadreport" download><span></span></a> -->
-								  <script>
-										function dlreport(){
-											//alert("hererer")
-											$('#downloadreport').click()
-											window.location.href = $("#downloadreport")[0]
-										}
-								  </script>
-								  <td><button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info 
-								  btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td>
+							  <tbody id="reporttbody">
+								
+								
+								<!-- <tr class="table-success"> -->
 								  
-								</tr>
-								<tr class="table-default">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>chenggeng</td>
-								  <td>紧急事故</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-success">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-default">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-success">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-default">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-success">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-default">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-success">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
-								<tr class="table-default">
-								  <!-- <th scope="row" class="text-info">配电运维报告</th> -->
-								  <td>配电运维报告</td>
-								  <td>Column content</td>
-								  <td>Column content</td>
-								  <td>2018-04-17 20:31:36</td>
-								  <td><button type="button" class="btn btn-outline-info btn-sm">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info btn-sm">日志</button></td>
-								</tr>
+								  <!-- <td>配电运维报告</td> -->
+								  <!-- <td>zhaobin</td> -->
+								  <!-- <td>每日巡检</td> -->
+								  <!-- <td>2018-04-17 20:31:36</td> -->
+								  <!-- <a href="/static/report/Agile POL全光园区解决方案 V3.0.pdf" id="downloadreport" download><span></span></a> -->
+								  
+								  <!-- <script> -->
+										<!-- function dlreport(){ -->
+											
+											<!-- $('#downloadreport').click() -->
+											<!-- window.location.href = $("#downloadreport")[0] -->
+										<!-- } -->
+								  <!-- </script> -->
+								  <!-- <td><button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info  -->
+								  <!-- btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td> -->
+								  
+								<!-- </tr> -->
+								
+								
+								
 							  </tbody>
 							</table> 
 							
@@ -660,7 +642,7 @@ var next_pg
 							<!-- <div style="width:auto"> -->
 							<ul class="pagination pagination-sm" id="blogpage">
 								<script>
-									genReporttable(1)	
+									//genReporttable(1)	
 								</script>		  
 							</ul>
 							<!-- </div> -->

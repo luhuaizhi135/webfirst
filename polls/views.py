@@ -145,9 +145,14 @@ def reportdetail(request):
 		menu_2 = request.GET.get('menu_2')
 		pg     = request.GET.get('cur_pg')
 		
-		av_page=3
+		report_menu = menu_1 + menu_2
 		
-		Reports = models.Report.objects.all()
+		av_page=8
+		
+		
+		#DebugLog(report_menu)
+		Reports = models.Report.objects.filter(reportmenu=report_menu)
+		#DebugLog(str(Reports))
 		
 		start_pg = (int(pg)-1)*av_page
 		end_pg = (int(pg)-1)*av_page+av_page
