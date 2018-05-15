@@ -32,8 +32,17 @@
 
 		<script src="/static/js/jquery-3.3.1.js"></script>
 		<script src="/static/js/jquerysession.js"></script>
+		
+		<script src="/static/jquery.md5.js"></script>
+		<link href="/static/thirdparty/toastr/toastr/build/toastr.css"  rel="stylesheet" >
+		<script src="/static/thirdparty/toastr/toastr/build/toastr.min.js"></script>
 
 		<script>
+			toastr.options.positionClass = 'toast-center-center';
+			toastr.options.showDuration="300"
+			toastr.options.hideDuration="300"
+			toastr.options.timeOut="2000"
+	
 			$(document).ready(function(){
 
 				
@@ -64,6 +73,99 @@
 						}  
 					}  
 				}); 
+				
+				
+				
+				function gotoverify()
+				{
+					//document.getElementById("registorform").submit()
+					$(location).prop('href', "/loginpop")
+				}
+				
+				$('#submitbtn').click(function(){
+					var ssss = $('#form-password').val()
+					var dddd = $.md5(ssss)
+					//$('#form-password').val(dddd)
+					
+					var ssss = $('#form-repeatpassword').val()
+					var qqqq = $.md5(ssss)
+					//$('#form-repeatpassword').val(qqqq)
+					
+					//var pPattern = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/;
+					var pPattern = /^.*(?=.{6,}).*$/;
+					if(pPattern.test(ssss)==false)
+					{
+						toastr.error('密码必须6位以上');
+						return false
+					}
+					
+					if(dddd != qqqq)
+					{
+						toastr.error('密码输入不一致，请重新输入');
+						$('#form-password').val("")
+						$('#form-repeatpassword').val("")
+						return false
+					}
+					if($('#username').val()=="")
+					{
+						toastr.error('用户名不能为空');
+						$('#form-password').val("")
+						$('#form-repeatpassword').val("")
+						return false
+					}
+					else
+					{
+						var uPattern = /^[a-zA-Z0-9_-]{4,16}$/;
+						if(uPattern.test($('#username').val())==false)
+						{
+							toastr.error('用户名必须以字母数字或下划线开头，且长度不能低于4位');
+							return false
+						}
+
+					}
+					
+					//用户名校验
+					//密码校验
+					
+					//use ajax registor
+					var form = new FormData();
+					form.append("username",$('#username').val());
+					form.append("password",dddd);
+  
+					$.ajax({
+						url:'/registor',
+						type:'GET',
+						//dataType:'json',
+						//data:$('#registorform').serialize(),
+						data:{"username":$('#username').val(),"password":dddd},
+						//processData: false,  // tell jquery not to process the data
+						contentType: false, // tell jquery not to set contentType
+						async:false,
+						
+						success: function(rps) {
+							if(rps=="ok")
+							{
+								toastr.success('注册成功，即将进入登录界面');
+								setTimeout(gotoverify,2000)
+							}
+							else
+							{
+								toastr.error('用户名已存在！');
+								return false
+							}
+							
+						},
+						error:function(xhr,status,errMsg){
+							alert(status)
+							alert(errMsg)
+						}
+					})
+					
+					
+					//toastr.success('注册成功，即将进入登录界面');
+
+				})
+	
 			});
 		</script>
     </head>
@@ -87,10 +189,11 @@
                             </div>
                         </div>
                     </div>
+					
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                         	
-                        	<form role="form" action="/registor" method="post" enctype="application/x-www-form-urlencoded">
+                        	<form role="form" action="/registor" method="post" enctype="application/x-www-form-urlencoded" id="registorform">
                         		{% csrf_token %}
 								<!-- <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}"/> -->
                         		<fieldset>
@@ -106,7 +209,7 @@
 		                            <div class="form-bottom">
 				                    	<div class="form-group">
 				                    		<label class="sr-only" for="form-first-name">User name</label>
-				                        	<input type="text" name="username" placeholder="User name..." class="form-first-name form-control" id="form-first-name">
+				                        	<input type="text" name="username" id="username" placeholder="User name..." class="form-first-name form-control" id="form-first-name" required="required">
 				                        </div>
 										<div class="form-group">
 				                    		<label class="sr-only" for="form-password">Password</label>
@@ -114,12 +217,11 @@
 				                        </div>
 										<div class="form-group">
 				                    		<label class="sr-only" for="form-password">Password</label>
-				                        	<input type="password" name="repeatpassword" placeholder="Repeat Password..." class="form-password form-control" id="form-password">
+				                        	<input type="password" name="repeatpassword" placeholder="Repeat Password..." class="form-password form-control" id="form-repeatpassword">
 				                        </div>
-				                        
-										<button type="submit" class="btn">注册</button>
-										
-										
+				                        <script src="/static/jquery.md5.js"></script>
+										<button type="button" class="btn" id="submitbtn">注册</button>
+	
 				                    </div>
 			                    </fieldset>	
                         		
@@ -142,7 +244,8 @@
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>
         <![endif]-->
-
+		<script src="/static/jquery.md5.js"></script>
+		
     </body>
 
 </html>

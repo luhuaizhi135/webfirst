@@ -8,9 +8,6 @@
 	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	
-
-	
-
   	<!-- Facebook and Twitter integration -->
 	<meta property="og:title" content=""/>
 	<meta property="og:image" content=""/>
@@ -54,76 +51,56 @@
 	
 	<script src="/static/js/jquery-3.3.1.js"></script>
 	<script src="/static/js/jquerysession.js"></script>
-
-	
-	
 	
 	<link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+	<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
 	<script src="/static/thirdparty/popper.min.js"></script>
-<link href="/static/thirdparty/toastr/toastr/build/toastr.css"  rel="stylesheet" >
-<script src="/static/thirdparty/toastr/toastr/build/toastr.min.js"></script>
+	<link href="/static/thirdparty/toastr/toastr/build/toastr.css"  rel="stylesheet" >
+	<script src="/static/thirdparty/toastr/toastr/build/toastr.min.js"></script>
 
-<link href="/static/thirdparty/monokai_sublime.min.css" rel="stylesheet" />
-<link href="/static/thirdparty/magnific-popup.min.css" rel="stylesheet">
-<link href="/static/thirdparty/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/static/thirdparty/monokai_sublime.min.css" rel="stylesheet" />
+	<link href="/static/thirdparty/magnific-popup.min.css" rel="stylesheet">
+	<link href="/static/thirdparty/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet">
 
-
-
-
-
-
-
-
-
-<link rel="stylesheet" type="text/css" href="/static/thirdparty/timeline/bootstrap-3.3.6-dist/css/bootstrap.min.css" />
-
+	<link rel="stylesheet" type="text/css" href="/static/thirdparty/timeline/bootstrap-3.3.6-dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/thirdparty/timeline/css/jquery.eeyellow.Timeline.css" />
     <!--[if IE]>
         <script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
     <![endif]-->
 	
-	
-	
-<style>
-	td{padding:6px !important;}
-</style>
-<style>
-	.list-group-item{padding: .5rem 1rem;color: #007bff; !important}
-</style>
+	<style>
+		td{padding:6px !important;}
 
-<style>
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
+		.list-group-item{padding: .5rem 1rem;color: #007bff; !important}
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+		.dropbtn {
+			background-color: #4CAF50;
+			color: white;
+			padding: 16px;
+			font-size: 16px;
+			border: none;
+			cursor: pointer;
+		}
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-}
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
 
-.dropdown-content a {
-    display: block;
-}
+		.dropdown-content {
+			display: none;
+			position: absolute;
+		}
+
+		.dropdown-content a {
+			display: block;
+		}
 
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-</style>
-
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+	</style>
 
 
 	<script>
@@ -137,8 +114,7 @@
 		cur_menu = e.innerText
 		document.getElementById("menu_total").innerHTML = "";
 		genMenu(cur_menu)
-		genReporttable(1)
-		
+		genReporttable(1)	
 	}
 
 	elictric_menu = []
@@ -227,12 +203,10 @@
 						
 						document.getElementById("reporttbody").appendChild(new_tr)
 					}
-					
 					///生成报告结束
 					
 					
 					///生成页码开始
-					
 					total_pg=parseInt(json_reports["total_pg"]) //总页数
 					cur_page=parseInt(json_reports["cur_page"]) //当前页
 					av_page=parseInt(json_reports["av_page"])//每页个数
@@ -245,22 +219,22 @@
 					document.getElementById("blogpage").appendChild(new_li)
 							 
 							 
-					  per_pg =6 //每组显示6页
-					  for(var m=0;;m++)
-					  {
+					per_pg =6 //每组显示6页
+					for(var m=0;;m++)
+					{
 						if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
 						{
 							break;
 						}
-					  }
-					  start_pg = m*6+1
-					  end_pg = (m+1)*6
-					  if(end_pg>total_pg)
-					  {
+					}
+					start_pg = m*6+1
+					end_pg = (m+1)*6
+					if(end_pg>total_pg)
+					{
 						end_pg=total_pg
-					  }
-					  for(var i=start_pg;i<=end_pg;i++)
-					  {
+					}
+					for(var i=start_pg;i<=end_pg;i++)
+					{
 						
 						var new_li = document.createElement("li")
 						new_li.className = "page-item"
@@ -279,27 +253,27 @@
 						new_li.onclick = function(){pageitemclick(this)}
 						
 						document.getElementById('blogpage').appendChild(new_li)
-					  }
+					}
 					  
-					  if(cur_page>1)
-					  {
+					if(cur_page>1)
+					{
 						pre_pg = cur_page-1
-					  }
-					  else
-					  {
+					}
+					else
+					{
 						pre_pg=1
-					  }
-					  if(cur_page<total_pg)
-					  {
+					}
+					if(cur_page<total_pg)
+					{
 						next_pg = cur_page+1
-					  }
-					  else
-					  {
+					}
+					else
+					{
 						next_pg = cur_page
-					  }
+					}
 					  
-					  document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
-					  document.getElementById('prepage').onclick=function(){prepageclick()}
+					 document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
+					 document.getElementById('prepage').onclick=function(){prepageclick()}
 							  
 							  
 					new_li = document.createElement("li")
@@ -360,7 +334,6 @@
 				success: function(reportmenu) {
 
 					//alert(reportmenu)
-					
 					var json_reportmenu = JSON.parse(reportmenu);
 					//alert(json_reportmenu.elictric_menu)
 					elictric_menu = json_reportmenu.elictric_menu
@@ -388,13 +361,10 @@
 		})
 	}
 
-	
-	
-	
-		toastr.options.positionClass = 'toast-center-center';
-		toastr.options.showDuration="300"
-		toastr.options.hideDuration="300"
-		toastr.options.timeOut="2000"
+	toastr.options.positionClass = 'toast-center-center';
+	toastr.options.showDuration="300"
+	toastr.options.hideDuration="300"
+	toastr.options.timeOut="2000"
 
 	$(document).ready(function() {
 		{% if request.session.username %}  
@@ -443,36 +413,35 @@
 		}  
 	}); 
 	
-  $('#searchblog').click(function(){
-	//alert('search click')
-	//toastr.success('上传文档成功');
-	window.location.href='/blog/?pg=1&searchval='+$('#searchblogcondition').val(); 
-  })
+	$('#searchblog').click(function(){
+		//alert('search click')
+		//toastr.success('上传文档成功');
+		window.location.href='/blog/?pg=1&searchval='+$('#searchblogcondition').val(); 
+	})
   
-  var initalProgress = 0
-  function updateProgress()
-  {
-	$('#uploadprocess').css('width',String(initalProgress)+"%");
-	initalProgress = initalProgress+1;
-	time_handle = setTimeout(updateProgress,100);
-	if(initalProgress==100)
+	var initalProgress = 0
+	function updateProgress()
 	{
-		clearTimeout(time_handle);
+		$('#uploadprocess').css('width',String(initalProgress)+"%");
+		initalProgress = initalProgress+1;
+		time_handle = setTimeout(updateProgress,100);
+		if(initalProgress==100)
+		{
+			clearTimeout(time_handle);
+		}
 	}
-  }
-  $('#addnewbtn').click(function(){
 	
-	initalProgress=0
-	$('#uploadprocess').css('width',String(initalProgress)+"%");
-	$('#fartherprg').hide()
-	$('#photoCover').val('')
-  })
-  $('#uploadreport').click(function(){
-		//alert($('#photoCover').val())
+	$('#addnewbtn').click(function(){
+		initalProgress=0
+		$('#uploadprocess').css('width',String(initalProgress)+"%");
+		$('#fartherprg').hide()
+		$('#photoCover').val('')
+	})
+	
+	$('#uploadreport').click(function(){
 		
 		$('#fartherprg').show()
 		time_handle = setTimeout(updateProgress,100)
-		
 		
 		//begin
 		var form_data = new FormData();
@@ -485,15 +454,12 @@
 				processData: false,  // tell jquery not to process the data
 				contentType: false, // tell jquery not to set contentType
 				success: function(report) {
-
 					$('#uploadprocess').css('width',"100%");
 					$('#photoCover').val('')
 					//alert('上传成功')
 					toastr.success('上传文档成功');
 					clearTimeout(time_handle);
-					setTimeout(function(){$('#closeupload').click()},2000)
-					
-					
+					setTimeout(function(){$('#closeupload').click()},2000)	
 				},
 				error: function(xhr,status,errMsg){
 					//alert(data)
@@ -508,44 +474,39 @@
 		})
 	})
 	})
-function HTMLEncode(html) {
-    var temp = document.createElement("div");
-    (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
-    var output = temp.innerHTML;
-    temp = null;
-    return output;
-}
-
-function HTMLDecode(text) { 
-    var temp = document.createElement("div"); 
-    temp.innerHTML = text; 
-    var output = temp.innerText || temp.textContent; 
-    temp = null; 
-    return output; 
-} 
-
-function gotopagehref(){
-		window.location.href='#'//'/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
+	
+	function HTMLEncode(html) {
+		var temp = document.createElement("div");
+		(temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+		var output = temp.innerHTML;
+		temp = null;
+		return output;
 	}
-	
-total_pg=100//{{total_pg}} //总页数
-cur_page=1//{{cur_page}} //当前页
-av_page=10//{{av_page}}//每页个数
-var pre_pg
-var next_pg
 
+	function HTMLDecode(text) { 
+		var temp = document.createElement("div"); 
+		temp.innerHTML = text; 
+		var output = temp.innerText || temp.textContent; 
+		temp = null; 
+		return output; 
+	} 
+
+	function gotopagehref(){
+			window.location.href='#'//'/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
+		}
 	
-	
-	
+	total_pg=100//{{total_pg}} //总页数
+	cur_page=1//{{cur_page}} //当前页
+	av_page=10//{{av_page}}//每页个数
+	var pre_pg
+	var next_pg
 		
 	</script>
-	
 	</head>
 	
 	<body>
 		
 	<div class="fh5co-loader"></div>
-	
 	<div id="page">
 	<nav class="fh5co-nav" role="navigation">
 		<div class="container-wrap">
@@ -578,7 +539,6 @@ var next_pg
 			<div class="row">
 				<div class="col-md-2 animate-box">
 					<div class="services">
-						<!-- <button class="dropbtn">下拉菜单</button> -->
 						<div class="list-group">
 							<ul id="menu_total">
 								<script>
@@ -608,46 +568,28 @@ var next_pg
 								</tr>
 							  </thead>
 							  <tbody id="reporttbody">
-								
-								
 								<!-- <tr class="table-success"> -->
-								  
 								  <!-- <td>配电运维报告</td> -->
 								  <!-- <td>zhaobin</td> -->
 								  <!-- <td>每日巡检</td> -->
 								  <!-- <td>2018-04-17 20:31:36</td> -->
 								  <!-- <a href="/static/report/Agile POL全光园区解决方案 V3.0.pdf" id="downloadreport" download><span></span></a> -->
-								  
 								  <!-- <script> -->
-										<!-- function dlreport(){ -->
-											
+										<!-- function dlreport(){ -->	
 											<!-- $('#downloadreport').click() -->
 											<!-- window.location.href = $("#downloadreport")[0] -->
 										<!-- } -->
 								  <!-- </script> -->
 								  <!-- <td><button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info  -->
 								  <!-- btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td> -->
-								  
 								<!-- </tr> -->
-								
-								
-								
 							  </tbody>
 							</table> 
 							
 							<hr>
-							<!-- <div style="width:50%"> -->
 							<!--分页begin-->
-							<!-- <div style="width:90%"> -->
-							<!-- <div style="width:auto"> -->
-							<ul class="pagination pagination-sm" id="blogpage">
-								<script>
-									//genReporttable(1)	
-								</script>		  
+							<ul class="pagination pagination-sm" id="blogpage">	  
 							</ul>
-							<!-- </div> -->
-							<!-- </div> -->
-							<!--分页end-->
 					</div>
 				</div>
 			</div>
@@ -752,7 +694,6 @@ var next_pg
 	</div>
 	<!-- 模态框--上传报告end -->
 
-
 	<!-- 模态框-时间轴begin -->
 	<div class="modal fade in" id="timelineModal">
 	  <!-- <div class="modal-dialog"  style="max-width:1000px;width:1000px !important"> -->
@@ -768,9 +709,9 @@ var next_pg
 		  <!-- 模态框主体 -->
 		  <div class="modal-body">
 			
-			<div class="container">
-			<div class="row">
-				<div class="col-md-12">
+			<div class="container-wrap">
+			<div class="row pre-scrollable">
+				<div class="col-md-12 animate-box">
 					<div class="VivaTimeline">
 						<dl>
 							<dt>2018 四月</dt>
@@ -842,6 +783,7 @@ var next_pg
 				</div>
 			</div>
 		</div>
+		
 		  </div>
 	 
 		  <!-- 模态框底部 -->
@@ -896,8 +838,6 @@ var next_pg
             });
         });
     </script>
-	
-	
 	
 	</body>
 </html>

@@ -15,6 +15,7 @@ from django.shortcuts import render, render_to_response
 from django.template import loader, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 import re
+from pip._vendor.pyparsing import CaselessKeyword
 #from django.utils.encoding import force_unicode,smart_unicode, smart_str, DEFAULT_LOCALE_ENCODING  
 
 
@@ -87,16 +88,27 @@ def verify(request):
 	return HttpResponse(template.render({},request))
 
 def registor(request):
-	uname = request.POST['username']
-	password = request.POST['password']
-	repeatpassword = request.POST['repeatpassword']
-	if password != repeatpassword:
-		return HttpResponseRedirect("/verify")
-	if (models.User.objects.filter(username=uname,userpwd=password).count()!=0):
-		return HttpResponseRedirect("/verify")
-		
-	models.User.objects.create(username=uname, userpwd=password)
-	return redirect(reverse('loginpop', args=[]))
+	DebugLog("trace into registor")
+	if request.method=='GET':
+		uname = request.GET['username']
+		password = request.GET['password']
+		#repeatpassword = request.GET['repeatpassword']
+	else:
+		uname = request.POST['username']
+		password = request.POST['password']
+		#repeatpassword = request.POST['repeatpassword']
+	
+	DebugLog(uname)
+	DebugLog(password)
+	#DebugLog(repeatpassword)
+	
+	if (models.User.objects.filter(username=uname).count()!=0):
+		return HttpResponse('fail')
+		#return HttpResponseRedirect("/verify")
+	else:
+		models.User.objects.create(username=uname, userpwd=password)
+		#return redirect(reverse('loginpop', args=[]))
+		return HttpResponse('ok')
 	
 def detail(request,question_id):
 	latest_question_list = models.Question.objects.order_by('-pub_date')[:5]
