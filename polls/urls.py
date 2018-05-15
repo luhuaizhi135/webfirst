@@ -12,6 +12,7 @@ urlpatterns=[
 	url(r'^login$',views.login,name='login'),
 	url(r'^loginpop$',views.loginpop,name='loginpop'),
 	url(r'^loginsucc$',views.loginsucc,name='loginsucc'),
+	url(r'^logout$',views.logout,name='logout'),
 	url(r'^registor$',views.registor,name='registor'),
 	url(r'^blog/$',views.blog,name='blog'),
 	url(r'^showblog/$',views.showblog,name='showblog'),

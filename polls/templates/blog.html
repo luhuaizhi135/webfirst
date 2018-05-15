@@ -8,9 +8,6 @@
 	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	
-
-	
-
   	<!-- Facebook and Twitter integration -->
 	<meta property="og:title" content=""/>
 	<meta property="og:image" content=""/>
@@ -115,16 +112,11 @@
 	<script>
 		$(document).ready(function() {
 			{% if request.session.username %}  
-				//alert("{{username}}")
-				//alert("{{ request.session.username }} ")
-				
-				//$('#fh5co-hero').hide()
 				
 			{% else %}  
-				//alert("还未登录")
-				<!-- $('#fh5co-hero').show() -->
 				$(location).attr('href', '/loginpop')
 			{% endif %}  
+			
 			function getCookie(name) {  
 					var cookieValue = null;  
 					if (document.cookie && document.cookie != '') {  
@@ -167,7 +159,6 @@
 				window.location.href='/blog/?pg='+$('#gotopagetext').val()+'&searchval='+$('#searchblogcondition').val(); 
 			}
 			
-			
 		total_pg={{total_pg}} //总页数
 		cur_page={{cur_page}} //当前页
 		av_page={{av_page}}//每页个数
@@ -192,10 +183,11 @@
 
 		function showablog(blogid,blogtitle)
 		{
-			//alert(blogid)
-			//alert(blogtitle)
 			window.location.href='/showblog/?blogid='+blogid; 
 		}
+		
+		
+		
 	</script>
 	
 	</head>
@@ -225,7 +217,7 @@
 							<li><a href="#">人事</a></li>
 							<li><a href="#">其它</a></li>
 							<li><a href="#">联系我们</a></li>
-							
+							<li><a href="/logout" ><i class="fas fa-sign-out-alt "></i></a></li>
 						</ul>
 					</div>
 				</div>

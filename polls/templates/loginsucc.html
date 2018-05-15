@@ -55,18 +55,13 @@
 	<script src="/static/js/jquery-3.3.1.js"></script>
 	<script src="/static/js/jquerysession.js"></script>
 
+	<link href="/static/thirdparty/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet">
 	
 	<script>
 		$(document).ready(function() {
 			{% if request.session.username %}  
-				//alert("{{username}}")
-				//alert("{{ request.session.username }} ")
-				
-				//$('#fh5co-hero').hide()
-				
+	
 			{% else %}  
-				//alert("还未登录")
-				<!-- $('#fh5co-hero').show() -->
 				$(location).attr('href', '/loginpop')
 			{% endif %}  
 		})
@@ -99,7 +94,7 @@
 							<li><a href="#">人事</a></li>
 							<li><a href="#">其它</a></li>
 							<li><a href="#">联系我们</a></li>
-							
+							<li><a href="/logout" ><i class="fas fa-sign-out-alt "></i></a></li>
 						</ul>
 					</div>
 				</div>
@@ -108,28 +103,7 @@
 		</div>
 	</nav>
 	<div class="container-wrap">
-		<!-- <aside id="fh5co-hero" class=""> -->
-			<!-- <div class="flexslider"> -->
-				<!-- <ul class="slides"> -->
-			   	<!-- <li style="background-image: url(/static/thirdparty/ft5_79_church/images/img_bg_1.jpg);"> -->
-			   		<!-- <div class="overlay"></div> -->
-			   		<!-- <div class="container-fluid"> -->
-			   			<!-- <div class="row"> -->
-				   			<!-- <div class="col-md-6 col-md-offset-3 text-center"> -->
-				   				<!-- <div class="slider-text"> -->
-					   				<!-- <div class="slider-text-inner"> -->
-					   					<!-- <h1>欢迎来到财拓云数据中心</h1> -->
-											
-											<!-- <p><a class="btn btn-primary btn-demo" href="/loginpop" style="font-size: 14px;padding: 10px 20px !important;"> <i class="icon-user"></i>登 录</a> <a class="btn btn-primary btn-learn" style="font-size: 14px;padding: 10px 20px !important;"><i class="icon-user-plus"></i>注 册</a></p> -->
-					   				<!-- </div> -->
-				   				<!-- </div> -->
-				   			<!-- </div> -->
-				   		<!-- </div> -->
-			   		<!-- </div> -->
-			   	<!-- </li> -->
-			  	<!-- </ul> -->
-		  	<!-- </div> -->
-		<!-- </aside> -->
+		
 		
 		
 		<div id="fh5co-services" class="fh5co-light-grey">

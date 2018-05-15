@@ -368,12 +368,9 @@
 
 	$(document).ready(function() {
 		{% if request.session.username %}  
-			//alert("{{username}}")
-			//alert("{{ request.session.username }} ")
-			//$('#fh5co-hero').hide()
+			
 		{% else %}  
-			//alert("还未登录")
-			<!-- $('#fh5co-hero').show() -->
+
 			$(location).attr('href', '/loginpop')
 		{% endif %}  
 		
@@ -528,6 +525,7 @@
 							<li><a href="#">人事</a></li>
 							<li><a href="#">其它</a></li>
 							<li><a href="#">联系我们</a></li>
+							<li><a href="/logout" ><i class="fas fa-sign-out-alt "></i></a></li>
 						</ul>
 					</div>
 				</div>

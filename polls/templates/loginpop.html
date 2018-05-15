@@ -113,8 +113,22 @@
 				                        	<input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
 				                        </div>
 				                        
-										<button type="submit" class="btn">登录</button>
-										
+										<script>
+											function callmd5()
+											{
+												beforeval = $('#form-password').val()
+												afterval = $.md5(beforeval)
+												$('#form-password').val(afterval)
+											}
+										</script>
+										<button type="submit" class="btn" onclick="callmd5()">登录</button>
+										<button type="button" class="btn btn-dark" onclick="goback()">返回</button>
+										<script>
+											function goback()
+											{
+												$(location).prop('href', "/")
+											}
+										</script>
 										<!-- <a type="submit" class="btn btn-primary">登录</a> -->
 				                    </div>
 			                    </fieldset>
@@ -134,7 +148,7 @@
         <script src="/static/thirdparty/azds_multi-step-registration/assets/js/jquery.backstretch.min.js"></script>
         <script src="/static/thirdparty/azds_multi-step-registration/assets/js/retina-1.1.0.min.js"></script>
         <script src="/static/thirdparty/azds_multi-step-registration/assets/js/scripts.js"></script>
-        
+        <script src="/static/jquery.md5.js"></script>
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>
         <![endif]-->

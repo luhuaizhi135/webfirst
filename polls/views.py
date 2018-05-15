@@ -80,7 +80,12 @@ def login(request):
 	except :
 		para = {"findit":True,"username":'',"password":''}
 		return render(request,'login.html',{'para':json.dumps(para)})
-		
+
+def logout(request):
+	request.session.delete("session_key")	
+	request.session.clear()
+	para = {"findit":True,"username":'',"password":''}
+	return HttpResponseRedirect("/")	
 
 def verify(request):
 	#template = loader.get_template('validate.html')
