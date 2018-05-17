@@ -104,28 +104,257 @@
 
 
 	<script>
-	
-	cur_menu="电力"
-	cur_menu_child = ""
-	function menuclick(e)
-	{
-		//alert('menuclick')
-		//alert(e.innerText)
-		cur_menu = e.innerText
-		document.getElementById("menu_total").innerHTML = "";
-		genMenu(cur_menu)
-		genReporttable(1)	
-	}
 
-	elictric_menu = []
-	function menu_2_click(e)
-	{
-		//alert(cur_menu)
-		//alert(e.innerText)
-		cur_menu_child = e.innerText
-		//ajax refresh report table
+	
+	toastr.options.positionClass = 'toast-center-center';
+	toastr.options.showDuration="300"
+	toastr.options.hideDuration="300"
+	toastr.options.timeOut="2000"
+
+	$(document).ready(function() {
+		{% if request.session.username %}  
+			
+		{% else %}  
+
+			$(location).attr('href', '/loginpop')
+		{% endif %}  
+		
+		{% if request.session.searchcondition %}  
+			$('#searchblogcondition').val("{{ request.session.searchcondition }}")
+			//alert("{{ request.session.searchcondition }}")
+		{% else %}  
+			//alert("没有request.session.searchcondition")
+		{% endif %}  
+	
+	
+		function getCookie(name) {  
+			var cookieValue = null;  
+			if (document.cookie && document.cookie != '') {  
+				var cookies = document.cookie.split(';');  
+				for (var i = 0; i < cookies.length; i++) {  
+					var cookie = jQuery.trim(cookies[i]);  
+					// Does this cookie string begin with the name we want?  
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {  
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
+						break;  
+					}  
+				}  
+			}  
+			return cookieValue;  
+		}  
+		function csrfSafeMethod(method) {  
+			// these HTTP methods do not require CSRF protection  
+			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
+		}  
+		$.ajaxSetup({  
+			beforeSend: function(xhr, settings) {  
+			var csrftoken = getCookie('csrftoken');       
+			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);  
+				}  
+			}  
+		}); 
+		
+		$('#searchblog').click(function(){
+			//alert('search click')
+			//toastr.success('上传文档成功');
+			window.location.href='/blog/?pg=1&searchval='+$('#searchblogcondition').val(); 
+		})
+	  
+		var initalProgress = 0
+		function updateProgress()
+		{
+			$('#uploadprocess').css('width',String(initalProgress)+"%");
+			initalProgress = initalProgress+1;
+			time_handle = setTimeout(updateProgress,100);
+			if(initalProgress==100)
+			{
+				clearTimeout(time_handle);
+			}
+		}
+		
+		$('#addnewbtn').click(function(){
+			initalProgress=0
+			$('#uploadprocess').css('width',String(initalProgress)+"%");
+			$('#fartherprg').hide()
+			$('#photoCover').val('')
+			
+			$("#divreporttable").show()//innerHTML = "";
+			$("#divmanageuser").hide()//innerHTML = "";
+		})
+		
+		$('#uploadreport').click(function(){
+			
+			$('#fartherprg').show()
+			time_handle = setTimeout(updateProgress,100)
+			
+			//begin
+			var form_data = new FormData();
+			var file_info =$('#reportfile')[0].files[0];
+			form_data.append('file',file_info);
+			$.ajax({
+					url:'/uploadreport',
+					type:'POST',
+					data: form_data,
+					processData: false,  // tell jquery not to process the data
+					contentType: false, // tell jquery not to set contentType
+					success: function(report) {
+						$('#uploadprocess').css('width',"100%");
+						$('#photoCover').val('')
+						//alert('上传成功')
+						toastr.success('上传文档成功');
+						clearTimeout(time_handle);
+						setTimeout(function(){$('#closeupload').click()},2000)	
+					},
+					error: function(xhr,status,errMsg){
+						//alert(data)
+						alert("upload report file  fail");
+						alert(status)
+						alert(errMsg)
+						$('#photoCover').val('')
+						clearTimeout(time_handle);
+						$('#closeupload').click()
+					}
+				//end
+			})
+		})
+		
+	
+		function manageuser_pageitemclick(e)
+		{
+			genManageUserstable(e.innerText)
+		}
+		function manageuser_prepageclick()
+		{
+			if(cur_page>1)
+			{
+				genManageUserstable(cur_page-1)
+			}
+		}
+		function manageuser_nextpageclick()
+		{
+			if(cur_page<total_pg)
+			{
+				genManageUserstable(cur_page+1)
+			}
+		}
+		
+	
+		function genManageUserstable(pg)
+		{
+			 
+			$.ajax({
+					url:'/manageuser',
+					type:'GET',
+					data:{"menu_1": cur_menu.trim(),"menu_2":cur_menu_child.trim(),"cur_pg":pg}, //"cur_user":"{{request.session.username}}"
+					//dataType:'json',
+					//processData: false,  // tell jquery not to process the data
+					contentType: false, // tell jquery not to set contentType
+					
+					async:false,
+					success: function(rps) {
+
+						var temp = JSON.parse(rps);
+						
+						////生成用户table开始
+						document.getElementById("manageuserbody").innerHTML=""
+						for(u in temp.rsltusers)
+						{
+							username = temp.rsltusers[u].username
+							unvisibleflg = temp.rsltusers[u].unvisibleflg
+							readonlyflg = temp.rsltusers[u].readonlyflg
+							rwflg = temp.rsltusers[u].rwflg
+							
+							new_tr = document.createElement("tr")
+							if(u%2==0)
+							{
+								new_tr.className = "table-success"
+							}
+							else
+							{
+								new_tr.className = "table-default"
+							}
+							
+							new_td = document.createElement("td")
+							new_td.innerText = username
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							new_td.innerText = unvisibleflg
+							new_td.innerHTML = '<input type="radio" name="' + username+'" value="unvisibleflg">'
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							new_td.innerText = readonlyflg
+							new_td.innerHTML = '<input type="radio" name="'+username+'" value="readonlyflg">'
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							new_td.innerText = rwflg
+							new_td.innerHTML = '<input type="radio" name="'+username+'" value="rwflg">'
+							new_tr.appendChild(new_td)
+							
+							document.getElementById("manageuserbody").appendChild(new_tr)
+						}
+						///生成用户table结束
+						
+						///生成页码开始
+						
+						document.getElementById("manageuserpage").innerHTML = "";
+						total_pg=parseInt(temp.total_pg) //总页数
+						cur_page=parseInt(temp.cur_page) //当前页
+						av_page=parseInt(temp.av_page)//每页个数
+						genPage("manageuserpage",manageuser_pageitemclick,manageuser_prepageclick,manageuser_nextpageclick)
+						/////////////////////////////
+					},
+					error: function(xhr,status,errMsg){
+						alert(status)
+						alert(errMsg)
+					}
+			})
+		}
+	
+		$('#adminuser').click(function(){
+			//alert('manage users ')
+			$("#divreporttable").hide()//innerHTML = "";
+			$("#divmanageuser").show()//innerHTML = "";
+			genManageUserstable(1)
+		})
+		
+		$('#savemanageuser').click(function(){
+			var a = $("input[name='luhuaizhi']:checked").val();
+			//alert(a)	
+		})
+		
+		$("#divreporttable").show()//innerHTML = "";
+		$("#divmanageuser").hide()//innerHTML = "";
+		
+		
+		$("#divreporttable").show()//innerHTML = "";
+		$("#divmanageuser").hide()//innerHTML = "";
+			
+			
+		genMenu(cur_menu)
 		genReporttable(1)
+	
+	})//$(document).ready(function() end
+	
+	
+	function hasClass(obj, cls) { 
+		return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)')); 
+	} 
+
+	function addClass(obj, cls) { 
+		if (!this.hasClass(obj, cls)) obj.className += " " + cls; 
+	} 
+
+	function removeClass(obj, cls) { 
+		if (hasClass(obj, cls)) { 
+			var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)'); 
+			obj.className = obj.className.replace(reg, ' '); 
+		} 
 	}
+	
 	
 	function pageitemclick(e)
 	{
@@ -144,6 +373,106 @@
 		{
 			genReporttable(cur_page+1)
 		}
+	}
+	
+	
+	function genPage(ul_id,pg_item_click_fun,pre_pg_click_fun,next_pg_click_fun)
+	{
+		///生成页码开始
+		///////////////////////////////
+		new_li = document.createElement("li")
+		new_li.className = "page-item"
+		new_li.innerHTML = '<a class="page-link" href="#" id="prepage" )>上一页</a>'
+		new_li.onclick=function(){pre_pg_click_fun()}//function(){prepageclick()}
+		//document.getElementById('prepage').onclick=function(){pre_pg_click_fun()}//function(){prepageclick()}
+		
+		document.getElementById(ul_id).appendChild(new_li)
+				 
+				 
+		per_pg =6 //每组显示6页
+		for(var m=0;;m++)
+		{
+			if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
+			{
+				break;
+			}
+		}
+		start_pg = m*6+1
+		end_pg = (m+1)*6
+		if(end_pg>total_pg)
+		{
+			end_pg=total_pg
+		}
+		for(var i=start_pg;i<=end_pg;i++)
+		{
+			
+			var new_li = document.createElement("li")
+			new_li.className = "page-item"
+			if(i==cur_page)
+			{
+				new_li.className +=  " active"
+			}
+			
+			var new_a = document.createElement("a")
+			new_a.className = "page-link"
+			new_a.text = i
+			new_a.href='javascript:void(0);'//"/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
+			
+			new_li.appendChild(new_a)
+			
+			new_li.onclick = function(){pg_item_click_fun(this)} //function(){pageitemclick(this)}
+			
+			document.getElementById(ul_id).appendChild(new_li)
+		}
+		  
+		if(cur_page>1)
+		{
+			pre_pg = cur_page-1
+		}
+		else
+		{
+			pre_pg=1
+		}
+		if(cur_page<total_pg)
+		{
+			next_pg = cur_page+1
+		}
+		else
+		{
+			next_pg = cur_page
+		}
+		  
+				  
+				  
+		new_li = document.createElement("li")
+		new_li.className = "page-item"
+		new_li.innerHTML = '<a class="page-link" href="#" id="nextpage" )>下一页</a>'
+		
+		new_li.onclick=function(){next_pg_click_fun()}//function(){nextpageclick()}
+		//document.getElementById('nextpage').onclick=function(){next_pg_click_fun()}//function(){nextpageclick()}
+		document.getElementById(ul_id).appendChild(new_li)
+		
+		new_span = document.createElement("span")
+		new_span.innerHTML = '&nbsp;&nbsp;'
+		document.getElementById(ul_id).appendChild(new_span)
+		
+		new_a = document.createElement("a")
+		new_a.className = "page-link"
+		new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
+		new_a.innerText="跳至"
+		document.getElementById(ul_id).appendChild(new_a)
+		
+		new_li = document.createElement("li")
+		new_li.className = "page-item"
+		new_li.innerHTML = '<input class="page-link" style="display:inline !important"></input>'
+		document.getElementById(ul_id).appendChild(new_li)
+		
+		new_a = document.createElement("a")
+		new_a.className = "page-link"
+		new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
+		new_a.innerText="GO"
+		document.getElementById(ul_id).appendChild(new_a)
+		/////////////////////////////
 	}
 	
 	totalreports=[];
@@ -205,112 +534,12 @@
 					}
 					///生成报告结束
 					
-					
 					///生成页码开始
+					document.getElementById("blogpage").innerHTML = "";
 					total_pg=parseInt(json_reports["total_pg"]) //总页数
 					cur_page=parseInt(json_reports["cur_page"]) //当前页
 					av_page=parseInt(json_reports["av_page"])//每页个数
-		
-					document.getElementById("blogpage").innerHTML = "";
-					///////////////////////////////
-					new_li = document.createElement("li")
-					new_li.className = "page-item"
-					new_li.innerHTML = '<a class="page-link" href="#" id="prepage" )>上一页</a>'
-					document.getElementById("blogpage").appendChild(new_li)
-							 
-							 
-					per_pg =6 //每组显示6页
-					for(var m=0;;m++)
-					{
-						if(cur_page>=(m*6+1)&&cur_page<=(m+1)*6)
-						{
-							break;
-						}
-					}
-					start_pg = m*6+1
-					end_pg = (m+1)*6
-					if(end_pg>total_pg)
-					{
-						end_pg=total_pg
-					}
-					for(var i=start_pg;i<=end_pg;i++)
-					{
-						
-						var new_li = document.createElement("li")
-						new_li.className = "page-item"
-						if(i==cur_page)
-						{
-							new_li.className +=  " active"
-						}
-						
-						var new_a = document.createElement("a")
-						new_a.className = "page-link"
-						new_a.text = i
-						new_a.href='javascript:void(0);'//"/blog/?pg="+i+'&searchval='+$('#searchblogcondition').val(); 
-						
-						new_li.appendChild(new_a)
-						
-						new_li.onclick = function(){pageitemclick(this)}
-						
-						document.getElementById('blogpage').appendChild(new_li)
-					}
-					  
-					if(cur_page>1)
-					{
-						pre_pg = cur_page-1
-					}
-					else
-					{
-						pre_pg=1
-					}
-					if(cur_page<total_pg)
-					{
-						next_pg = cur_page+1
-					}
-					else
-					{
-						next_pg = cur_page
-					}
-					  
-					 document.getElementById('prepage').href = "#"//"/blog/?pg="+String(pre_pg)+'&searchval='+$('#searchblogcondition').val(); 
-					 document.getElementById('prepage').onclick=function(){prepageclick()}
-							  
-							  
-					new_li = document.createElement("li")
-					new_li.className = "page-item"
-					new_li.innerHTML = '<a class="page-link" href="#" id="nextpage" )>下一页</a>'
-					document.getElementById("blogpage").appendChild(new_li)
-					
-							  
-								  
-					document.getElementById('nextpage').href = "#"
-					document.getElementById('nextpage').onclick=function(){nextpageclick()}
-					
-					new_span = document.createElement("span")
-					new_span.innerHTML = '&nbsp;&nbsp;'
-					document.getElementById("blogpage").appendChild(new_span)
-					
-					new_a = document.createElement("a")
-					new_a.className = "page-link"
-					new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
-					new_a.innerText="跳至"
-					document.getElementById("blogpage").appendChild(new_a)
-					
-					new_li = document.createElement("li")
-					new_li.className = "page-item"
-					new_li.innerHTML = '<input class="page-link" style="display:inline !important"></input>'
-					document.getElementById("blogpage").appendChild(new_li)
-					
-					new_a = document.createElement("a")
-					new_a.className = "page-link"
-					new_a.style = "display:inline;padding-top:5px;padding-bottom:5px !important"
-					new_a.innerText="GO"
-					document.getElementById("blogpage").appendChild(new_a)
-					
-					  //<span>&nbsp;&nbsp;</span>
-					 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">跳至</a>
-					 // <li class="page-item"><input class="page-link" style="display:inline !important"></input></li>
-					 // <a class="page-link" href="#"  style="display:inline;padding-top:5px;padding-bottom:5px !important">GO</a>
+					genPage("blogpage",pageitemclick,prepageclick,nextpageclick)
 					/////////////////////////////
 				},
 				error: function(xhr,status,errMsg){
@@ -320,7 +549,8 @@
 		})
 	}
 	
-	function genMenu(menu_1)//"电力"、“暖通”
+	menu_2_list=[]
+		function genMenu(menu_1)//"电力"、“暖通”
 	{
 		$.ajax({
 				url:'/genreportmenu',
@@ -360,117 +590,41 @@
 				}
 		})
 	}
-
-	toastr.options.positionClass = 'toast-center-center';
-	toastr.options.showDuration="300"
-	toastr.options.hideDuration="300"
-	toastr.options.timeOut="2000"
-
-	$(document).ready(function() {
-		{% if request.session.username %}  
-			
-		{% else %}  
-
-			$(location).attr('href', '/loginpop')
-		{% endif %}  
-		
-		{% if request.session.searchcondition %}  
-			$('#searchblogcondition').val("{{ request.session.searchcondition }}")
-			//alert("{{ request.session.searchcondition }}")
-		{% else %}  
-			//alert("没有request.session.searchcondition")
-		{% endif %}  
 	
-	
-	function getCookie(name) {  
-		var cookieValue = null;  
-		if (document.cookie && document.cookie != '') {  
-			var cookies = document.cookie.split(';');  
-			for (var i = 0; i < cookies.length; i++) {  
-				var cookie = jQuery.trim(cookies[i]);  
-				// Does this cookie string begin with the name we want?  
-				if (cookie.substring(0, name.length + 1) == (name + '=')) {  
-					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  
-					break;  
-				}  
-			}  
-		}  
-		return cookieValue;  
-	}  
-	function csrfSafeMethod(method) {  
-		// these HTTP methods do not require CSRF protection  
-		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));  
-	}  
-	$.ajaxSetup({  
-		beforeSend: function(xhr, settings) {  
-		var csrftoken = getCookie('csrftoken');       
-		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {  
-				xhr.setRequestHeader("X-CSRFToken", csrftoken);  
-			}  
-		}  
-	}); 
-	
-	$('#searchblog').click(function(){
-		//alert('search click')
-		//toastr.success('上传文档成功');
-		window.location.href='/blog/?pg=1&searchval='+$('#searchblogcondition').val(); 
-	})
-  
-	var initalProgress = 0
-	function updateProgress()
+	cur_menu="电力"
+	cur_menu_child = ""
+	function menuclick(e)
 	{
-		$('#uploadprocess').css('width',String(initalProgress)+"%");
-		initalProgress = initalProgress+1;
-		time_handle = setTimeout(updateProgress,100);
-		if(initalProgress==100)
-		{
-			clearTimeout(time_handle);
-		}
+		$("#divreporttable").show()//innerHTML = "";
+		$("#divmanageuser").hide()//innerHTML = "";
+		//alert('menuclick')
+		//alert(e.innerText)
+		cur_menu = e.innerText
+		document.getElementById("menu_total").innerHTML = "";
+		genMenu(cur_menu)
+		genReporttable(1)	
 	}
-	
-	$('#addnewbtn').click(function(){
-		initalProgress=0
-		$('#uploadprocess').css('width',String(initalProgress)+"%");
-		$('#fartherprg').hide()
-		$('#photoCover').val('')
-	})
-	
-	$('#uploadreport').click(function(){
+
+	elictric_menu = []
+	function menu_2_click(e)
+	{
+		$("#divreporttable").show()//innerHTML = "";
+		$("#divmanageuser").hide()//innerHTML = "";
+		//alert(cur_menu)
+		//alert(e.innerText)
+		cur_menu_child = e.innerText
 		
-		$('#fartherprg').show()
-		time_handle = setTimeout(updateProgress,100)
+		all_menus = document.getElementById("menu_total").childNodes
+		for(m=0;m<all_menus.length;m++)
+		{
+			x = all_menus[m]
+			removeClass(x,"active")
+		}
 		
-		//begin
-		var form_data = new FormData();
-		var file_info =$('#reportfile')[0].files[0];
-		form_data.append('file',file_info);
-		$.ajax({
-				url:'/uploadreport',
-				type:'POST',
-				data: form_data,
-				processData: false,  // tell jquery not to process the data
-				contentType: false, // tell jquery not to set contentType
-				success: function(report) {
-					$('#uploadprocess').css('width',"100%");
-					$('#photoCover').val('')
-					//alert('上传成功')
-					toastr.success('上传文档成功');
-					clearTimeout(time_handle);
-					setTimeout(function(){$('#closeupload').click()},2000)	
-				},
-				error: function(xhr,status,errMsg){
-					//alert(data)
-					alert("upload report file  fail");
-					alert(status)
-					alert(errMsg)
-					$('#photoCover').val('')
-					clearTimeout(time_handle);
-					$('#closeupload').click()
-				}
-			//end
-		})
-	})
-	})
+		e.className = e.className+" active"
+		//ajax refresh report table
+		genReporttable(1)
+	}
 	
 	function HTMLEncode(html) {
 		var temp = document.createElement("div");
@@ -497,6 +651,9 @@
 	av_page=10//{{av_page}}//每页个数
 	var pre_pg
 	var next_pg
+	
+	
+	
 		
 	</script>
 	</head>
@@ -539,24 +696,31 @@
 					<div class="services">
 						<div class="list-group">
 							<ul id="menu_total">
-								<script>
-									genMenu(cur_menu)
-								</script>
+								<!-- <script> -->
+									<!-- $(document).ready(function() { -->
+										<!-- genMenu(cur_menu) -->
+									<!-- }) -->
+								<!-- </script> -->
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-10 animate-box">
 					<div class="services">
-						<script>
-							$(document).ready(function() {
-								genReporttable(1)
-							})
-						</script>
-						
-						<table class="table table-hover">
+						<button type="button" class="btn btn-success btn-sm form-inline" data-toggle="modal" data-target="#myModal" id="addnewbtn">添加报告</button>
+						<button type="button" class="btn btn-primary btn-sm form-inline" id="adminuser">管理权限</button>
+					</div>
+					<div class="services" id="divreporttable">
+						<!-- <script> -->
+							<!-- $(document).ready(function() { -->
+								<!-- genReporttable(1) -->
+								<!-- $("#divreporttable").show()//innerHTML = ""; -->
+								<!-- $("#divmanageuser").hide()//innerHTML = ""; -->
+							<!-- }) -->
+						<!-- </script>		 -->
+						<table class="table table-hover"  id="reporttable">
 							  <thead> 
-								<button type="button" class="btn btn-success btn-sm form-inline" data-toggle="modal" data-target="#myModal" id="addnewbtn">添加报告</button>
+								
 								<tr>
 								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-file fa-sm">&nbsp;</i>报&nbsp;&nbsp;告</h3></th>
 								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th>
@@ -588,7 +752,36 @@
 							<!--分页begin-->
 							<ul class="pagination pagination-sm" id="blogpage">	  
 							</ul>
-					</div>
+							
+					</div><!--end report table service-->
+					<div class="services" id="divmanageuser">	
+						<table class="table table-hover">
+							  <thead> 
+								
+								<tr>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-lock fa-sm">&nbsp;</i>不可见</h5></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fab fa-readme fa-sm">&nbsp;</i>只&nbsp;&nbsp;读</h5></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>读&nbsp;&nbsp;写</h5></th>
+								</tr>
+							  </thead>
+							  <tbody id="manageuserbody">
+								<tr>
+									<td>张三</td>
+									<td>只读</td>
+								</tr>
+								<tr>
+									<td>李四</td>
+									<td>读写</td>
+								</tr>
+							  </tbody>
+						</table> 
+						
+						<!--分页begin-->
+						<ul class="pagination pagination-sm" id="manageuserpage">	  
+						</ul>
+						<button type="button" class="btn btn-primary btn-sm form-inline" id="savemanageuser">保存</button>
+					</div><!--end manage user table service-->
 				</div>
 			</div>
 		</div>

@@ -56,16 +56,28 @@ class Blog(models.Model):
     blogdate = models.DateTimeField(default = timezone.now)
     
 class ElictricDic(models.Model):
-    menu_item = models.CharField(max_length=120)     
+    menu_item = models.CharField(max_length=120)
+    unvisible_users = models.CharField(max_length=1200,default='[]')   
+    readonly_users = models.CharField(max_length=1200,default='[]')
+    rw_users = models.CharField(max_length=1200,default='[]')  
  
 class CoolingstationDic(models.Model):
-    menu_item = models.CharField(max_length=120)     
+    menu_item = models.CharField(max_length=120)   
+    unvisible_users = models.CharField(max_length=1200,default='[]')   
+    readonly_users = models.CharField(max_length=1200,default='[]')
+    rw_users = models.CharField(max_length=1200,default='[]')   
     
 class FireProtectionDic(models.Model):
     menu_item = models.CharField(max_length=120) 
+    unvisible_users = models.CharField(max_length=1200,default='[]')   
+    readonly_users = models.CharField(max_length=1200,default='[]')
+    rw_users = models.CharField(max_length=1200,default='[]')  
     
 class infrastructureDic(models.Model):
     menu_item = models.CharField(max_length=120) 
+    unvisible_users = models.CharField(max_length=1200,default='[]')   
+    readonly_users = models.CharField(max_length=1200,default='[]')
+    rw_users = models.CharField(max_length=1200,default='[]') 
     
 class Report(models.Model):
     filename = models.CharField(max_length=120)

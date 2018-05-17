@@ -149,12 +149,66 @@ def genreportmenu(request):
 		menus = []
 
 		fun_model = "models."+	menu_dic[menu_1] + 	".objects.all()"
+		#models.User.objects.filter(username=uname)
 		menu_model = eval(fun_model)
 		for menu in menu_model:
 			menus.append(menu.menu_item)		
 					
 		return HttpResponse(json.dumps({"elictric_menu":menus}))
 		#return HttpResponse(json.dumps(data))
+
+def manageuser(request):
+	if request.method=='GET':
+		menu_1 = request.GET.get('menu_1')
+		menu_2 = request.GET.get('menu_2')
+		pg     = request.GET.get('cur_pg')
+		cur_user = request.GET.get('cur_user')
+		
+		menu_dic = {"电力":"ElictricDic","暖通":"CoolingstationDic","消防":"FireProtectionDic","设施":"infrastructureDic"}
+		menu_1 = request.GET.get('menu_1')
+		fun_model = "models."+	menu_dic[menu_1] + 	'.objects.filter(menu_item="'+menu_2+'")'
+		#models.User.objects.filter(username=uname)
+		DebugLog(fun_model)
+		menu_model = eval(fun_model)
+		
+		DebugLog(menu_model[0].unvisible_users)
+		DebugLog(menu_model[0].readonly_users)
+		DebugLog(menu_model[0].rw_users)
+		
+		users = models.User.objects.all()
+		
+		av_page=8
+		start_pg = (int(pg)-1)*av_page
+		end_pg = (int(pg)-1)*av_page+av_page
+		
+		if users.count()%av_page == 0:
+			total_pg = int(users.count()/av_page)
+		else:
+			total_pg = int(users.count()/av_page)+1
+		
+		rsltusers=[]	
+		pg_users = users[start_pg:end_pg]
+		for u in pg_users:
+			if u.username in json.loads(menu_model[0].unvisible_users):
+				unvisibleflg = True
+			else:
+				unvisibleflg = False
+				
+			if u.username in json.loads(menu_model[0].readonly_users):
+				readonlyflg = True
+			else:
+				readonlyflg = False
+				
+			if u.username in json.loads(menu_model[0].rw_users):
+				rwflg = True
+			else:
+				rwflg = False
+				
+			rsltusers.append({"username":u.username,"unvisibleflg":unvisibleflg,"readonlyflg":readonlyflg,"rwflg":rwflg})
+			
+		context = {'rsltusers':rsltusers,'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
+		DebugLog(context)
+		return HttpResponse(json.dumps(context))
 	
 def reportdetail(request):	
 	if request.method=='GET':
@@ -307,7 +361,6 @@ def DebugLog(msg):
 def comment(request,comment_id):
 	LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 	#logging.basicConfig(filename='myfirstweb.log', level=logging.ERROR, format=LOG_FORMAT)
-	
 	
 	#logging.error("trace into comment")
 	cm = models.Comment.objects.get(pk=comment_id)

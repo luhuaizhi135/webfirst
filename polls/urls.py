@@ -24,5 +24,6 @@ urlpatterns=[
 	url(r'^report/$',views.report,name='report'),
 	url(r'^reportdetail/$',views.reportdetail,name='reportdetail'),
 	url(r'^genreportmenu/$',views.genreportmenu,name='genreportmenu'),
+	url(r'^manageuser/$',views.manageuser,name='manageuser'),
 	#url(r'^report/(?P<dic_1>[0-9]+)/(?P<dic_2>[0-9]+)$',views.report,name='report'),
 ]
