@@ -157,6 +157,58 @@ def genreportmenu(request):
 		return HttpResponse(json.dumps({"elictric_menu":menus}))
 		#return HttpResponse(json.dumps(data))
 
+def updateuserright(request):
+	if request.method=='POST':
+		DebugLog("===================================================================")
+		DebugLog(request.POST)
+		DebugLog("===================================================================")
+		usersupdate = json.loads(request.POST['aaa'])
+		DebugLog(usersupdate)
+		DebugLog("===================================================================")
+		menu_1 = request.POST['menu_1']
+		menu_2 = request.POST['menu_2']
+		
+		menu_dic = {"电力":"ElictricDic","暖通":"CoolingstationDic","消防":"FireProtectionDic","设施":"infrastructureDic"}
+		fun_model = "models."+	menu_dic[menu_1] + 	'.objects.filter(menu_item="'+menu_2+'")'
+		menu_model = eval(fun_model)
+		DebugLog(menu_model[0].unvisible_users)
+		DebugLog(menu_model[0].readonly_users)
+		DebugLog(menu_model[0].rw_users)
+		
+		unvisible_users=json.loads(menu_model[0].unvisible_users)
+		readonly_users=json.loads(menu_model[0].readonly_users)
+		rw_users=json.loads(menu_model[0].rw_users)
+				
+		for user in usersupdate:
+			username = user['username']
+			checkval = user['checkval']
+			if checkval=="unvisibleflg":
+				if username in readonly_users:
+					readonly_users.remove(username)
+				if username in rw_users:
+					rw_users.remove(username)
+				unvisible_users.append(username)
+			if checkval=="readonlyflg":
+				if username in unvisible_users:
+					unvisible_users.remove(username)
+				if username in rw_users:
+					rw_users.remove(username)
+				readonly_users.append(username)
+			if checkval=="rwflg":
+				if username in unvisible_users:
+					unvisible_users.remove(username)
+				if username in readonly_users:
+					readonly_users.remove(username)
+				rw_users.append(username)
+			
+			fun_model = "models."+	menu_dic[menu_1] + 	'.objects.filter(menu_item="'+menu_2+'")'
+			menu_model = eval(fun_model)
+			menu_model.update(unvisible_users=json.dumps(unvisible_users),readonly_users=json.dumps(readonly_users),rw_users=json.dumps(rw_users))
+		
+	return HttpResponse('ok')
+		#users = json.dumps(usersupdate)
+		#DebugLog(str(users))
+
 def manageuser(request):
 	if request.method=='GET':
 		menu_1 = request.GET.get('menu_1')
