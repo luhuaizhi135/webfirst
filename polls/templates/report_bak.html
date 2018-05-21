@@ -256,10 +256,77 @@
 					success: function(rps) {
 
 						var temp = JSON.parse(rps);
-						usercard_html = temp.usercard
-						$("#divmanageuser1").html(usercard_html)
+						
+						////生成用户table开始
+						document.getElementById("manageuserbody").innerHTML=""
+						for(u in temp.rsltusers)
+						{
+							username = temp.rsltusers[u].username
+							unvisibleflg = temp.rsltusers[u].unvisibleflg
+							readonlyflg = temp.rsltusers[u].readonlyflg
+							rwflg = temp.rsltusers[u].rwflg
+							if(unvisibleflg==false && readonlyflg==false && rwflg==false)
+							{
+								unvisibleflg=true
+							}
+							
+							new_tr = document.createElement("tr")
+							if(u%2==0)
+							{
+								new_tr.className = "table-success"
+							}
+							else
+							{
+								new_tr.className = "table-default"
+							}
+							
+							new_td = document.createElement("td")
+							new_td.innerText = username
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							if(unvisibleflg==true)
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="unvisibleflg" onchange="userrightchg(this)" checked="true">'
+							}
+							else
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="unvisibleflg" onchange="userrightchg(this)">'
+							}
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							new_td.innerText = readonlyflg
+							
+							if(readonlyflg==true)
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="readonlyflg" onchange="userrightchg(this)" checked="true">'
+							}
+							else
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="readonlyflg" onchange="userrightchg(this)">'
+							}
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							new_td.innerText = rwflg
+							if(rwflg==true)
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="rwflg" onchange="userrightchg(this)" checked="true">'
+							}
+							else
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="rwflg" onchange="userrightchg(this)">'
+							}
+							
+							new_tr.appendChild(new_td)
+							
+							document.getElementById("manageuserbody").appendChild(new_tr)
+						}
+						///生成用户权限table结束
 						
 						///生成页码开始
+						
 						document.getElementById("manageuserpage").innerHTML = "";
 						total_pg=parseInt(temp.total_pg) //总页数
 						cur_page=parseInt(temp.cur_page) //当前页
@@ -283,20 +350,12 @@
 		
 		$('#savemanageuser').click(function(){
 			rst=[]
-			
-			//trs = document.getElementById("divmanageuser1").childNodes
-			trs = $("#divmanageuser1").children('div')
-			//trs = document.getElementById("manageuserbody").getElementsByTagName("tr")
+			trs = document.getElementById("manageuserbody").getElementsByTagName("tr")
 			for(i=0;i<trs.length;i++)
 			{
-				x = trs[i]
-				y = x.children[0].children[0]
-				username = y.innerText
-				
+				username = trs[i].getElementsByTagName("input")[0].name
 				ipt = 'input[name="'+username+'"]:checked'
 				var a = $(ipt).val();
-			
-				
 				rst.push({"username":username,"checkval":a})
 			}
 			
@@ -733,49 +792,178 @@
 								  <!-- btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td> -->
 								<!-- </tr> -->
 							  </tbody>
-							</table> 
+						</table> 
+						<div class="row">
+							<div class="col-md-3 animate-box">
+								<div class="card border-primary mb-3" style="max-width: 20rem;">
+								  <div class="card-header">Header</div>
+								  <div class="card-body">
+									<h4 class="card-title">Primary card title</h4>
+									<div class="form-group">
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r1" name="customRadio" class="custom-control-input">
+											  <label class="custom-control-label " for="r1">不可见该文档</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r2"  name="customRadio" class="custom-control-input">
+											  <label class="custom-control-label" for="r2">具有只读权限</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r3"  name="customRadio" class="custom-control-input">
+											  <label class="custom-control-label" for="r3">具有读写权限</label>
+											</div>
+									  </div>
+								  </div>
+								</div>
+							</div>
+							<div class="col-md-3 animate-box">
+								<div class="card border-primary mb-3" style="max-width: 20rem;">
+								  <div class="card-header">Header</div>
+								  <div class="card-body">
+									<h4 class="card-title">Primary card title</h4>
+										<div class="form-group">
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r4" name="customRadio2" class="custom-control-input">
+											  <label class="custom-control-label " for="r4">不可见该文档</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r5"  name="customRadio2" class="custom-control-input">
+											  <label class="custom-control-label" for="r5">具有只读权限</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r6"  name="customRadio2" class="custom-control-input">
+											  <label class="custom-control-label" for="r6">具有读写权限</label>
+											</div>
+									  </div>
+								  </div>
+								</div>
+							</div>
+							<div class="col-md-3 animate-box">
+								<div class="card border-primary mb-3" style="max-width: 20rem;">
+								  <div class="card-header">Header</div>
+								  <div class="card-body">
+									<h4 class="card-title">Primary card title</h4>
+										<div class="form-group">
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r7" name="customRadio3" class="custom-control-input">
+											  <label class="custom-control-label " for="r7">不可见该文档</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r8"  name="customRadio3" class="custom-control-input">
+											  <label class="custom-control-label" for="r8">具有只读权限</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r9"  name="customRadio3" class="custom-control-input">
+											  <label class="custom-control-label" for="r9">具有读写权限</label>
+											</div>
+									  </div>
+								  </div>
+								</div>
+							</div>
 							
-							<hr>
-							<!--分页begin-->
-							<ul class="pagination pagination-sm" id="blogpage">	  
-							</ul>
+						</div>
+						<div class="row">
+							<div class="col-md-3 animate-box">
+								<div class="card border-primary mb-3" style="max-width: 20rem;">
+								  <div class="card-header">Header</div>
+								  <div class="card-body">
+									<h4 class="card-title">Primary card title</h4>
+									<div class="form-group">
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r1" name="customRadio" class="custom-control-input">
+											  <label class="custom-control-label " for="r1">不可见该文档</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r2"  name="customRadio" class="custom-control-input">
+											  <label class="custom-control-label" for="r2">具有只读权限</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r3"  name="customRadio" class="custom-control-input">
+											  <label class="custom-control-label" for="r3">具有读写权限</label>
+											</div>
+									  </div>
+								  </div>
+								</div>
+							</div>
+							<div class="col-md-3 animate-box">
+								<div class="card border-primary mb-3" style="max-width: 20rem;">
+								  <div class="card-header">Header</div>
+								  <div class="card-body">
+									<h4 class="card-title">Primary card title</h4>
+										<div class="form-group">
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r4" name="customRadio2" class="custom-control-input">
+											  <label class="custom-control-label " for="r4">不可见该文档</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r5"  name="customRadio2" class="custom-control-input">
+											  <label class="custom-control-label" for="r5">具有只读权限</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r6"  name="customRadio2" class="custom-control-input">
+											  <label class="custom-control-label" for="r6">具有读写权限</label>
+											</div>
+									  </div>
+								  </div>
+								</div>
+							</div>
+							<div class="col-md-3 animate-box">
+								<div class="card border-primary mb-3" style="max-width: 20rem;">
+								  <div class="card-header">Header</div>
+								  <div class="card-body">
+									<h4 class="card-title">Primary card title</h4>
+										<div class="form-group">
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r7" name="customRadio3" class="custom-control-input">
+											  <label class="custom-control-label " for="r7">不可见该文档</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r8"  name="customRadio3" class="custom-control-input">
+											  <label class="custom-control-label" for="r8">具有只读权限</label>
+											</div>
+											<div class="custom-control custom-radio">
+											  <input type="radio" id="r9"  name="customRadio3" class="custom-control-input">
+											  <label class="custom-control-label" for="r9">具有读写权限</label>
+											</div>
+									  </div>
+								  </div>
+								</div>
+							</div>
+							
+						</div>
+						<hr>
+						<!--分页begin-->
+						<ul class="pagination pagination-sm" id="blogpage">	  
+						</ul>
 							
 					</div><!--end report table service-->
 					<div class="services" id="divmanageuser">	
-					<p></p>
-					<div class='row'>
-					<div class="services" id="divmanageuser1">		
-						<!-- <table class="table table-hover"> -->
-							  <!-- <thead>  -->
+						<table class="table table-hover">
+							  <thead> 
 								
-								<!-- <tr> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-lock fa-sm">&nbsp;</i>不可见</h5></th> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fab fa-readme fa-sm">&nbsp;</i>只&nbsp;&nbsp;读</h5></th> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>读&nbsp;&nbsp;写</h5></th> -->
-								<!-- </tr> -->
-							  <!-- </thead> -->
-							  <!-- <tbody id="manageuserbody"> -->
-							  <!-- </tbody> -->
-						<!-- </table>  -->
+								<tr>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-lock fa-sm">&nbsp;</i>不可见</h5></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fab fa-readme fa-sm">&nbsp;</i>只&nbsp;&nbsp;读</h5></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>读&nbsp;&nbsp;写</h5></th>
+								</tr>
+							  </thead>
+							  <tbody id="manageuserbody">
+							  </tbody>
+						</table> 
 						
-						<!-- <div class="card border-primary mb-3" style="max-width: 20rem;"> -->
-						  <!-- <div class="card-header">Header</div> -->
-						  <!-- <div class="card-body"> -->
-							<!-- <h4 class="card-title">Primary card title</h4> -->
-							<!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-						  <!-- </div> -->
-						<!-- </div> -->
+						<div class="card border-primary mb-3" style="max-width: 20rem;">
+						  <div class="card-header">Header</div>
+						  <div class="card-body">
+							<h4 class="card-title">Primary card title</h4>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						  </div>
+						</div>
 						
 						<!--分页begin-->
-						
-						
-					</div>
-				</div>
-					<ul class="pagination pagination-sm" id="manageuserpage">	  
-					</ul>
-					
-					<button type="button" class="btn btn-primary btn-sm form-inline" id="savemanageuser">保存</button>
+						<ul class="pagination pagination-sm" id="manageuserpage">	  
+						</ul>
+						<button type="button" class="btn btn-primary btn-sm form-inline" id="savemanageuser">保存</button>
 					</div><!--end manage user table service-->
 				</div>
 			</div>

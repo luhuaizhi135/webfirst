@@ -1,0 +1,42 @@
+{% for user in Users %}
+{% if forloop.counter == 0 %}
+<div class="row" id="userrolerowid">
+{% endif %}
+	<div class="col-md-3" style="padding-left:0px">
+		<div class="card border-primary mb-3">
+		  <div class="card-header">{{user.username}}</div>
+		  <div class="card-body">
+			<h4 class="card-title">{{menu_2}}</h4>
+				<div class="form-group">
+					<div class="custom-control custom-radio">
+					  {% if user.unvisibleflg == True %}
+						<input type="radio" id="{{user.username}}r1" name="{{user.username}}" class="custom-control-input" value="unvisibleflg" onchange="userrightchg(this)"  checked="true">
+					  {% else %}
+						<input type="radio" id="{{user.username}}r1" name="{{user.username}}" class="custom-control-input" value="unvisibleflg" onchange="userrightchg(this)"  checked="true">
+					  {% endif %}
+					  <label class="custom-control-label " for="{{user.username}}r1">不可见该文档</label>
+					</div>
+					<div class="custom-control custom-radio">
+					  {% if user.readonlyflg == True %}
+						<input type="radio" id="{{user.username}}r2"  name="{{user.username}}" class="custom-control-input" value="readonlyflg" onchange="userrightchg(this)"  checked="true">
+					  {% else %}
+						<input type="radio" id="{{user.username}}r2"  name="{{user.username}}" class="custom-control-input" value="readonlyflg" onchange="userrightchg(this)">
+					  {% endif %}
+					  <label class="custom-control-label" for="{{user.username}}r2">具有只读权限</label>
+					</div>
+					<div class="custom-control custom-radio">
+					  {% if user.rwflg == True %}
+						<input type="radio" id="{{user.username}}r3"  name="{{user.username}}" class="custom-control-input" value="rwflg" onchange="userrightchg(this)"  checked="true">
+					  {% else %}
+						<input type="radio" id="{{user.username}}r3"  name="{{user.username}}" class="custom-control-input" value="rwflg" onchange="userrightchg(this)">
+					  {% endif %}
+					  <label class="custom-control-label" for="{{user.username}}r3">具有读写权限</label>
+					</div>
+			  </div>
+		  </div>
+		</div>
+	</div>
+{% if forloop.counter == 0 %}
+</div>
+{% endif %}
+{% endfor %}	

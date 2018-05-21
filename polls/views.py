@@ -16,6 +16,7 @@ from django.template import loader, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 import re
 from pip._vendor.pyparsing import CaselessKeyword
+from django.template.loader import render_to_string
 #from django.utils.encoding import force_unicode,smart_unicode, smart_str, DEFAULT_LOCALE_ENCODING  
 
 
@@ -220,7 +221,7 @@ def manageuser(request):
 		menu_1 = request.GET.get('menu_1')
 		fun_model = "models."+	menu_dic[menu_1] + 	'.objects.filter(menu_item="'+menu_2+'")'
 		#models.User.objects.filter(username=uname)
-		DebugLog(fun_model)
+		#DebugLog(fun_model)
 		menu_model = eval(fun_model)
 		
 		DebugLog(menu_model[0].unvisible_users)
@@ -257,8 +258,14 @@ def manageuser(request):
 				rwflg = False
 				
 			rsltusers.append({"username":u.username,"unvisibleflg":unvisibleflg,"readonlyflg":readonlyflg,"rwflg":rwflg})
+		
+		html_card = render_to_string('usercard123.html',{"Users":rsltusers,"menu_2":menu_2})	
 			
-		context = {'rsltusers':rsltusers,'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
+		DebugLog("===================================================================")	
+		DebugLog(html_card)	
+		DebugLog("===================================================================")
+		
+		context = {'rsltusers':rsltusers,'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'usercard':html_card}
 		DebugLog(context)
 		return HttpResponse(json.dumps(context))
 	
