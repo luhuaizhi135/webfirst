@@ -265,7 +265,8 @@ def manageuser(request):
 		DebugLog(html_card)	
 		DebugLog("===================================================================")
 		
-		context = {'rsltusers':rsltusers,'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'usercard':html_card}
+		#context = {'rsltusers':rsltusers,'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'usercard':html_card}
+		context = {'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'usercard':html_card}
 		DebugLog(context)
 		return HttpResponse(json.dumps(context))
 	
@@ -274,6 +275,7 @@ def reportdetail(request):
 		menu_1 = request.GET.get('menu_1')
 		menu_2 = request.GET.get('menu_2')
 		pg     = request.GET.get('cur_pg')
+		username = request.GET.get('username')
 		
 		report_menu = menu_1 + menu_2
 		
@@ -293,7 +295,22 @@ def reportdetail(request):
 			total_pg = int(Reports.count()/av_page)+1
 		
 		data = serializers.serialize("json", Reports[start_pg:end_pg])
-		context = {'Reports':data,'cur_page':pg,'total_pg':total_pg,'av_page':av_page}
+		
+		
+		
+		menu_dic = {"电力":"ElictricDic","暖通":"CoolingstationDic","消防":"FireProtectionDic","设施":"infrastructureDic"}
+		fun_model = "models."+	menu_dic[menu_1] + 	'.objects.filter(menu_item="'+menu_2+'")'
+		menu_model = eval(fun_model)
+		if username in menu_model[0].unvisible_users:
+			userrole = "unvisibleflg"
+		if username in menu_model[0].readonly_users:
+			userrole = "readonlyflg"
+		if username in menu_model[0].rw_users:
+			userrole = "rwflg"
+		
+		
+		
+		context = {'Reports':data,'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'userrole':userrole}
 		return HttpResponse(json.dumps(context))
 	
 	

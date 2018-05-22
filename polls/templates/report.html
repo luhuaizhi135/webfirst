@@ -486,7 +486,7 @@
 		$.ajax({
 				url:'/reportdetail',
 				type:'GET',
-				data:{"menu_1": cur_menu.trim(),"menu_2":cur_menu_child.trim(),"cur_pg":pg},
+				data:{"menu_1": cur_menu.trim(),"menu_2":cur_menu_child.trim(),"cur_pg":pg,"username":"{{request.session.username}}"},
 				//dataType:'json',
 				//processData: false,  // tell jquery not to process the data
 				contentType: false, // tell jquery not to set contentType
@@ -499,6 +499,7 @@
 					var allreports = JSON.parse(totalreports)
 					//alert(totalreports)
 					////生成报告开始
+					userrole = json_reports["userrole"]
 					document.getElementById("reporttbody").innerHTML=""
 					for(rp in allreports)
 					{
@@ -529,7 +530,20 @@
 						new_tr.appendChild(new_td)
 						
 						new_td = document.createElement("td")
-						new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button>'
+						
+						if(userrole=="unvisibleflg")
+						{
+							new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()" disabled>下载</button><button type="button" class="btn btn-outline-info btn-sm" disabled>上传</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal" disabled>日志</button>'
+						}
+						if(userrole=="readonly_users")
+						{
+							new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()" disabled>下载</button><button type="button" class="btn btn-outline-info btn-sm" disabled>上传</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button>'
+						}
+						if(userrole=="rwflg")
+						{
+							new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()" >下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button>'
+						}
+						
 						new_tr.appendChild(new_td)
 						
 						document.getElementById("reporttbody").appendChild(new_tr)
@@ -742,40 +756,15 @@
 							
 					</div><!--end report table service-->
 					<div class="services" id="divmanageuser">	
-					<p></p>
-					<div class='row'>
-					<div class="services" id="divmanageuser1">		
-						<!-- <table class="table table-hover"> -->
-							  <!-- <thead>  -->
-								
-								<!-- <tr> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-lock fa-sm">&nbsp;</i>不可见</h5></th> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fab fa-readme fa-sm">&nbsp;</i>只&nbsp;&nbsp;读</h5></th> -->
-								  <!-- <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>读&nbsp;&nbsp;写</h5></th> -->
-								<!-- </tr> -->
-							  <!-- </thead> -->
-							  <!-- <tbody id="manageuserbody"> -->
-							  <!-- </tbody> -->
-						<!-- </table>  -->
+						<p></p>
+						<div class='row'>
+							<div class="services" id="divmanageuser1">		
+							</div>
+						</div>
+						<ul class="pagination pagination-sm" id="manageuserpage">	  
+						</ul>
 						
-						<!-- <div class="card border-primary mb-3" style="max-width: 20rem;"> -->
-						  <!-- <div class="card-header">Header</div> -->
-						  <!-- <div class="card-body"> -->
-							<!-- <h4 class="card-title">Primary card title</h4> -->
-							<!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-						  <!-- </div> -->
-						<!-- </div> -->
-						
-						<!--分页begin-->
-						
-						
-					</div>
-				</div>
-					<ul class="pagination pagination-sm" id="manageuserpage">	  
-					</ul>
-					
-					<button type="button" class="btn btn-primary btn-sm form-inline" id="savemanageuser">保存</button>
+						<button type="button" class="btn btn-primary btn-sm form-inline" id="savemanageuser">保存</button>
 					</div><!--end manage user table service-->
 				</div>
 			</div>
