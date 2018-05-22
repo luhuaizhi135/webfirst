@@ -19,6 +19,7 @@ urlpatterns=[
 	url(r'^publish$',views.publish,name='publish'),
 	url(r'^uploadpic$',views.uploadpic,name='uploadpic'),
 	url(r'^uploadreport$',views.uploadreport,name='uploadreport'),
+	url(r'^removereport$',views.removereport,name='removereport'),
 	url(r'^publishblog$',views.publishblog,name='publishblog'),
 	url(r'^searchblog$',views.searchblog,name='searchblog'),
 	url(r'^report/$',views.report,name='report'),

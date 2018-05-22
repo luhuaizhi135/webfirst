@@ -192,9 +192,6 @@
 			var form_data = new FormData();
 			var file_info =$('#reportfile')[0].files[0];
 			form_data.append('file',file_info);
-			form_data.append('menu_1',cur_menu.trim());
-			form_data.append('menu_2',cur_menu_child.trim());
-			form_data.append('username',"{{request.session.username}}");
 			$.ajax({
 					url:'/uploadreport',
 					type:'POST',
@@ -259,10 +256,79 @@
 					success: function(rps) {
 
 						var temp = JSON.parse(rps);
-						usercard_html = temp.usercard
-						$("#divmanageuser1").html(usercard_html)
+						
+						////生成用户权限table开始
+						document.getElementById("manageuserbody").innerHTML=""
+						for(u in temp.rsltusers)
+						{
+							username = temp.rsltusers[u].username
+							unvisibleflg = temp.rsltusers[u].unvisibleflg
+							readonlyflg = temp.rsltusers[u].readonlyflg
+							rwflg = temp.rsltusers[u].rwflg
+							usercard_html = temp.usercard
+							
+							if(unvisibleflg==false && readonlyflg==false && rwflg==false)
+							{
+								unvisibleflg=true
+							}
+							
+							new_tr = document.createElement("tr")
+							if(u%2==0)
+							{
+								new_tr.className = "table-success"
+							}
+							else
+							{
+								new_tr.className = "table-default"
+							}
+							
+							new_td = document.createElement("td")
+							new_td.innerText = username
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							if(unvisibleflg==true)
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="unvisibleflg" onchange="userrightchg(this)" checked="true">'
+							}
+							else
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="unvisibleflg" onchange="userrightchg(this)">'
+							}
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							new_td.innerText = readonlyflg
+							
+							if(readonlyflg==true)
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="readonlyflg" onchange="userrightchg(this)" checked="true">'
+							}
+							else
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="readonlyflg" onchange="userrightchg(this)">'
+							}
+							new_tr.appendChild(new_td)
+							
+							new_td = document.createElement("td")
+							new_td.innerText = rwflg
+							if(rwflg==true)
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="rwflg" onchange="userrightchg(this)" checked="true">'
+							}
+							else
+							{
+								new_td.innerHTML = '<input type="radio" name="'+username+'" value="rwflg" onchange="userrightchg(this)">'
+							}
+							
+							new_tr.appendChild(new_td)
+							
+							document.getElementById("manageuserbody").appendChild(new_tr)
+						}
+						///生成用户权限table结束
 						
 						///生成页码开始
+						
 						document.getElementById("manageuserpage").innerHTML = "";
 						total_pg=parseInt(temp.total_pg) //总页数
 						cur_page=parseInt(temp.cur_page) //当前页
@@ -286,20 +352,12 @@
 		
 		$('#savemanageuser').click(function(){
 			rst=[]
-			
-			//trs = document.getElementById("divmanageuser1").childNodes
-			trs = $("#divmanageuser1").children('div')
-			//trs = document.getElementById("manageuserbody").getElementsByTagName("tr")
+			trs = document.getElementById("manageuserbody").getElementsByTagName("tr")
 			for(i=0;i<trs.length;i++)
 			{
-				x = trs[i]
-				y = x.children[0].children[0]
-				username = y.innerText
-				
+				username = trs[i].getElementsByTagName("input")[0].name
 				ipt = 'input[name="'+username+'"]:checked'
 				var a = $(ipt).val();
-			
-				
 				rst.push({"username":username,"checkval":a})
 			}
 			
@@ -480,52 +538,6 @@
 		/////////////////////////////
 	}
 	
-	function dlreport(e,filename,filepath)
-	{
-		var   link = document.createElement('a')
-		link.setAttribute("download", "")
-		link.href = filepath
-		link.click()
-	}
-	
-	var rmfile=""
-	var rmfilepath=""
-	function funconfirmremovereport()
-	{
-		
-		$.ajax({
-				url:'/removereport',
-				type:'GET',
-				data:{"filename": rmfile,"menu_1":cur_menu.trim(),"menu_2":cur_menu_child.trim()},
-				//dataType:'json',
-				//processData: false,  // tell jquery not to process the data
-				contentType: false, // tell jquery not to set contentType
-				
-				async:false,
-				success: function(rps) {
-					rmfile=""
-					rmfilepath=""
-				},
-				
-				error: function(xhr,status,errMsg){
-					alert(status)
-					alert(errMsg)
-					rmfile=""
-					rmfilepath=""
-				}
-		})
-	}
-	
-	function rmreport(e,filename,filepath)
-	{
-		//data-toggle="modal" 
-		//data-target="#rmoveReportModal" 
-		
-		$('#rmoveReportModal').modal();  
-		rmfile=filename
-		rmfilepath=filepath	
-	}
-	
 	totalreports=[];
 	function genReporttable(pg)
 	{
@@ -535,7 +547,7 @@
 		$.ajax({
 				url:'/reportdetail',
 				type:'GET',
-				data:{"menu_1": cur_menu.trim(),"menu_2":cur_menu_child.trim(),"cur_pg":pg,"username":"{{request.session.username}}"},
+				data:{"menu_1": cur_menu.trim(),"menu_2":cur_menu_child.trim(),"cur_pg":pg},
 				//dataType:'json',
 				//processData: false,  // tell jquery not to process the data
 				contentType: false, // tell jquery not to set contentType
@@ -548,7 +560,6 @@
 					var allreports = JSON.parse(totalreports)
 					//alert(totalreports)
 					////生成报告开始
-					userrole = json_reports["userrole"]
 					document.getElementById("reporttbody").innerHTML=""
 					for(rp in allreports)
 					{
@@ -564,9 +575,6 @@
 						
 						new_td = document.createElement("td")
 						new_td.innerText = allreports[rp].fields.filename
-						filename = allreports[rp].fields.filename
-						filepath = allreports[rp].fields.reportpath
-						new_td.style = "width:30%"
 						new_tr.appendChild(new_td)
 						
 						new_td = document.createElement("td")
@@ -582,36 +590,7 @@
 						new_tr.appendChild(new_td)
 						
 						new_td = document.createElement("td")
-						
-						dlclickfun = "dlreport(this,'"+filename+"','"+filepath+"')"
-						rmclickfun = "rmreport(this,'"+filename+"','"+filepath+"')"
-						if(userrole=="unvisibleflg")
-						{
-							
-							new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreportfunction" disabled>下载</button><button type="button" class="btn btn-outline-info btn-sm" onclick="rmreportfunction" disabled>删除</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal" disabled>日志</button>'
-							
-							
-							
-							new_td.innerHTML = new_td.innerHTML.replace("dlreportfunction",dlclickfun)
-							new_td.innerHTML = new_td.innerHTML.replace("rmreportfunction",rmclickfun)
-						}
-						if(userrole=="readonlyflg")
-						{
-							new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreportfunction" >下载</button><button type="button" class="btn btn-outline-info btn-sm" onclick="rmreportfunction" disabled>删除</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button>'
-							
-							
-							new_td.innerHTML = new_td.innerHTML.replace("dlreportfunction",dlclickfun)
-							new_td.innerHTML = new_td.innerHTML.replace("rmreportfunction",rmclickfun)
-						}
-						if(userrole=="rwflg")
-						{
-							new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreportfunction">下载</button><button type="button" class="btn btn-outline-info btn-sm" onclick="rmreportfunction"  data-toggle="modal" data-target="#removeReportModal" >删除</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button>'
-							
-							
-							new_td.innerHTML = new_td.innerHTML.replace("dlreportfunction",dlclickfun)
-							new_td.innerHTML = new_td.innerHTML.replace("rmreportfunction",rmclickfun)
-						}
-						
+						new_td.innerHTML = '<button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info     btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button>'
 						new_tr.appendChild(new_td)
 						
 						document.getElementById("reporttbody").appendChild(new_tr)
@@ -824,14 +803,31 @@
 							
 					</div><!--end report table service-->
 					<div class="services" id="divmanageuser">	
-						<p></p>
-						<div class='row'>
-							<div class="services" id="divmanageuser1">		
-							</div>
+						<table class="table table-hover">
+							  <thead> 
+								
+								<tr>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-lock fa-sm">&nbsp;</i>不可见</h5></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fab fa-readme fa-sm">&nbsp;</i>只&nbsp;&nbsp;读</h5></th>
+								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>读&nbsp;&nbsp;写</h5></th>
+								</tr>
+							  </thead>
+							  <tbody id="manageuserbody">
+							  </tbody>
+						</table> 
+						
+						<div class="card border-primary mb-3" style="max-width: 20rem;">
+						  <div class="card-header">Header</div>
+						  <div class="card-body">
+							<h4 class="card-title">Primary card title</h4>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						  </div>
 						</div>
+						
+						<!--分页begin-->
 						<ul class="pagination pagination-sm" id="manageuserpage">	  
 						</ul>
-						
 						<button type="button" class="btn btn-primary btn-sm form-inline" id="savemanageuser">保存</button>
 					</div><!--end manage user table service-->
 				</div>
@@ -855,6 +851,34 @@
 		  <div class="modal-body">
 		  <form   action="/blog/?pg=1&searchval=" method="post"  enctype="multipart/form-data">
 			<fieldset form>
+			  <!-- <legend>Custom forms</legend> -->
+			  
+			  <div class="form-group">
+				<div class="custom-control custom-radio">
+				  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="">
+				  <label class="custom-control-label" for="customRadio1">覆盖文件</label>
+				</div>
+				<div class="custom-control custom-radio">
+				  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+				  <label class="custom-control-label" for="customRadio2">保存副本</label>
+				</div>
+				
+			  </div>
+			  <div class="form-group">
+				<div class="custom-control custom-checkbox">
+				  <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+				  <label class="custom-control-label" for="customCheck1">其他人只读权限</label>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<select class="custom-select">
+				  <option selected="">报告类型</option>
+				  <option value="1">日常巡检</option>
+				  <option value="2">紧急事故</option>
+				  <option value="3">改造需求</option>
+				</select>
+			  </div>
+			  
 			  <!-- <div class="form-group"> -->
 			  <div  class="services">
 				<div class="input-group mb-3">
@@ -865,8 +889,8 @@
 						<div class="desc">
 							<!-- <div class="row"> -->
 							<!-- <div class="col-md-12 form-inline" > -->
-								<input id="photoCover" class="form-control"  type="text" style="height:30px;margin-bottom: 5px; !important"> 
-								<button type="button" class="btn btn-success btn-sm " onclick="$('input[id=reportfile]').click();" id="addnewbtn" style="margin-right: 0px;">Browse</button>
+								<input id="photoCover" class="form-control"  type="text" style="height:30px !important"> 
+								<button type="button" class="btn btn-success btn-sm " onclick="$('input[id=reportfile]').click();" id="addnewbtn">Browse</button>
 								<button type="button" class="btn btn-success btn-sm " id="uploadreport">Upload</button>
 							<!-- </div> -->
 							<!-- </div> -->
@@ -906,43 +930,6 @@
 	  </div>
 	</div>
 	<!-- 模态框--上传报告end -->
-	
-	
-	<!-- 模态框-确认删除begin -->
-	<div class="modal fade" id="removeReportModal">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-	 
-		  <!-- 模态框头部 -->
-		  <div class="modal-header">
-			<h4 class="modal-title">确认删除报告？</h4>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		  </div>
-	 
-		  <!-- 模态框主体 -->
-		  <div class="modal-body">
-				<div class="alert alert-dismissible alert-warning">
-				  <h4 class="alert-heading">Warning!</h4>
-				  <p class="mb-0">报告删除后将不可恢复，请谨慎操作！</p>
-				</div>
-		  </div>
-	 
-		  <!-- 模态框底部 -->
-		  <div class="modal-footer">
-			<!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
-			<!-- <input type="submit" class="btn btn-success"></input> -->
-			<button type="button" class="btn btn-warning" data-dismiss="modal" id="confirmremovereport" onclick="funconfirmremovereport()">确定</button>
-			<button type="button" class="btn btn-success" data-dismiss="modal" id="closeupload1111">取消</button>
-		  </div>
-		
-		</div>
-	  </div>
-	</div>
-	<!-- 模态框--确认删除end -->
-	
-	
-	
-	
 
 	<!-- 模态框-时间轴begin -->
 	<div class="modal fade in" id="timelineModal">

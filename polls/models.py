@@ -3,6 +3,7 @@ from unittest.util import _MAX_LENGTH
 from django.template.defaultfilters import default
 from django.utils.encoding import python_2_unicode_compatible
 import django.utils.timezone as timezone
+import time
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -83,7 +84,8 @@ class Report(models.Model):
     filename = models.CharField(max_length=120)
     username = models.CharField(max_length=20)
     reportinfo = models.CharField(max_length=120)
-    reportdate = models.DateTimeField(default = timezone.now)
+    reportdate = models.CharField(max_length=120)
     reportmenu = models.CharField(max_length=50)
+    reportpath = models.CharField(max_length=120)
     
     

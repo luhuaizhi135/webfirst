@@ -17,6 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 import re
 from pip._vendor.pyparsing import CaselessKeyword
 from django.template.loader import render_to_string
+import time
 #from django.utils.encoding import force_unicode,smart_unicode, smart_str, DEFAULT_LOCALE_ENCODING  
 
 
@@ -160,21 +161,21 @@ def genreportmenu(request):
 
 def updateuserright(request):
 	if request.method=='POST':
-		DebugLog("===================================================================")
-		DebugLog(request.POST)
-		DebugLog("===================================================================")
+		#DebugLog("===================================================================")
+		#DebugLog(request.POST)
+		#DebugLog("===================================================================")
 		usersupdate = json.loads(request.POST['aaa'])
-		DebugLog(usersupdate)
-		DebugLog("===================================================================")
+		#DebugLog(usersupdate)
+		#DebugLog("===================================================================")
 		menu_1 = request.POST['menu_1']
 		menu_2 = request.POST['menu_2']
 		
 		menu_dic = {"电力":"ElictricDic","暖通":"CoolingstationDic","消防":"FireProtectionDic","设施":"infrastructureDic"}
 		fun_model = "models."+	menu_dic[menu_1] + 	'.objects.filter(menu_item="'+menu_2+'")'
 		menu_model = eval(fun_model)
-		DebugLog(menu_model[0].unvisible_users)
-		DebugLog(menu_model[0].readonly_users)
-		DebugLog(menu_model[0].rw_users)
+		#DebugLog(menu_model[0].unvisible_users)
+		#DebugLog(menu_model[0].readonly_users)
+		#DebugLog(menu_model[0].rw_users)
 		
 		unvisible_users=json.loads(menu_model[0].unvisible_users)
 		readonly_users=json.loads(menu_model[0].readonly_users)
@@ -224,9 +225,9 @@ def manageuser(request):
 		#DebugLog(fun_model)
 		menu_model = eval(fun_model)
 		
-		DebugLog(menu_model[0].unvisible_users)
-		DebugLog(menu_model[0].readonly_users)
-		DebugLog(menu_model[0].rw_users)
+		#DebugLog(menu_model[0].unvisible_users)
+		#DebugLog(menu_model[0].readonly_users)
+		#DebugLog(menu_model[0].rw_users)
 		
 		users = models.User.objects.all()
 		
@@ -261,13 +262,10 @@ def manageuser(request):
 		
 		html_card = render_to_string('usercard123.html',{"Users":rsltusers,"menu_2":menu_2})	
 			
-		DebugLog("===================================================================")	
-		DebugLog(html_card)	
-		DebugLog("===================================================================")
-		
+	
 		#context = {'rsltusers':rsltusers,'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'usercard':html_card}
 		context = {'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'usercard':html_card}
-		DebugLog(context)
+		
 		return HttpResponse(json.dumps(context))
 	
 def reportdetail(request):	
@@ -283,7 +281,7 @@ def reportdetail(request):
 		
 		
 		#DebugLog(report_menu)
-		Reports = models.Report.objects.filter(reportmenu=report_menu)
+		Reports = models.Report.objects.filter(reportmenu=report_menu).order_by("-reportdate")
 		#DebugLog(str(Reports))
 		
 		start_pg = (int(pg)-1)*av_page
@@ -313,6 +311,19 @@ def reportdetail(request):
 		context = {'Reports':data,'cur_page':pg,'total_pg':total_pg,'av_page':av_page,'userrole':userrole}
 		return HttpResponse(json.dumps(context))
 	
+def removereport(request):	
+	if request.method=='GET':
+		filename = request.GET.get('filename')
+		DebugLog(filename)
+		menu_1 = request.GET.get('menu_1')
+		menu_2 = request.GET.get('menu_2')
+		models.Report.objects.filter(filename=filename).delete()
+		
+		myfile = os.path.join(BASE_DIR, 'polls/static', 'report', menu_1,menu_2,filename)
+		if os.path.exists(myfile):
+		    os.remove(myfile)
+	
+	return HttpResponse("ok")
 	
 def report(request):
 	template = loader.get_template('report.html')
@@ -374,12 +385,36 @@ def uploadpic(request):
 def uploadreport(request):
 	if request.method == 'POST':
 		file_obj = request.FILES.get('file')
-		f = open(os.path.join(BASE_DIR, 'polls/static', 'report', file_obj.name), 'wb')
+		menu_1 = request.POST['menu_1']
+		menu_2 = request.POST['menu_2']
+		DebugLog(menu_1+menu_2)
+		
+		if os.path.isdir(os.path.join(BASE_DIR, 'polls/static', 'report', menu_1)):
+			pass
+		else:
+			os.mkdir(os.path.join(BASE_DIR, 'polls/static', 'report', menu_1))
+			
+		if os.path.isdir(os.path.join(BASE_DIR, 'polls/static', 'report', menu_1, menu_2)):
+			pass
+		else:
+			os.mkdir(os.path.join(BASE_DIR, 'polls/static', 'report', menu_1, menu_2))
+		
+		f = open(os.path.join(BASE_DIR, 'polls/static', 'report', menu_1,menu_2,file_obj.name), 'wb')
 
 		for chunk in file_obj.chunks():
 			f.write(chunk)
 		f.close()
-		report = '/static/report/'+file_obj.name
+		report = '/static/report/'+menu_1+'/'+menu_2+'/'+file_obj.name
+		
+		#save to db: username,filename,path
+		filename = file_obj.name
+		username = request.POST['username']
+		reportinfo = "none"
+		reportmenu = menu_1+menu_2
+		reportdate = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+		
+		models.Report.objects.create(filename=filename, username=username,reportinfo=reportinfo,reportmenu=reportmenu,reportdate=reportdate,reportpath=report)
+		
 		return HttpResponse(report)
 
 def genAbstract(blog):
