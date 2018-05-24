@@ -68,6 +68,17 @@
         <script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
     <![endif]-->
 	
+
+	
+    <link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/css/jquery.orgchart.css">
+    <link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/css/style.css">
+	<link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/color-coded/style.css">
+	
+	<style>
+	   ::-webkit-scrollbar {display:none}
+   </style>
+  
 	<style>
 		td{padding:6px !important;}
 
@@ -338,7 +349,11 @@
 			
 			
 		genMenu(cur_menu)
-		genReporttable(1)
+		
+		
+		
+		
+	
 	
 	})//$(document).ready(function() end
 	
@@ -770,284 +785,33 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container-wrap">
-		<div id="fh5co-services" class="fh5co-light-grey" style="padding: 2em 2em !important">
-			<div class="row">
-				<div class="col-md-2 animate-box">
-					<div class="services">
-						<div class="list-group">
-							<ul id="menu_total">
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-10 animate-box">
-					<div class="services">
-						<button type="button" class="btn btn-success btn-sm form-inline" data-toggle="modal" data-target="#myModal" id="addnewbtn">添加报告</button>
-						<button type="button" class="btn btn-primary btn-sm form-inline" id="adminuser">管理权限</button>
-					</div>
-					<div class="services" id="divreporttable">
-						<table class="table table-hover"  id="reporttable">
-							  <thead> 
-								
-								<tr>
-								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-file fa-sm">&nbsp;</i>报&nbsp;&nbsp;告</h3></th>
-								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-user fa-sm">&nbsp;</i>用&nbsp;&nbsp;户</h3></th>
-								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-exclamation-circle fa-sm">&nbsp;</i>信&nbsp;&nbsp;息</h3></th>
-								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-history fa-sm">&nbsp;</i>修&nbsp;改&nbsp;记&nbsp;录</h3></th>
-								  <th scope="col" class="text-muted" style="border-top:0px"><h5><i class="fas fa-edit fa-sm">&nbsp;</i>操&nbsp;&nbsp;作</h5></th>
-								</tr>
-							  </thead>
-							  <tbody id="reporttbody">
-								<!-- <tr class="table-success"> -->
-								  <!-- <td>配电运维报告</td> -->
-								  <!-- <td>zhaobin</td> -->
-								  <!-- <td>每日巡检</td> -->
-								  <!-- <td>2018-04-17 20:31:36</td> -->
-								  <!-- <a href="/static/report/Agile POL全光园区解决方案 V3.0.pdf" id="downloadreport" download><span></span></a> -->
-								  <!-- <script> -->
-										<!-- function dlreport(){ -->	
-											<!-- $('#downloadreport').click() -->
-											<!-- window.location.href = $("#downloadreport")[0] -->
-										<!-- } -->
-								  <!-- </script> -->
-								  <!-- <td><button type="button" class="btn btn-outline-info btn-sm" onclick="dlreport()">下载</button><button type="button" class="btn btn-outline-info btn-sm">上传</button><button type="button" class="btn btn-outline-info  -->
-								  <!-- btn-sm" data-toggle="modal" data-target="#timelineModal">日志</button></td> -->
-								<!-- </tr> -->
-							  </tbody>
-							</table> 
-							
-							<hr>
-							<!--分页begin-->
-							<ul class="pagination pagination-sm" id="blogpage">	  
-							</ul>
-							
-					</div><!--end report table service-->
-					<div class="services" id="divmanageuser">	
-						<p></p>
-						<div class='row'>
-							<div class="services" id="divmanageuser1">		
-							</div>
-						</div>
-						<ul class="pagination pagination-sm" id="manageuserpage">	  
-						</ul>
+	<div class="container-wrap" style="height:800px;width:1200px">
+		<div id="fh5co-services" class="fh5co-light-grey" style="height:800px;width:1060px;padding: 1em 1em 1em 1em!important">
+			<!-- <div class="row"> -->
+				
+				<!-- <div class="col-md-12 animate-box">			 -->
+					<!-- <div class="services" id="divreporttable" > -->
+					<div class="row" id="chart-container"  style="height:580px" >
+						<!-- <script> -->
+							<!-- $('#divreporttable').load('/static/middleorg.html'); -->
+						<!-- </script>	 -->
+						<!-- <iframe src="/static/middleorg.html" width="100%" height="800" frameborder="0"> -->
+							   <!-- 您的浏览器不支持iframe，请升级   -->
+						<!-- </iframe>	
+						-->
 						
-						<button type="button" class="btn btn-primary btn-sm form-inline" id="savemanageuser">保存</button>
-					</div><!--end manage user table service-->
-				</div>
-			</div>
+						<!-- <div id="chart-container"></div> -->
+						<script type="text/javascript" src="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/js/jquery.min.js"></script>
+						<script type="text/javascript" src="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/js/jquery.orgchart.js"></script>
+					    
+						<script type="text/javascript" src="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/color-coded/scripts.js"></script>
+
+					</div>
+				<!-- </div> -->
+			<!-- </div> -->
 		</div>
 		
 	</div><!-- END container-wrap -->
-
-	<!-- 模态框-上传报告begin -->
-	<div class="modal fade" id="myModal">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-	 
-		  <!-- 模态框头部 -->
-		  <div class="modal-header">
-			<h4 class="modal-title">上传报告</h4>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		  </div>
-	 
-		  <!-- 模态框主体 -->
-		  <div class="modal-body">
-		  <form   action="/blog/?pg=1&searchval=" method="post"  enctype="multipart/form-data">
-			<fieldset form>
-			  <!-- <div class="form-group"> -->
-			  <div  class="services">
-				<div class="input-group mb-3">
-				  <!-- <div class="custom-file"> -->
-									
-					<input id="reportfile" type="file" style="display:none">  
-					<div class="input-append">  
-						<div class="desc">
-							<!-- <div class="row"> -->
-							<!-- <div class="col-md-12 form-inline" > -->
-								<input id="photoCover" class="form-control"  type="text" style="height:30px;margin-bottom: 5px; !important"> 
-								<button type="button" class="btn btn-success btn-sm " onclick="$('input[id=reportfile]').click();" id="addnewbtn" style="margin-right: 0px;">Browse</button>
-								<button type="button" class="btn btn-success btn-sm " id="uploadreport">Upload</button>
-							<!-- </div> -->
-							<!-- </div> -->
-						</div>
-						<script>
-							$('input[id=reportfile]').click(function(){
-									$('#photoCover').val($('input[id=reportfile]').val());
-								})
-							$('input[id=reportfile]').change(function() {  
-								$('#photoCover').val($('input[id=reportfile]').val());  
-							});  
-							
-						</script>
-					</div> 
-				  <!-- </div> -->
- 
-				</div>
-				
-				<!--进度条begin-->
-				<div class="progress" id="fartherprg" >
-				  <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="uploadprocess" role="progressbar" style="width: 0%"></div>
-				</div>	
-				<!--进度条end-->
-			  </div> 
-			</fieldset>
-			</form> 
-		  </div>
-	 
-		  <!-- 模态框底部 -->
-		  <div class="modal-footer">
-			<!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
-			<!-- <input type="submit" class="btn btn-success"></input> -->
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeupload">关闭</button>
-		  </div>
-		
-		</div>
-	  </div>
-	</div>
-	<!-- 模态框--上传报告end -->
-	
-	
-	<!-- 模态框-确认删除begin -->
-	<div class="modal fade" id="removeReportModal">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-	 
-		  <!-- 模态框头部 -->
-		  <div class="modal-header">
-			<h4 class="modal-title">确认删除报告？</h4>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		  </div>
-	 
-		  <!-- 模态框主体 -->
-		  <div class="modal-body">
-				<div class="alert alert-dismissible alert-warning">
-				  <h4 class="alert-heading">Warning!</h4>
-				  <p class="mb-0">报告删除后将不可恢复，请谨慎操作！</p>
-				</div>
-		  </div>
-	 
-		  <!-- 模态框底部 -->
-		  <div class="modal-footer">
-			<!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
-			<!-- <input type="submit" class="btn btn-success"></input> -->
-			<button type="button" class="btn btn-warning" data-dismiss="modal" id="confirmremovereport" onclick="funconfirmremovereport()">确定</button>
-			<button type="button" class="btn btn-success" data-dismiss="modal" id="closeupload1111">取消</button>
-		  </div>
-		
-		</div>
-	  </div>
-	</div>
-	<!-- 模态框--确认删除end -->
-	
-	
-	
-	
-
-	<!-- 模态框-时间轴begin -->
-	<div class="modal fade in" id="timelineModal">
-	  <!-- <div class="modal-dialog"  style="max-width:1000px;width:1000px !important"> -->
-	  <div class="modal-dialog" >
-		<div class="modal-content">
-	 
-		  <!-- 模态框头部 -->
-		  <div class="modal-header">
-			<h4 class="modal-title">操作日志</h4>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		  </div>
-	 
-		  <!-- 模态框主体 -->
-		  <div class="modal-body">
-			
-			<div class="container-wrap">
-			<div class="row pre-scrollable">
-				<div class="col-md-12 animate-box">
-					<div class="VivaTimeline">
-						<dl>
-							<dt>2018 四月</dt>
-							<dd class="pos-left clearfix">
-								<div class="circ"></div>
-								<div class="time">4.18</div>
-								<div class="events">
-									<div class="events-header">巡检报告</div>
-									<div class="events-body">
-										<div class="row">
-											<!-- <div class="col-md-6 pull-left"> -->
-												<!-- <img class="events-object img-responsive img-rounded" src="/media/photos/8.jpg" /> -->
-											<!-- </div> -->
-											<div class="events-desc">
-												日常巡检数据更新，涉及10KV报告，报告人----XXX
-											</div>
-										</div>
-										
-									</div>
-									
-								</div>
-							</dd>
-							<dt>2018 三月</dt>
-							<dd class="pos-right clearfix">
-								<div class="circ"></div>
-								<div class="time">3.30</div>
-								<div class="events">
-									<div class="events-header">紧急事故</div>
-									<div class="events-body">
-										<div class="row">
-											<!-- <div class="col-md-6 pull-left"> -->
-												<!-- <img class="events-object img-responsive img-rounded" src="/media/photos/8.jpg" /> -->
-											<!-- </div> -->
-											<div class="events-desc">
-												空调漏水，紧急处理，需联系厂家维修
-											</div>
-										</div>
-										
-									</div>
-									<div class="events-footer">
-
-									</div>
-								</div>
-							</dd>
-							<dd class="pos-left clearfix">
-								<div class="circ"></div>
-								<div class="time">3.15</div>
-								<div class="events">
-									<div class="events-header">改进维修</div>
-									<div class="events-body">
-										<div class="row">
-											<!-- <div class="col-md-6 pull-left"> -->
-												<!-- <img class="events-object img-responsive img-rounded" src="/media/photos/8.jpg" /> -->
-											<!-- </div> -->
-											<div class="events-desc">
-												桥架改造，施工单位----XXXX
-											</div>
-										</div>
-									</div>
-								</div>
-							</dd>
-							<dt>2018 二月</dt>
-							<dt>2018 一月</dt>
-							<dt>2017 十二月</dt>
-							<dt>2017 十一月</dt>
-							<dt>2017 十月</dt>
-						</dl>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		  </div>
-	 
-		  <!-- 模态框底部 -->
-		  <div class="modal-footer">
-			<!-- <input class="input-group-text" id="" type="submit" value="Upload"></input> -->
-			<!-- <input type="submit" class="btn btn-success"></input> -->
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeupload">关闭</button>
-		  </div>
-		
-		</div>
-	  </div>
-	</div>
-	<!-- 模态框--时间轴end -->
-
 	</div>
 
 	<div class="gototop js-top">

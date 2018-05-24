@@ -483,3 +483,10 @@ def comment(request,comment_id):
 	#rsp.addHeader('Access-Control-Allow-Method:POST,GET')
 	#logging.error(str(rsp))
 	return rsp
+
+def organization(request):
+	template = loader.get_template('organization.html')
+	context = {}
+	
+	return HttpResponse(template.render(context,request))
+	
