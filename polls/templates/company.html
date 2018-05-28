@@ -37,66 +37,12 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 	
-	<script src="/static/js/jquery-3.3.1.js"></script>
-	<script src="/static/js/jquerysession.js"></script>
+<link href="/static/thirdparty/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet">
 	
-	<link href="/static/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="/static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-	<script src="/static/thirdparty/popper.min.js"></script>
-	
-	<link href="/static/thirdparty/monokai_sublime.min.css" rel="stylesheet" />
-	<link href="/static/thirdparty/magnific-popup.min.css" rel="stylesheet">
-	<link href="/static/thirdparty/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet">
-
-	
-	<!--组织结构图控件-->
-    <link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/css/jquery.orgchart.css">
-    <link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/css/style.css">
-	<link rel="stylesheet" href="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/color-coded/style.css">
-	
-	<style>
-	   ::-webkit-scrollbar {display:none}
-   </style>
-  
-	<style>
-		td{padding:6px !important;}
-
-		.list-group-item{padding: .5rem 1rem;color: #007bff; !important}
-
-		.dropbtn {
-			background-color: #4CAF50;
-			color: white;
-			padding: 16px;
-			font-size: 16px;
-			border: none;
-			cursor: pointer;
-		}
-
-		.dropdown {
-			position: relative;
-			display: inline-block;
-		}
-
-		.dropdown-content {
-			display: none;
-			position: absolute;
-		}
-
-		.dropdown-content a {
-			display: block;
-		}
-
-
-		.dropdown:hover .dropdown-content {
-			display: block;
-		}
-	</style>
-
+		<script src="/static/thirdparty/ft5_79_church/js/jquery.min.js"></script>
 
 	<script>
 
-	
 	$(document).ready(function() {
 		{% if request.session.username %}  
 			
@@ -143,7 +89,6 @@
 	
 	})//$(document).ready(function() end
 	
-	
 		
 	function hasClass(obj, cls) { 
 		return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)')); 
@@ -182,11 +127,13 @@
 	<body>
 		
 	<div class="fh5co-loader"></div>
+	
 	<div id="page">
 	<nav class="fh5co-nav" role="navigation">
 		<div class="container-wrap">
 			<div class="top-menu">
 				<div class="row">
+					
 					<div class="col-md-12 col-md-offset-0 text-center menu-1">
 						<ul>
 							<li class="active"><a href="/loginsucc">首页</a></li>
@@ -209,28 +156,101 @@
 						</ul>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</nav>
-	<div class="container-wrap" style="height:800px;width:1200px">
-		<div id="fh5co-services" class="fh5co-light-grey" style="height:800px;width:1060px;padding: 1em 1em 1em 1em!important">
-			<!-- <div class="row"> -->
-				
-				<!-- <div class="col-md-12 animate-box">			 -->
-					<!-- <div class="services" id="divreporttable" > -->
-					<div class="row" id="chart-container"  style="height:580px" >
-						
-						<script type="text/javascript" src="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/js/jquery.min.js"></script>
-						<script type="text/javascript" src="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/js/jquery.orgchart.js"></script>
-					    
-						<script type="text/javascript" src="/static/thirdparty/jq22OrgChart-master683920160923/OrgChart-master20160923/examples/color-coded/scripts.js"></script>
-
-					</div>
-				<!-- </div> -->
-			<!-- </div> -->
-		</div>
+	<div class="container-wrap">
 		
+		<div id="fh5co-news">
+			<div class="row animate-box">
+				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+					<h2>公司愿景</h2>
+					<p>财拓云联通富特IDC总体规模2000+的机柜，领先的基础设施建设，具有独立专业的运维团队，为您提供优质的IDC服务，客户永远使我们的中心，愿与您联手协作共赢，创造美好前景！</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 animate-box">
+					<div class="news">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/house.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<!-- <span class="date">March 30, 2017</span> -->
+							<h3><a href="#">基本信息</a></h3>
+							<p>财拓云公司成立于2016年，公司主要经营IDC建设，互联网金融服务，联通富特IDC竣工于2017年，2018年3月正式投入使用，公司位于外高桥保税区内，地理位置优越，交通便利，IDC拥有1000平米的独立建筑，规模大，基础设施优良.</p>
+							<!-- <a href="#">Read More <i class="icon-arrow-right3"></i></a> -->
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 animate-box">
+					<div class="news">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/inner.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<!-- <span class="date">March 30, 2017</span> -->
+							<h3><a href="#">基础设施</a></h3>
+							<p>富特IDC拥有业界领先的基础设施建设，充足的电力供应，在暖通方面首家应用FreeCooling技术，具有三家运营商接入的网络建设，数据中心级别最高.数据中心级别最高数据中心级别最高数据中心级别最高数据中心级别最高数据中心级别最高</p>
+							<!-- <a href="#">Read More <i class="icon-arrow-right3"></i></a> -->
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 animate-box">
+					<div class="news">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/yunwei.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<!-- <span class="date">March 30, 2017</span> -->
+							<h3><a href="#">运维团队</a></h3>
+							<p>16年的运维经验，丰富的运维经验，拥有在电力、暖通、网络等方面的优秀专家若干名。公司取得Uptime认证，流程上把控运维质量，同时建立知识社区，不断完善与改进.</p>
+							<!-- <a href="#">Read More <i class="icon-arrow-right3"></i></a> -->
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 animate-box">
+					<div class="news">
+						<a href="#" class="img-holder"><img class="img-responsive" src="/static/thirdparty/ft5_79_church/images/img-1.jpg" alt="Free HTML5 Website Template by freehtml5.co"></a>
+						<div class="desc">
+							<!-- <span class="date">March 30, 2017</span> -->
+							<h3><a href="#">服务客户</a></h3>
+							<p>联手移动，联通，电信三大运营商，为诸如腾讯、阿里、百度等大型互联网行业提供IDC服务，长期保持优质客户群.让我们在一起</p>
+							<!-- <a href="#">Read More <i class="icon-arrow-right3"></i></a> -->
+						</div>
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+		<div id="fh5co-counter" class="fh5co-counters fh5co-light-grey">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 text-center animate-box">
+					<p>迄今为止，我们为优质客户保障了16*365*7*24小时无事故运行.</p>
+					</div>
+			</div>
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="row">
+						<div class="col-md-3 col-sm-6 col-xs-6 text-center">
+							<span class="fh5co-counter js-counter" data-from="0" data-to="9452" data-speed="3000" data-refresh-interval="50"></span>
+							<span class="fh5co-counter-label">机柜数</span>
+						</div>
+						<div class="col-md-3 col-sm-6 col-xs-6 text-center">
+							<span class="fh5co-counter js-counter" data-from="0" data-to="150000" data-speed="3000" data-refresh-interval="50"></span>
+							<span class="fh5co-counter-label">服务器</span>
+						</div>
+						<div class="clearfix visible-sm-block visible-xs-block"></div>
+						<div class="col-md-3 col-sm-6 col-xs-6 text-center">
+							<span class="fh5co-counter js-counter" data-from="0" data-to="433" data-speed="3000" data-refresh-interval="50"></span>
+							<span class="fh5co-counter-label">客户</span>
+						</div>
+						<div class="col-md-3 col-sm-6 col-xs-6 text-center">
+							<span class="fh5co-counter js-counter" data-from="0" data-to="0" data-speed="3000" data-refresh-interval="50"></span>
+							<span class="fh5co-counter-label">事故</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div><!-- END container-wrap -->
+
+	
 	</div>
 
 	<div class="gototop js-top">

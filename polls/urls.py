@@ -28,5 +28,7 @@ urlpatterns=[
 	url(r'^manageuser/$',views.manageuser,name='manageuser'),
 	url(r'^updateuserright/$',views.updateuserright,name='updateuserright'),
 	url(r'^organization/$',views.organization,name='organization'),
+	url(r'^company/$',views.company,name='company'),
+	url(r'^dashboard/$',views.dashboard,name='dashboard'),
 	#url(r'^report/(?P<dic_1>[0-9]+)/(?P<dic_2>[0-9]+)$',views.report,name='report'),
 ]
